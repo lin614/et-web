@@ -1,8 +1,8 @@
 {
   "name": "et-web",
   "version": "1.0.0",
-  "description": "Nuxt.js + Vuetify.js project",
-  "author": "林矿坡 <linkuangpo@exchangechain.com>",
+  "description": "exchain 2.0",
+  "author": "exchain",
   "private": true,
   "scripts": {
     "dev": "nuxt",
