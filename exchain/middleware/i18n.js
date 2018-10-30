@@ -7,6 +7,8 @@ export default function ({
   error,
   redirect
 }) {
+  debugger
+  console.log('sdfsdf')
   const defaultLocale = app.i18n.fallbackLocale
   // If middleware is called from hot module replacement, ignore it
   if (isHMR) return

@@ -24,10 +24,14 @@ module.exports = {
         name: 'viewport',
         content: 'width=device-width, initial-scale=1'
       },
+      { // set meta
+        name: 'keyWords',
+        content: 'Exchain、Exchain交易所、交易所、买币、比特币、ETH、BTC、以太坊、USDT、ET、交易即挖矿、合作伙伴'
+      },
       {
         hid: 'description',
         name: 'description',
-        content: '{{escape description }}'
+        content: 'Exchain交易所，全球首家共享型交易平台，以用户需求为核心，打造“共有、共享、共治、透明开放互惠性交易平台。交易即入股分享100%平台收益，同时有限时免交易费，合作伙伴奖励等活动与用户共建交易所。'
       }
     ],
     link: [{
@@ -43,9 +47,7 @@ module.exports = {
   /*
    ** Customize the progress bar color
    */
-  loading: {
-    color: '#3B8070'
-  },
+  loading: '~/components/loading.vue',
   /*
    ** Build configuration
    */

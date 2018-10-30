@@ -1,10 +1,17 @@
 {
   "name": "iview-ssr",
   "version": "1.0.0",
-  "description": "",
+  "description": "abcdefg",
   "author": "",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "127.0.0.1",
+      "port": "8000"
+    }
+  },
   "scripts": {
+    "debug": "node --inspect node_modules/nuxt/bin/nuxt",
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
