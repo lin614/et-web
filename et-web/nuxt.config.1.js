@@ -1,9 +1,22 @@
-export default {
+module.exports = {
+  //server配置
+  server: {
+    port: 8000,
+    host: '127.0.0.1'
+  },
+  //vue.config
+  vue: {
+    config: {
+      productTip: false,
+      devtools: true
+    }
+  },
+
   /*
    ** Headers of the page
    */
   head: {
-    title: 'et-web',
+    title: '{{ name }}',
     meta: [{
         charset: 'utf-8'
       },
@@ -22,63 +35,37 @@ export default {
       }
     ],
     link: [{
-        rel: 'icon',
-        type: 'image/x-icon',
-        href: '/favicon.ico'
-      },
-      {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
-      }
-    ]
+      rel: 'icon',
+      type: 'image/x-icon',
+      href: '/favicon.ico'
+    }]
   },
-  plugins: ['~/plugins/vuetify.js'],
-  css: [
-    '~/assets/style/app.styl'
-  ],
+  plugins: [{
+    src: '~plugins/iview',
+    ssr: true
+  }],
   /*
    ** Customize the progress bar color
    */
-  // loading: {
-  //   color: '#3B8070'
-  // },
   loading: '~/components/loading.vue',
   /*
    ** Build configuration
    */
   build: {
-    transpile: [/^vuetify/],
-    babel: {
-      plugins: [
-        ['transform-imports', {
-          'vuetify': {
-            'transform': 'vuetify/es5/components/${member}',
-            'preventFullImport': true
-          }
-        }]
-      ]
-    },
-    extractCSS: true,
     /*
      ** Run ESLint on save
      */
     extend(config, {
-      isDev
+      isDev,
+      isClient
     }) {
-      if (isDev && process.client) {
+      if (isDev && isClient) {
         config.module.rules.push({
           enforce: 'pre',
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/
         })
-      }
-      if (process.server) {
-        config.externals = [
-          nodeExternals({
-            whitelist: [/^vuetify/]
-          })
-        ]
       }
     }
   }

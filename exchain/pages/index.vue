@@ -6,8 +6,7 @@
 <script>
 export default {
   async asyncData(context) {
-    debugger
-    console.log(context)
+    
   },
   
 }

@@ -4,14 +4,23 @@
   "description": "exchain 2.0",
   "author": "exchain",
   "private": true,
+  "config": {
+    "nuxt": {
+      "host": "127.0.0.1",
+      "port": "8000"
+    }
+  },
   "scripts": {
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "look": "nuxt --content-base ./dist"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "nuxt": "^2.1.0",
+    "vue-i18n": "^8.3.0",
     "vuetify": "^1.2.6"
   },
   "devDependencies": {
