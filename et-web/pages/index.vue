@@ -68,8 +68,9 @@ export default {
   mounted() {
     console.log(this.$store)
   },
-  asyncData() {}
-  // middleware: ['init']
+  asyncData() {
+    
+  }
 }
 </script>
 

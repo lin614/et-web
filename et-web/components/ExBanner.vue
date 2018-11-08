@@ -7,7 +7,6 @@
   </div>
 </template>
 <script>
-import ax from 'axios'
 export default {
 
 }
