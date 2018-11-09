@@ -1,6 +1,6 @@
 <template>
   <div>
-    <ex-banner></ex-banner>
+    <ex-banner :items="items"></ex-banner>
     {{i}}
     <v-layout column justify-center align-center>
       <v-flex xs12 sm8 md6>
@@ -58,18 +58,24 @@
 </template>
 <script>
 import ExBanner from '@/components/ExBanner'
+import { mapActions } from 'vuex'
+import { mapMutations, mapState } from 'vuex'
 export default {
   components: { ExBanner },
   data() {
-    return {
-      i: this.$store.state.bd.i
-    }
+    return {}
   },
   mounted() {
-    console.log(this.$store)
+    console.log(this.items)
   },
-  asyncData() {
-    
+
+  async asyncData({ store, env }) {
+    let a = await store.dispatch('upEt')
+
+    return { items: [] }
+    // let { data } =await api.getBanner()
+    // debugger
+    // return { items: data }
   }
 }
 </script>

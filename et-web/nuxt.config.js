@@ -1,23 +1,40 @@
 export default {
+  env: {
+    api: {
+      safe: false, //true:https,wss,false:http,ws
+      domain: 'exchain.com',
+      // url(sub = 'service') {
+      //   return `http${this.safe?'s':''}://${sub}.${this.domain}`
+      // },
+      // ws() {
+      //   return `ws${this.safe?'s':''}://${sub}.${this.domain}/wsapp/`
+      // },
+      // home() {
+      //   return `http${this.safe?'s':''}://www.${this.domain}`
+      // }
+      // fee: 'http://stats.exchain.com', //首页待分配收入api地址
+      // invite: 'http://invite.exchain.com', //邀请相关接口地址
+      // ser: 'http://service.exchain.com', //登录注册相关接口（主api)
+      // quote: 'ws://service.exchain.com/wsapp/', //行情相关接口
+      // domain: 'exchain.com',
+      // trade: 'http://www.exchain.com:81', //交易
+
+      // https
+      // fee: 'https://stats.exchain.com', //首页待分配收入api地址
+      // invite: 'https://invite.exchain.com', //邀请相关接口地址
+      // user: 'https://service.exchain.com', //登录注册相关接口（主api)
+      // quote: 'wss://service.exchain.com/wsapp/', //行情相关接口
+      // domain: 'exchain.com',
+      // trade: 'https://www.exchain.com:44381' //交易
+    },
+  },
+  router: {
+    middleware: 'axios'
+  },
   /*
    ** Headers of the page
    */
-  api: {
-    fee: 'http://stats.exchain.com', //首页待分配收入api地址
-    invite: 'http://invite.exchain.com', //邀请相关接口地址
-    user: 'http://service.exchain.com', //登录注册相关接口（主api)
-    quote: 'ws://service.exchain.com/wsapp/', //行情相关接口
-    domain: 'exchain.com',
-    trade: 'http://www.exchain.com:81', //交易
 
-    // https
-    // fee: 'https://stats.exchain.com', //首页待分配收入api地址
-    // invite: 'https://invite.exchain.com', //邀请相关接口地址
-    // user: 'https://service.exchain.com', //登录注册相关接口（主api)
-    // quote: 'wss://service.exchain.com/wsapp/', //行情相关接口
-    // domain: 'exchain.com',
-    // trade: 'https://www.exchain.com:44381' //交易
-  },
   head: {
     title: 'et-web',
     meta: [{

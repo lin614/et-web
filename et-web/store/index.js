@@ -1,9 +1,25 @@
 export const state = () => ({
-  locales: ['cn', 'en'],
-  locale: 'cn'
+  //首页信息展示
+  et: {
+    etBtc: 0, //当天交易量,以btc计
+    volAll: 0 //总流通量
+  },
+
 })
 export const mutations = {
-  set_lang(state, locale) {
-    state.locales.includes(locale) && (state.locale = locale)
+  upEt(state, etBtc, volAll) {
+    state.etBtc = etBtc
+    state.volAll = volAll
+  },
+
+}
+
+export const actions = {
+  async upEt({
+    getters
+  }) {
+    debugger
+    console.log(context)
+    return '123'
   }
 }
