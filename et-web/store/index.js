@@ -1,25 +1,7 @@
 export const state = () => ({
-  //首页信息展示
-  et: {
-    etBtc: 0, //当天交易量,以btc计
-    volAll: 0 //总流通量
-  },
-
+  pn: null //登录凭证
 })
-export const mutations = {
-  upEt(state, etBtc, volAll) {
-    state.etBtc = etBtc
-    state.volAll = volAll
-  },
-
-}
 
 export const actions = {
-  async upEt({
-    getters
-  }) {
-    debugger
-    console.log(context)
-    return '123'
-  }
+  async nuxtServerInit(context) {}
 }
