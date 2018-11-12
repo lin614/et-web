@@ -7,10 +7,14 @@
         </div>
       </v-carousel-item>
     </v-carousel>
+    <ex-notice></ex-notice>
   </div>
 </template>
 <script>
-export default {}
+import ExNotice from './ExNotice'
+export default {
+  components: { ExNotice }
+}
 </script>
 
 <style>
