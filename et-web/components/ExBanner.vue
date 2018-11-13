@@ -2,7 +2,7 @@
   <div>
     <v-carousel height="380" hide-controls>
       <v-carousel-item v-for="(item,i) in $t('static.banner')" :key="i" :src="item.bgUrl" max="100%">
-        <div class="banner">
+        <div class="banner">          
           <img :src="item.imgUrl" class="banner_img">
         </div>
       </v-carousel-item>

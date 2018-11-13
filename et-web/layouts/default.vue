@@ -1,5 +1,5 @@
 <template>
-  <v-app>
+  <v-app dark>
     <ex-head></ex-head>
     <v-content>
       <!-- <v-container>
