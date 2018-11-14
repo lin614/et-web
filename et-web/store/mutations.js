@@ -1,5 +1,9 @@
 export default {
-    upEt(state, etBtc, volAll) {
+    setApi(state, api) {
+        state.api = api
+    },
+    upEt(state, [etBtc, volAll]) {
+        
         state.et.etBtc = etBtc
         state.et.volAll = volAll
     },

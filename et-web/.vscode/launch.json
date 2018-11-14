@@ -16,7 +16,7 @@
       "NODE_ENV": "development",
       "DEBUG": "nuxt:*,app",
       "host": "www.exchain.com",
-      "port": "301"
+      "port": "80"
     },
 
   }]

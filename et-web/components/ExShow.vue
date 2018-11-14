@@ -5,7 +5,7 @@
                 <img class="timq" src='../assets/images/timq/1.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline"> <i class="iconfont icon-btc mr-2" style="font-size:32px"></i>Cafe Badilico</span>
+                        <span class="headline"> <i class="iconfont icon-btc mr-2" style="font-size:24px"></i>{{et.etBtc}}</span>
                         <div class="d-flex">
 
                             <div class="ml-2 grey--text text--darken-6">
@@ -27,7 +27,7 @@
                 <img class="timq" src='../assets/images/timq/2.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline">Cafe Badilico</span>
+                        <span class="headline">{{et.volAll}}</span>
                         <div class="d-flex">
 
                             <div class="ml-2 grey--text text--darken-6">
@@ -47,7 +47,7 @@
                 <img class="timq" src='../assets/images/timq/5.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline">Cafe Badilico</span>
+                        <span class="headline">{{dayNum}}</span>
                         <div class="d-flex">
 
                             <div class="ml-2 grey--text text--darken-6">
@@ -65,7 +65,13 @@
     </div>
 </template>
 <script>
-export default {}
+import { mapState, mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapState(['et']),
+    ...mapGetters(['dayNum'])
+  }
+}
 </script>
 
 <style lang="stylus" scoped>
@@ -77,7 +83,5 @@ export default {}
         width: 100%;
         height: 140px;
     }
-
-    
 }
 </style>

@@ -2,8 +2,9 @@ export default {
   env: {
     api: {
       safe: false, //true:https,wss,false:http,ws
-      domain: 'exchain.com:301',
-    },
+      domain: 'exchain.com',
+
+    }
   },
 
   /*
