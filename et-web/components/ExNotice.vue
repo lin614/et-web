@@ -5,8 +5,8 @@
             <li class="item" v-for="(p,i) of $t('static.notice')" :key="i" :class="{novice:i==0,advise:i==1,announcement:i==2}">
                 <a :href="p.url">
                     <div>
-                        <h3 class="tit3">{{p.title}}</h3>
-                        <p class="title">{{p.subTitle}}</p>
+                        <h3>{{p.title}}</h3>
+                        <p>{{p.subTitle}}</p>
                     </div>
                 </a>
             </li>
@@ -33,18 +33,18 @@
         &:hover {
             background-color: rgb(80, 176, 140);
         }
-    }
 
-    .tit3 {
-        margin-bottom: 11px;
-        color: #fff;
-        font-size: 22px;
-        font-weight: 500;
-    }
+        h3 {
+            margin-bottom: 11px;
+            color: #fff;
+            font-size: 22px;
+            font-weight: 500;
+        }
 
-    .title {
-        color: #fff;
-        font-size: 16px;
+        p {
+            color: #fff;
+            font-size: 16px;
+        }
     }
 
     gradient(a, b) {

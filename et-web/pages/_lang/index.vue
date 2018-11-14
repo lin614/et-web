@@ -12,7 +12,9 @@ import ExBanner from '@/components/ExBanner'
 import ExShow from '@/components/ExShow'
 import a1 from '../../assets/images/timq/1.jpg'
 export default {
-  components: { ExBanner, ExShow }
+  components: { ExBanner, ExShow },
+  mounted() {
+    }
 }
 </script>
 <style lang="stylus" scoped>

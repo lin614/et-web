@@ -5,7 +5,7 @@
                 <img class="timq" src='../assets/images/timq/1.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline"> <i class="iconfont icon-btc"></i>Cafe Badilico</span>
+                        <span class="headline"> <i class="iconfont icon-btc mr-2" style="font-size:32px"></i>Cafe Badilico</span>
                         <div class="d-flex">
 
                             <div class="ml-2 grey--text text--darken-6">
@@ -77,5 +77,7 @@ export default {}
         width: 100%;
         height: 140px;
     }
+
+    
 }
 </style>

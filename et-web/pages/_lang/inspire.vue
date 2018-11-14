@@ -1,6 +1,7 @@
 <template>
   <v-layout>
     <v-flex text-xs-center>
+      {{$t('banner')}}
       <img src="/v.png" alt="Vuetify.js" class="mb-5">
       <nuxt-link to="/">首页</nuxt-link>
       {{i}} <blockquote class="blockquote">

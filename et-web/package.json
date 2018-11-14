@@ -7,7 +7,7 @@
   "config": {
     "nuxt": {
       "host": "www.exchain.com",
-      "port": "8000"
+      "port": "301"
     }
   },
   "scripts": {

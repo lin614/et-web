@@ -13,7 +13,8 @@
 <script>
 import ExNotice from './ExNotice'
 export default {
-  components: { ExNotice }
+  components: { ExNotice },
+  
 }
 </script>
 
