@@ -11,10 +11,9 @@ export default async ({
   if (!route.name) return
   if (process.client) {
     //默认语言
-
     let locale = localStorage.getItem('lang')
     locale && store.commit('set_lang', locale) && (this.$i18n.locale = locale)
-
+    
   }
   let cn = require('~/locales/cn.json')
   let en = require('~/locales/en.json')
@@ -33,18 +32,6 @@ export default async ({
     let {
       data: en_banner
     } = await ax.get(home + '/banner/banner_en.json')
-    let tStr = new Date().getTime()
-    //语言
-    // let cn_lang = {
-    //   icon: 'https://cdn.vuetifyjs.com/images/flags/cn.png?t=' + tStr,
-    //   lang: 'cn',
-    //   title: ' 简体中文'
-    // }
-    // let en_lang = {
-    //   icon: 'https://cdn.vuetifyjs.com/images/flags/us.png?t=' + tStr,
-    //   lang: 'en',
-    //   title: ' English'
-    // }
 
     //公告信息
     let {
@@ -68,16 +55,13 @@ export default async ({
         cn_sound.push(cn_stage.data)
         en_sound.push(en_stage.data)
       }
-      // 'sound/stage' +
     }
     cn.static = {
-      // lang: cn_lang,
       banner: cn_banner,
       notice: cn_notice,
       sound: cn_sound
     }
     en.static = {
-      // lang: en_lang,
       banner: en_banner,
       notice: en_notice,
       sound: en_sound

@@ -2,7 +2,7 @@
   <div>
     <v-carousel height="380" hide-controls>
       <v-carousel-item v-for="(item,i) in $t('static.banner')" :key="i" :src="item.bgUrl" max="100%">
-        <div class="banner">          
+        <div class="banner">
           <img :src="item.imgUrl" class="banner_img">
         </div>
       </v-carousel-item>
@@ -11,14 +11,18 @@
   </div>
 </template>
 <script>
+
 import ExNotice from './ExNotice'
 export default {
   components: { ExNotice },
-  
+ 
 }
 </script>
 
 <style>
+.v-carousel {
+  box-shadow: none;
+}
 .v-carousel__controls {
   /* background: none; */
   height: auto;

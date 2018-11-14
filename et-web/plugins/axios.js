@@ -6,10 +6,11 @@ export default function ({
 }) {
 
     let ax = url => {
+        
         return axios.create({
             baseURL: url,
             headers: {
-                'X-EXCHAIN-PN': store.state.pn
+                'X-EXCHAIN-PN': store.state.user.pn
             }
         })
     }
