@@ -32,6 +32,21 @@
                 <v-btn flat>登录</v-btn>
                 <v-btn flat>注册</v-btn>
 
+                <v-menu offset-y left :open-on-hover="false">
+                    <v-btn icon>
+                        <v-icon>more_vert</v-icon>
+                    </v-btn>
+                    <v-list>
+                        <v-list-tile @click="changeLan('cn')">
+                            <img src="https://cdn.vuetifyjs.com/images/flags/cn.png">
+                            <v-list-tile-title>&nbsp&nbsp 简体中文</v-list-tile-title>
+                        </v-list-tile>
+                        <v-list-tile @click="changeLan('en')">
+                            <img src="https://cdn.vuetifyjs.com/images/flags/us.png">
+                            <v-list-tile-title>&nbsp&nbsp English</v-list-tile-title>
+                        </v-list-tile>
+                    </v-list>
+                </v-menu>
             </v-toolbar-items>
         </v-toolbar>
     </div>

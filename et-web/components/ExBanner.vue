@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="background:url(https://d3bcj1iwrh8aaw.cloudfront.net/imgs/ban-bg1.jpg)">
     <v-carousel height="380" hide-controls>
       <v-carousel-item v-for="(item,i) in $t('static.banner')" :key="i" :src="item.bgUrl" max="100%">
         <div class="banner">
@@ -15,7 +15,14 @@
 import ExNotice from './ExNotice'
 export default {
   components: { ExNotice },
- 
+  data(){
+    return{
+      // items:[]
+    }
+  },
+  asyncData({app}){
+    return {items:$t('static.banner')}
+  }
 }
 </script>
 

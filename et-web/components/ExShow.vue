@@ -5,19 +5,14 @@
                 <img class="timq" src='../assets/images/timq/1.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline"> <i class="iconfont icon-btc mr-2" style="font-size:24px"></i>{{et.etBtc}}</span>
+                        <h3 class="headline"><i class="iconfont icon-btc" style="font-size:24px"></i>&nbsp&nbsp{{et.etBtc}}</h3>
                         <div class="d-flex">
-
-                            <div class="ml-2 grey--text text--darken-6">
-                                <span>
-                                    &nbsp{{ $t('index.txSumary.currentDay') }}
-                                </span>
-                            </div>
+                            <span class="body-1 mt-2 grey--text">&nbsp{{ $t('index.txSumary.currentDay') }}</span>
                         </div>
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <v-icon>mdi-chevron-right</v-icon>
+                        <i class="iconfont  icon-marketing1"></i>
                     </v-btn>
                 </v-card-title>
             </v-card>
@@ -27,17 +22,14 @@
                 <img class="timq" src='../assets/images/timq/2.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline">{{et.volAll}}</span>
+                        <h3 class="headline">{{et.volAll}}</h3>
                         <div class="d-flex">
-
-                            <div class="ml-2 grey--text text--darken-6">
-                                <span>{{ $t('index.txSumary.currentDay') }}</span>
-                            </div>
+                            <span class="body-1 mt-2 grey--text">&nbsp{{ $t('index.txSumary.etCirculation') }}</span>
                         </div>
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <v-icon>mdi-chevron-right</v-icon>
+                        <i class="iconfont  icon-marketing1"></i>
                     </v-btn>
                 </v-card-title>
             </v-card>
@@ -47,18 +39,16 @@
                 <img class="timq" src='../assets/images/timq/5.jpg' />
                 <v-card-title>
                     <div>
-                        <span class="headline">{{dayNum}}</span>
+                        <h3 class="headline">{{dayNum}}&nbsp&nbsp{{ $t('index.txSumary.freeUnit') }}</h3>
                         <div class="d-flex">
-
-                            <div class="ml-2 grey--text text--darken-6">
-                                <span>{{ $t('index.txSumary.currentDay') }}</span>
-                            </div>
+                            <span class="body-1 mt-2 grey--text">{{ $t('index.txSumary.freeTitle') }}</span>
                         </div>
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <v-icon>mdi-chevron-right</v-icon>
+                        <i class="iconfont  icon-marketing1"></i>
                     </v-btn>
+
                 </v-card-title>
             </v-card>
         </v-hover>

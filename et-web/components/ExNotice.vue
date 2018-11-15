@@ -1,12 +1,12 @@
 <template>
-    <div>
+    <div >
         <ul class="notice">
-
+            
             <li class="item" v-for="(p,i) of $t('static.notice')" :key="i" :class="{novice:i==0,advise:i==1,announcement:i==2}">
                 <a :href="p.url">
                     <div>
-                        <h3>{{p.title}}</h3>
-                        <p>{{p.subTitle}}</p>
+                        <h3 class="headline ">{{p.title}}</h3>
+                        <p class="subheading">{{p.subTitle}}</p>
                     </div>
                 </a>
             </li>
@@ -36,14 +36,14 @@
 
         h3 {
             margin-bottom: 11px;
-            color: #fff;
-            font-size: 22px;
-            font-weight: 500;
+            color: #FAFAFA;
+            // font-size: 22px;
+            // font-weight: 500;
         }
 
         p {
-            color: #fff;
-            font-size: 16px;
+            color: #E0E0E0;
+            // font-size: 16px;
         }
     }
 
