@@ -2,7 +2,7 @@
     <div class="ExHead">
         <v-toolbar height="40" fixed app>
             <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn flat dark>
+                <v-btn flat>
                     <ex-logo />
                 </v-btn>
                 <v-btn flat>法币</v-btn>
@@ -15,38 +15,23 @@
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-menu offset-y left :open-on-hover="false">
                     <v-btn flat slot="activator" color="primary">
-                        <img src="https://cdn.vuetifyjs.com/images/flags/cn.png" v-if="$i18n.locale=='cn'">
-                        <img src="https://cdn.vuetifyjs.com/images/flags/us.png" v-if="$i18n.locale=='en'">
+                        <i class="iconfont" :class="$i18n.locale=='cn'?'icon-CN':'icon-EN'"></i>
                     </v-btn>
                     <v-list>
                         <v-list-tile @click="changeLan('cn')">
-                            <img src="https://cdn.vuetifyjs.com/images/flags/cn.png">
-                            <v-list-tile-title>&nbsp&nbsp 简体中文</v-list-tile-title>
+                            <v-list-tile-title> <i class="iconfont icon-CN"></i></v-list-tile-title>
                         </v-list-tile>
                         <v-list-tile @click="changeLan('en')">
-                            <img src="https://cdn.vuetifyjs.com/images/flags/us.png">
-                            <v-list-tile-title>&nbsp&nbsp English</v-list-tile-title>
+                            <v-list-tile-title> <i class="iconfont icon-EN"></i></v-list-tile-title>
                         </v-list-tile>
                     </v-list>
                 </v-menu>
+                <v-btn flat slot="activator" color="primary" @click="changeTheme()">
+                    <i class="iconfont icon-theme1" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
+                </v-btn>
+
                 <v-btn flat>登录</v-btn>
                 <v-btn flat>注册</v-btn>
-
-                <v-menu offset-y left :open-on-hover="false">
-                    <v-btn icon>
-                        <v-icon>more_vert</v-icon>
-                    </v-btn>
-                    <v-list>
-                        <v-list-tile @click="changeLan('cn')">
-                            <img src="https://cdn.vuetifyjs.com/images/flags/cn.png">
-                            <v-list-tile-title>&nbsp&nbsp 简体中文</v-list-tile-title>
-                        </v-list-tile>
-                        <v-list-tile @click="changeLan('en')">
-                            <img src="https://cdn.vuetifyjs.com/images/flags/us.png">
-                            <v-list-tile-title>&nbsp&nbsp English</v-list-tile-title>
-                        </v-list-tile>
-                    </v-list>
-                </v-menu>
             </v-toolbar-items>
         </v-toolbar>
     </div>
@@ -60,15 +45,16 @@ export default {
     return {}
   },
   methods: {
-    ...mapMutations(['set_lang']),
+    ...mapMutations(['set_lang', 'set_dark_theme']),
     changeLan(lan) {
       this.set_lang(lan)
       location.reload()
+    },
+    changeTheme() {
+      this.set_dark_theme()
     }
   },
-  mounted() {
-    
-  }
+  mounted() {}
 }
 </script>
 

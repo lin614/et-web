@@ -5,14 +5,14 @@
                 <!-- <img class="timq" src='../assets/images/timq/1.jpg' /> -->
                 <v-card-title>
                     <div>
-                        <h3 class="display-1"><i class="iconfont icon-btc" style="font-size:24px"></i>&nbsp&nbsp{{et.etBtc}}</h3>
+                        <h3 class="display-1"><i class="iconfont icon-btc" style="font-size:32px"></i>&nbsp&nbsp{{et.etBtc}}</h3>
                         <div class="d-flex">
                             <span class="body-1 mt-2 grey--text">&nbsp{{ $t('index.txSumary.currentDay') }}</span>
                         </div>
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <i class="iconfont  icon-marketing1"></i>
+                        <i class="iconfont  icon-bitcoin-1"></i>
                     </v-btn>
                 </v-card-title>
             </v-card>
@@ -29,7 +29,7 @@
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <i class="iconfont  icon-marketing1"></i>
+                        <i class="iconfont  icon-coin"></i>
                     </v-btn>
                 </v-card-title>
             </v-card>
@@ -46,7 +46,7 @@
                     </div>
                     <v-spacer></v-spacer>
                     <v-btn icon class="mr-0">
-                        <i class="iconfont  icon-marketing1"></i>
+                        <i class="iconfont  icon-Time"></i>
                     </v-btn>
 
                 </v-card-title>

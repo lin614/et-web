@@ -1,14 +1,14 @@
 <template>
     <div class="notice">
         <v-list two-line>
-            <template v-for="(item, index) in items">
+            <template v-for="(item, index) in $t('static.notice')">
                 <v-list-tile :key="index" avatar ripple @click="">
                     <v-list-tile-content>
                         <v-list-tile-title>{{ item.title }}</v-list-tile-title>
                         <v-list-tile-sub-title>{{ item.subTitle }}</v-list-tile-sub-title>
                     </v-list-tile-content>
                 </v-list-tile>
-                <v-divider v-if="index + 1 < items.length" :key="`divider-${index}`"></v-divider>
+                <v-divider v-if="index + 1 < $t('static.notice').length" :key="`divider-${index}`"></v-divider>
             </template>
         </v-list>
     </div>
@@ -51,7 +51,7 @@ export default {
 .notice {
     position: absolute;
     width: 390px;
-    height: 380px;
+    // height: 380px;
     float: right;
     right: calc(50% - 600px);
     top: 30px;

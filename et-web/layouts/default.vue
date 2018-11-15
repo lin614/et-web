@@ -1,5 +1,5 @@
 <template>
-  <v-app dark>
+  <v-app :dark="dark">
     <ex-head></ex-head>
     <v-content>
       <!-- <v-container>
@@ -18,6 +18,11 @@
 import ExHead from '@/components/ExHead'
 export default {
   components: { ExHead },
+  computed: {
+    dark() {
+      return this.$store.state.theme.dark
+    }
+  },
   data() {
     return {
       clipped: false,
@@ -28,6 +33,6 @@ export default {
       rightDrawer: false,
       title: 'Vuetify.js'
     }
-  }
+  },
 }
 </script>

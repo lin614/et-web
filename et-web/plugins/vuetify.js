@@ -36,3 +36,15 @@ Vue.use(Vuetify, {
 
   }
 })
+
+export default async ({
+  app,
+  store
+}) => {
+  if (process.client) {
+    // //默认主题
+    // let dark = localStorage.getItem('dark')
+  
+    // store.commit('set_dark_theme', dark)
+  }
+}

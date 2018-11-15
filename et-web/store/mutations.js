@@ -3,7 +3,7 @@ export default {
         state.api = api
     },
     upEt(state, [etBtc, volAll]) {
-        
+
         state.et.etBtc = etBtc
         state.et.volAll = volAll
     },
@@ -17,6 +17,10 @@ export default {
     }) {
         state.lang.messages.cn = cn
         state.messages.en = en
+    },
+    set_dark_theme(state, ) {
+        state.theme.dark = !state.theme.dark
+        // localStorage.setItem('dark', dark)
     }
 
 }

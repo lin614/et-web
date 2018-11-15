@@ -14,5 +14,8 @@ export default () => ({
   api: {
     safe: false,
     domain: ''
+  },
+  theme: {
+    dark: true
   }
 })
