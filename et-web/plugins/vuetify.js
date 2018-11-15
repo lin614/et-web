@@ -13,7 +13,8 @@ import {
   VImg,
   VMenu,
   VHover,
-  VCarousel
+  VCarousel,
+  VDivider
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -30,7 +31,8 @@ Vue.use(Vuetify, {
     VImg,
     VMenu,
     VHover,
-    VCarousel
+    VCarousel,
+    VDivider
 
   }
 })

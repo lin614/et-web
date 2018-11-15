@@ -1,7 +1,7 @@
 <template>
     <div >
         <ul class="notice">
-            
+
             <li class="item" v-for="(p,i) of $t('static.notice')" :key="i" :class="{novice:i==0,advise:i==1,announcement:i==2}">
                 <a :href="p.url">
                     <div>
@@ -21,7 +21,7 @@
     height: 300px;
     float: right;
     right: calc(50% - 600px);
-    top: 40px;
+    top: 35px;
 
     .item {
         height: 100px;

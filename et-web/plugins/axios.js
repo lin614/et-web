@@ -20,9 +20,20 @@ export default function ({
     app.invite = ax(store.getters.invite)
     app.stats = ax(store.getters.stats)
     app.home = ax(store.getters.home)
-    // app.service = ax(`http${env.api.safe?'s':''}://service.${env.api.domain}`) 
-    // app.invite = ax(`http${env.api.safe?'s':''}://invite.${env.api.domain}`) //邀请相关接口地址
-    // app.stats = ax(`http${env.api.safe?'s':''}://stats.${env.api.domain}`) //et信息接口地址
-    // app.home = ax(`http${env.api.safe?'s':''}://www.${env.api.domain}`) //本地资源地址
-
+    app.ax = axios
+    //请求图片获取到dataurl
+    app.dataurl = url => {
+        return axios
+            .get(url, {
+                responseType: 'arraybuffer'
+            })
+            .then(response => {
+                let prefix = 'data:' + response.headers['content-type'] + ';base64,'
+                let imgdata = new Buffer(response.data, 'binary').toString('base64')
+                return prefix + imgdata
+            }).catch(err => {
+                console.log(err)
+                return null
+            })
+    }
 }

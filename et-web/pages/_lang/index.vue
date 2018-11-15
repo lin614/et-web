@@ -11,9 +11,17 @@
 import ExBanner from '@/components/ExBanner'
 import ExShow from '@/components/ExShow'
 export default {
-  components: { ExBanner, ExShow },
-  mounted() {
-    }
+  components: { ExBanner, ExShow }
+
+  // async asyncData({ app, store }) {
+  //   let i18n = app.i18n.getLocaleMessage(app.i18n.locale)
+  //   let list = i18n.static.banner
+  //   for (let ban of list) {
+  //     ban.bg_dataurl = await app.dataurl(ban.bgUrl)
+  //     ban.img_dataurl = await app.dataurl(ban.imgUrl)
+  //   }
+  //   return { banner: list }
+  // }
 }
 </script>
 <style lang="stylus" scoped>

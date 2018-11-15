@@ -1,11 +1,11 @@
 <template>
     <div class="show">
         <v-hover>
-            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
-                <img class="timq" src='../assets/images/timq/1.jpg' />
+            <v-card color=" " slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
+                <!-- <img class="timq" src='../assets/images/timq/1.jpg' /> -->
                 <v-card-title>
                     <div>
-                        <h3 class="headline"><i class="iconfont icon-btc" style="font-size:24px"></i>&nbsp&nbsp{{et.etBtc}}</h3>
+                        <h3 class="display-1"><i class="iconfont icon-btc" style="font-size:24px"></i>&nbsp&nbsp{{et.etBtc}}</h3>
                         <div class="d-flex">
                             <span class="body-1 mt-2 grey--text">&nbsp{{ $t('index.txSumary.currentDay') }}</span>
                         </div>
@@ -18,11 +18,11 @@
             </v-card>
         </v-hover>
         <v-hover>
-            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
-                <img class="timq" src='../assets/images/timq/2.jpg' />
+            <v-card color=" " slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
+                <!-- <img class="timq" src='../assets/images/timq/2.jpg' /> -->
                 <v-card-title>
                     <div>
-                        <h3 class="headline">{{et.volAll}}</h3>
+                        <h3 class="display-1">{{et.volAll}}</h3>
                         <div class="d-flex">
                             <span class="body-1 mt-2 grey--text">&nbsp{{ $t('index.txSumary.etCirculation') }}</span>
                         </div>
@@ -35,11 +35,11 @@
             </v-card>
         </v-hover>
         <v-hover>
-            <v-card slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
-                <img class="timq" src='../assets/images/timq/5.jpg' />
+            <v-card color=" " slot-scope="{ hover }" :class="`elevation-${hover ? 12 : 2}`" width="390">
+                <!-- <img class="timq" src='../assets/images/timq/5.jpg' /> -->
                 <v-card-title>
                     <div>
-                        <h3 class="headline">{{dayNum}}&nbsp&nbsp{{ $t('index.txSumary.freeUnit') }}</h3>
+                        <h3 class="display-1">{{dayNum}}&nbsp&nbsp{{ $t('index.txSumary.freeUnit') }}</h3>
                         <div class="d-flex">
                             <span class="body-1 mt-2 grey--text">{{ $t('index.txSumary.freeTitle') }}</span>
                         </div>

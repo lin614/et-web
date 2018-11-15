@@ -11,17 +11,13 @@
   </div>
 </template>
 <script>
-
-import ExNotice from './ExNotice'
+import ExNotice from './ExNotice2'
 export default {
   components: { ExNotice },
-  data(){
-    return{
-      // items:[]
+  data() {
+    return {
+      banner: this.items
     }
-  },
-  asyncData({app}){
-    return {items:$t('static.banner')}
   }
 }
 </script>

@@ -1,8 +1,8 @@
 <template>
     <div class="ExHead">
-        <v-toolbar height="48" fixed app dark>
+        <v-toolbar height="40" fixed app>
             <v-toolbar-items class="hidden-sm-and-down">
-                <v-btn flat>
+                <v-btn flat dark>
                     <ex-logo />
                 </v-btn>
                 <v-btn flat>法币</v-btn>
@@ -14,7 +14,7 @@
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-menu offset-y left :open-on-hover="false">
-                    <v-btn flat slot="activator" color="primary" dark>
+                    <v-btn flat slot="activator" color="primary">
                         <img src="https://cdn.vuetifyjs.com/images/flags/cn.png" v-if="$i18n.locale=='cn'">
                         <img src="https://cdn.vuetifyjs.com/images/flags/us.png" v-if="$i18n.locale=='en'">
                     </v-btn>
@@ -65,6 +65,9 @@ export default {
       this.set_lang(lan)
       location.reload()
     }
+  },
+  mounted() {
+    
   }
 }
 </script>
@@ -72,7 +75,11 @@ export default {
 <style lang="stylus" scoped>
 .ExHead {
     .v-btn {
-        font-size: 16px;
+        border-radius: 0;
+        min-width: 0px;
+        padding-left: w = 15px;
+        padding-right: w;
+        // font-size: 16px;
     }
 }
 </style>
