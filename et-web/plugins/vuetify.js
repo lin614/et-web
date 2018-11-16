@@ -41,6 +41,7 @@ export default async ({
   app,
   store
 }) => {
+  
   if (process.client) {
     // //默认主题
     // let dark = localStorage.getItem('dark')

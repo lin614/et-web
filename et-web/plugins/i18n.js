@@ -10,12 +10,13 @@ export default async ({
   req
 }) => {
   if (!route.name) return
-  if (process.client) {
-    //默认语言
-    let locale = localStorage.getItem('lang')
-    locale && store.commit('set_lang', locale) && (this.$i18n.locale = locale)
+  // if (process.client) {
+  //   //默认语言
+  //   let locale = localStorage.getItem('lang')
+  //   locale && store.commit('set_lang', locale) && (this.$i18n.locale = locale)
 
-  }
+  // }
+  
   let cn = require('~/locales/cn.json')
   let en = require('~/locales/en.json')
 

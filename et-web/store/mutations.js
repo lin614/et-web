@@ -9,7 +9,6 @@ export default {
     },
     set_lang(state, locale) {
         state.lang.locales.includes(locale) && (state.lang.locale = locale)
-        localStorage.setItem('lang', locale)
     },
     set_messages(state, {
         cn,
@@ -18,9 +17,9 @@ export default {
         state.lang.messages.cn = cn
         state.messages.en = en
     },
-    set_dark_theme(state, ) {
-        state.theme.dark = !state.theme.dark
-        // localStorage.setItem('dark', dark)
-    }
+    set_dark(state, dark) {
+        
+        state.theme.dark = dark
+    },
 
 }

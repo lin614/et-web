@@ -1,5 +1,5 @@
 <template>
-  <v-app :dark="dark">
+  <v-app :dark="theme.dark">
     <ex-head></ex-head>
     <v-content>
       <!-- <v-container>
@@ -16,12 +16,11 @@
 
 <script>
 import ExHead from '@/components/ExHead'
+import { mapState } from 'vuex'
 export default {
   components: { ExHead },
   computed: {
-    dark() {
-      return this.$store.state.theme.dark
-    }
+    ...mapState(['theme'])
   },
   data() {
     return {
@@ -31,8 +30,12 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'Vuetify.js',
+      isdark: false
     }
   },
+  created() {
+    this.isdark = this.theme.dark
+  }
 }
 </script>

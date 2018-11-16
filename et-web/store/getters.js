@@ -15,5 +15,14 @@ export default {
             (60 * 60 * 24 * 1000)
         )
         return tn < 0 ? '90' : 90 - tn
-    }
+    },
+    // dark(state) {
+    //     var dark = false
+    //     if (process.client) {
+    //         dark = localStorage.getItem('dark')
+
+    //     }
+    //     state.theme.dark = dark == true
+    //     return state.theme.dark
+    // }
 }

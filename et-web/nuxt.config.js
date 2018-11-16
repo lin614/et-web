@@ -44,7 +44,10 @@ export default {
   router: {
     middleware: 'i18n'
   },
-  plugins: ['~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js'],
+  plugins: ['~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', {
+    src: '~/plugins/localStorage.js',
+    ssr: false
+  }],
   generate: {
     routes: ['/', '/inspire', '/en', '/en/inspire']
   },

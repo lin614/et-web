@@ -10,7 +10,10 @@ export default ({
 
     if (!route.name) return
     
-    
+    let locale = route.query['lang']
+    locale && (store.state.lang.locale = locale)
+    app.i18n.locale = store.state.lang.locale
+
     // const defaultLocale = app.i18n.fallbackLocale
     // // // If middleware is called from hot module replacement, ignore it
     // // // if (isHMR) return

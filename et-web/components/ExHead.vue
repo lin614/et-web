@@ -45,13 +45,17 @@ export default {
     return {}
   },
   methods: {
-    ...mapMutations(['set_lang', 'set_dark_theme']),
-    changeLan(lan) {
-      this.set_lang(lan)
-      location.reload()
+    ...mapMutations(['set_lang', 'set_dark']),
+    changeLan(lang) {
+      this.set_lang(lang)
+      this.$router.push({
+        path: `${this.$router.currentRoute.path}?lang=${lang}`
+      })
+      //   location.reload()
     },
     changeTheme() {
-      this.set_dark_theme()
+        let dark=!this.$store.state.theme.dark
+      this.set_dark(dark)
     }
   },
   mounted() {}

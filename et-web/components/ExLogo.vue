@@ -1,10 +1,20 @@
 <template>
   <div class="ExLogo mt-1">
     <img class="logo" src="../assets/images/logo1.png">
-    <img src="../assets/images/logo2.png" v-if="$store.state.theme.dark">
+    <img src="../assets/images/logo2.png" v-if="isdark">
     <img src="../assets/images/logo3.png" v-else>
   </div>
 </template>
+<script>
+export default {
+  computed: {
+    isdark() {
+      return this.$store.state.theme.dark == true
+    }
+  }
+}
+</script>
+
 <style lang="stylus" scoped>
 .ExLogo {
   img {
