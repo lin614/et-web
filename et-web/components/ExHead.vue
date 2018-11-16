@@ -13,7 +13,7 @@
             </v-toolbar-items>
             <v-spacer></v-spacer>
             <v-toolbar-items class="hidden-sm-and-down">
-                <v-menu offset-y left :open-on-hover="false">
+                <v-menu offset-y left :open-on-hover="true">
                     <v-btn flat slot="activator" color="primary">
                         <i class="iconfont" :class="$i18n.locale=='cn'?'icon-CN':'icon-EN'" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
                     </v-btn>
