@@ -15,7 +15,7 @@
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-menu offset-y left :open-on-hover="false">
                     <v-btn flat slot="activator" color="primary">
-                        <i class="iconfont" :class="$i18n.locale=='cn'?'icon-CN':'icon-EN'"></i>
+                        <i class="iconfont" :class="$i18n.locale=='cn'?'icon-CN':'icon-EN'" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
                     </v-btn>
                     <v-list>
                         <v-list-tile @click="changeLan('cn')">
