@@ -1,8 +1,16 @@
 <template>
   <div>
     <ex-banner></ex-banner>
-    <div class="et-show mt-3">
-      <ex-show />
+    <div class="main">
+      <div class="mt-3">
+        <ex-show />
+      </div>
+      <div class="mt-3">
+        <ex-coin-list></ex-coin-list>
+      </div>
+      <div class="mt-3">
+
+      </div>
     </div>
 
   </div>
@@ -10,8 +18,9 @@
 <script>
 import ExBanner from '@/components/ExBanner'
 import ExShow from '@/components/ExShow'
+import ExCoinList from '@/components/ExCoinList'
 export default {
-  components: { ExBanner, ExShow }
+  components: { ExBanner, ExShow, ExCoinList }
 
   // async asyncData({ app, store }) {
   //   let i18n = app.i18n.getLocaleMessage(app.i18n.locale)
@@ -25,10 +34,10 @@ export default {
 }
 </script>
 <style lang="stylus" scoped>
-.et-show {
+.main {
   margin: 0 auto;
   width: 1200px;
-  height: 380px;
+  
 }
 </style>
 

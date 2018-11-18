@@ -14,7 +14,8 @@ import {
   VMenu,
   VHover,
   VCarousel,
-  VDivider
+  VDivider,
+  VTabs
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -32,7 +33,8 @@ Vue.use(Vuetify, {
     VMenu,
     VHover,
     VCarousel,
-    VDivider
+    VDivider,
+    VTabs
 
   }
 })
@@ -41,11 +43,11 @@ export default async ({
   app,
   store
 }) => {
-  
+
   if (process.client) {
     // //默认主题
     // let dark = localStorage.getItem('dark')
-  
+
     // store.commit('set_dark_theme', dark)
   }
 }

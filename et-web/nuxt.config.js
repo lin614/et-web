@@ -47,7 +47,7 @@ export default {
   plugins: ['~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', {
     src: '~/plugins/localStorage.js',
     ssr: false
-  }],
+  }, '~plugins/echarts.js'],
   generate: {
     routes: ['/', '/inspire', '/en', '/en/inspire']
   },
