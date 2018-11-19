@@ -1,9 +1,8 @@
 <template>
   <div style="background:url(https://d3bcj1iwrh8aaw.cloudfront.net/imgs/ban-bg1.jpg)">
-    <v-carousel height="380" hide-controls>
-      <v-carousel-item v-for="(item,i) in $t('static.banner')" :key="i" :src="item.bgUrl" max="100%"  reverse-transition="fade"
-      transition="fade">
-        <div class="banner">
+    <v-carousel height="380" hide-controls class="elevation-1">
+      <v-carousel-item v-for="(item,i) in $t('static.banner')" :style="`background:url(${item.bgUrl})`" :key="i" max="100%" reverse-transition="fade" transition="fade">
+        <div class="banner" >
           <img :src="item.imgUrl" class="banner_img">
         </div>
       </v-carousel-item>

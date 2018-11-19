@@ -39,6 +39,9 @@ Vue.use(Vuetify, {
   }
 })
 
+// import ExHover from '../components/common/ExHover.vue'
+// Vue.component('ex-hover', ExHover)
+
 export default async ({
   app,
   store

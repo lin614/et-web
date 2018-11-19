@@ -20,8 +20,21 @@ import ExBanner from '@/components/ExBanner'
 import ExShow from '@/components/ExShow'
 import ExCoinList from '@/components/ExCoinList'
 export default {
-  components: { ExBanner, ExShow, ExCoinList }
-
+  components: { ExBanner, ExShow, ExCoinList },
+  data() {
+    var vu = this
+    return {
+      aa: setInterval(() => {
+        this.$store.commit('setTime')
+      })
+    }
+  }
+  // asyncData({ store }) {
+  //   let aa = setInterval(() => {
+  //     // store.commit('setTime')
+  //   }, 10000)
+  //   return { aa }
+  // }
   // async asyncData({ app, store }) {
   //   let i18n = app.i18n.getLocaleMessage(app.i18n.locale)
   //   let list = i18n.static.banner
@@ -37,7 +50,6 @@ export default {
 .main {
   margin: 0 auto;
   width: 1200px;
-  
 }
 </style>
 

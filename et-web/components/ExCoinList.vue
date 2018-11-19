@@ -1,6 +1,7 @@
 <template>
     <div>
         <div>
+            {{$store.state.test.time}}
             <v-hover>
                 <v-tabs v-model="active" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
                     <v-tab v-for="n in 3" :key="n" ripple>
@@ -175,16 +176,12 @@
     </div>
 </template>
 <script>
+import io from 'socket.io-client'
 export default {
   data() {
     return {
+      
       active: 0
-    }
-  },
-  methods: {
-    next() {
-      const active = parseInt(this.active)
-      this.active = active < 2 ? active + 1 : 0
     }
   }
 }

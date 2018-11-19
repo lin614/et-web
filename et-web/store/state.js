@@ -17,5 +17,8 @@ export default () => ({
   },
   theme: {
     dark: true
+  },
+  test: {
+    time: 1
   }
 })
