@@ -18,7 +18,6 @@ export default {
         state.messages.en = en
     },
     set_dark(state, dark) {
-        
         state.theme.dark = dark
     },
 

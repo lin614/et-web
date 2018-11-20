@@ -5,6 +5,6 @@ export default ({
 }) => {
     createPersistedState({
         key: 'exchain',
-        paths: ['lang']
+        paths: ['lang', 'theme']
     })(store)
 }
