@@ -1,4 +1,5 @@
 export default {
+    //api url
     service(state) {
         return `http${state.api.safe?'s':''}://service.${state.api.domain}` //api接口主要地址,
     },
@@ -8,7 +9,10 @@ export default {
     stats(state) {
         return `http${state.api.safe?'s':''}://stats.${state.api.domain}` //et信息接口地址
     },
-
+    ws(state) {
+        return `ws${state.api.safe?'s':''}://service.${state.api.domain}/wsapp/` //行情订阅接口
+    },
+    //免费期时间
     dayNum(state) {
         let tn = Math.floor(
             (new Date().getTime() - new Date('2018', '9', '6').getTime()) /
@@ -16,13 +20,8 @@ export default {
         )
         return tn < 0 ? '90' : 90 - tn
     },
-    // dark(state) {
-    //     var dark = false
-    //     if (process.client) {
-    //         dark = localStorage.getItem('dark')
-
-    //     }
-    //     state.theme.dark = dark == true
-    //     return state.theme.dark
-    // }
+    //是否打印控制台信息
+    showLog(state) {
+        return localStorage.getItem('showConsoleLog')
+    }
 }

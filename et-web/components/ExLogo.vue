@@ -1,8 +1,7 @@
 <template>
   <div class="ExLogo mt-1">
     <img class="logo" src="../assets/images/logo1.png">
-    <img src="../assets/images/logo2.png" v-if="isdark">
-    <img src="../assets/images/logo3.png" v-else>
+    <img src="../assets/images/logo2.png" >
   </div>
 </template>
 <script>

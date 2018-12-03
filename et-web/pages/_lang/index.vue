@@ -28,6 +28,9 @@ export default {
         this.$store.commit('setTime')
       })
     }
+  },
+  mounted() {
+    
   }
   // asyncData({ store }) {
   //   let aa = setInterval(() => {

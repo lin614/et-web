@@ -10,7 +10,11 @@ export default {
     }) {
         let etBtc = await ax.get(getters.service + '/api/quotation/getQuantAmount')
         let volAll = await ax.get(getters.stats + '/api/exet/stats/etCirculate')
-        
+
+        if (etBtc.status == '200' || volAll.status == '200') {
+            console.error('upEt error')
+            return
+        }
         etBtc.data && volAll.data && commit('upEt', [etBtc.data.result.total, volAll.data.data.etCirculate])
     }
 }

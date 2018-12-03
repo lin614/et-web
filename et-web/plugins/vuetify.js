@@ -15,7 +15,8 @@ import {
   VHover,
   VCarousel,
   VDivider,
-  VTabs
+  VTabs,
+  VBadge
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -34,7 +35,8 @@ Vue.use(Vuetify, {
     VHover,
     VCarousel,
     VDivider,
-    VTabs
+    VTabs,
+    VBadge
 
   }
 })

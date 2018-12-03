@@ -3,7 +3,7 @@
         <div>
             {{$store.state.test.time}}
             <v-hover>
-                <v-tabs v-model="active" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+                <v-tabs v-model="active" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                     <v-tab v-for="n in 3" :key="n" ripple>
                         {{['USDT','BTC','ETH'][n-1] }}
                     </v-tab>
@@ -13,7 +13,7 @@
                                 <div class="coinlist mt-3">
 
                                     <v-hover>
-                                        <v-card width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+                                        <v-card width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                                             <v-card-title>
                                                 <h4>eth/usdt</h4>
                                             </v-card-title>
@@ -51,7 +51,7 @@
                                         </v-card>
                                     </v-hover>
                                     <v-hover>
-                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                                             <v-card-title>
                                                 <h4>eth/usdt</h4>
                                             </v-card-title>
@@ -89,7 +89,7 @@
                                         </v-card>
                                     </v-hover>
                                     <v-hover>
-                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                                             <v-card-title>
                                                 <h4>eth/usdt</h4>
                                             </v-card-title>
@@ -127,7 +127,7 @@
                                         </v-card>
                                     </v-hover>
                                     <v-hover>
-                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+                                        <v-card class="ml-3" width="100%" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                                             <v-card-title>
                                                 <h4>eth/usdt</h4>
                                             </v-card-title>
@@ -176,7 +176,6 @@
     </div>
 </template>
 <script>
-import io from 'socket.io-client'
 export default {
   data() {
     return {

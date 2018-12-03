@@ -1,9 +1,23 @@
 <template>
   <div style="background:url(https://d3bcj1iwrh8aaw.cloudfront.net/imgs/ban-bg1.jpg)">
-    <v-carousel height="380" hide-controls class="elevation-1">
-      <v-carousel-item v-for="(item,i) in $t('static.banner')" :style="`background:url(${item.bgUrl})`" :key="i" max="100%" reverse-transition="fade" transition="fade">
-        <div class="banner" >
-          <img :src="item.imgUrl" class="banner_img">
+    <v-carousel
+      height="380"
+      hide-controls
+      class="elevation-1"
+    >
+      <!-- :style="`background:url(${item.bgUrl})`"  -->
+      <v-carousel-item
+        v-for="(item,i) in $t('static.banner')"
+        :src="item.bgUrl"
+        :key="i"
+        max="100%"
+       
+      >
+        <div class="banner">
+          <img
+            :src="item.imgUrl"
+            class="banner_img"
+          >
         </div>
       </v-carousel-item>
     </v-carousel>
@@ -11,15 +25,15 @@
   </div>
 </template>
 <script>
-import ExNotice from './ExNotice2'
+import ExNotice from "./ExNotice2";
 export default {
   components: { ExNotice },
   data() {
     return {
       banner: this.items
-    }
+    };
   }
-}
+};
 </script>
 
 <style>

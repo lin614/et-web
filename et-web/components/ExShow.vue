@@ -1,7 +1,7 @@
 <template>
     <div class="show">
         <v-hover>
-            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                 <!-- <img class="timq" src='../assets/images/timq/1.jpg' /> -->
                 <v-card-title>
                     <div>
@@ -18,7 +18,7 @@
             </v-card>
         </v-hover>
         <v-hover>
-            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                 <!-- <img class="timq" src='../assets/images/timq/2.jpg' /> -->
                 <v-card-title>
                     <div>
@@ -35,7 +35,7 @@
             </v-card>
         </v-hover>
         <v-hover>
-            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 10 : 1}`">
+            <v-card color=" " width="390" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 1}`">
                 <!-- <img class="timq" src='../assets/images/timq/5.jpg' /> -->
                 <v-card-title>
                     <div>
