@@ -10,6 +10,10 @@ export default {
     set_lang(state, locale) {
         state.lang.locales.includes(locale) && (state.lang.locale = locale)
     },
+    setUserInfo(state, data) {
+        state.user.email = data.email
+        state.user.mtime = data.mtime
+    },
     set_messages(state, {
         cn,
         en

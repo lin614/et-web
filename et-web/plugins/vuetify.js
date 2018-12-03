@@ -14,7 +14,13 @@ import {
   VMenu,
   VHover,
   VCarousel,
-  VDivider
+  VDivider,
+  VForm,
+  VInput,
+  VTextField,
+  VALERT,
+  
+
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -32,8 +38,11 @@ Vue.use(Vuetify, {
     VMenu,
     VHover,
     VCarousel,
-    VDivider
-
+    VDivider,
+    VForm,
+    VInput,
+    VTextField,
+    VALERT
   }
 })
 

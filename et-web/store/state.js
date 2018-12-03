@@ -1,6 +1,8 @@
 export default (localStorage) => ({
   user: {
-    pn: null //登录凭证
+    pn: null, //登录凭证,
+    email: null, // 
+    mtime: null //
   },
   et: {
     etBtc: 0, //当天交易量,以btc计

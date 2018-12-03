@@ -3,7 +3,6 @@ export default {
     api: {
       safe: false, //true:https,wss,false:http,ws
       domain: 'exchain.com',
-
     }
   },
 
@@ -39,6 +38,10 @@ export default {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
       }
+    ],
+    script: [
+      { src: '/gt.js' },
+      { src: '/gt.sense.js' }
     ]
   },
   router: {
@@ -52,7 +55,7 @@ export default {
     routes: ['/', '/inspire', '/en', '/en/inspire']
   },
   css: [
-    '~/assets/style/app.styl', '~/assets/style/iconfont.css'
+    '~/assets/style/app.styl', '~/assets/style/iconfont.css', '~/assets/style/main.css'
   ],
   /*
    ** Customize the progress bar color

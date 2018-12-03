@@ -15,7 +15,7 @@
             <v-toolbar-items class="hidden-sm-and-down">
                 <v-menu offset-y left :open-on-hover="true">
                     <v-btn flat slot="activator" color="primary">
-                        <i class="iconfont" :class="$i18n.locale=='cn'?'icon-CN':'icon-EN'" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
+                        <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
                     </v-btn>
                     <v-list>
                         <v-list-tile @click="changeLan('cn')">
@@ -30,8 +30,8 @@
                     <i class="iconfont icon-theme1" :style="{color:($store.state.theme.dark?'white':'black')}"></i>
                 </v-btn>
 
-                <v-btn flat>登录</v-btn>
-                <v-btn flat>注册</v-btn>
+                <router-link to="/user/login"><v-btn flat>登录</v-btn></router-link>
+                <router-link to="/user/register"><v-btn flat>注册</v-btn></router-link>
             </v-toolbar-items>
         </v-toolbar>
     </div>
@@ -58,7 +58,9 @@ export default {
       this.set_dark(dark)
     }
   },
-  mounted() {}
+  mounted() {
+      console.log(this.$i18n)
+  }
 }
 </script>
 
