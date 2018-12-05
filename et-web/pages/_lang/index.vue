@@ -24,9 +24,9 @@ export default {
   data() {
     var vu = this
     return {
-      aa: setInterval(() => {
-        this.$store.commit('setTime')
-      })
+      // aa: setInterval(() => {
+      //   this.$store.commit('setTime')
+      // })
     }
   },
   mounted() {

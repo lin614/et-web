@@ -1,7 +1,8 @@
 import ax from 'axios'
 export default {
     async nuxtServerInit(context) {
-        await context.dispatch('upEt')
+        console.log('nuxtServerInit',context)
+        // await context.dispatch('upEt')
     },
     //首页et信息更新
     async upEt({

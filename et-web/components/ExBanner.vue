@@ -5,13 +5,12 @@
       hide-controls
       class="elevation-1"
     >
-      <!-- :style="`background:url(${item.bgUrl})`"  -->
+      <!-- :style="`background:url(${item.bgUrl})`"  :src="item.bgUrl" -->
       <v-carousel-item
         v-for="(item,i) in $t('static.banner')"
-        :src="item.bgUrl"
+        :style="`background:url(${item.bgUrl});background-repeat: no-repeat; background-position: center center;`"
         :key="i"
         max="100%"
-       
       >
         <div class="banner">
           <img
