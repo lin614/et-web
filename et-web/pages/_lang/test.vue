@@ -3,3 +3,4 @@
     {{$store.state.test.time}}
   </div>
 </template>
+

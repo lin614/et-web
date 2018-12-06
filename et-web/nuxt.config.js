@@ -13,6 +13,13 @@ export default {
 
   head: {
     title: 'et-web',
+    script: [{
+      src: '/charting_library/charting_library.min.js'
+    }, {
+      src: '/datafeeds/udf/dist/bundle.min.js'
+    }, {
+      src: '/datafeeds/udf/dist/polyfills.js'
+    }],
     meta: [{
         charset: 'utf-8'
       },
@@ -45,12 +52,14 @@ export default {
     middleware: 'i18n'
   },
   plugins: [{
-    src: '~/plugins/localStorage.js',
-    ssr: false
-  }, {
-    src: '~plugins/ws.js',
-    ssr: false
-  }, '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'],
+      src: '~/plugins/localStorage.js',
+      ssr: false
+    }, {
+      src: '~plugins/ws.js',
+      ssr: false
+    },
+    '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'
+  ],
   generate: {
     routes: ['/', '/inspire', '/en', '/en/inspire']
   },
@@ -68,6 +77,7 @@ export default {
    ** Build configuration
    */
   build: {
+    // vendor: ['~/js/charting_library.min.js'],
     transpile: [/^vuetify/],
     babel: {
       plugins: [
