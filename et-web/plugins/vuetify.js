@@ -16,7 +16,9 @@ import {
   VCarousel,
   VDivider,
   VTabs,
-  VBadge
+  VBadge,
+  VDataTable,
+  VTextField
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -36,8 +38,9 @@ Vue.use(Vuetify, {
     VCarousel,
     VDivider,
     VTabs,
-    VBadge
-
+    VBadge,
+    VDataTable,
+    VTextField
   }
 })
 

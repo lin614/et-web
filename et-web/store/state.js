@@ -25,6 +25,9 @@ export default () => ({
   market: {
     pairs: [], //交易对信息
     bars: [], //k线数据
-    prices: [] //首页价格数据
+    groups:{
+      
+    }
+    // pairPrices: [] //首页价格数据
   }
 })

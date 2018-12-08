@@ -29,6 +29,6 @@ export default {
     },
     //平台支持的所有交易对
     pairsStr(state) {
-        return state.market.pairs.map(p => p.symbol).join(',')
-    }
+        return state.market.pairs.map(p => p.name).join(',')
+    },
 }

@@ -6,7 +6,7 @@
         <ex-show />
       </div>
       <div class="mt-3">
-        <ex-coin-list></ex-coin-list>
+        <ex-pairs />
       </div>
       <div class="mt-3">
 
@@ -18,9 +18,9 @@
 <script>
 import ExBanner from "@/components/ExBanner";
 import ExShow from "@/components/ExShow";
-import ExCoinList from "@/components/ExCoinList";
+import ExPairs from "@/components/ExPairs/ExPairs";
 export default {
-  components: { ExBanner, ExShow, ExCoinList },
+  components: { ExBanner, ExShow, ExPairs },
   data() {
     var vu = this;
     return {

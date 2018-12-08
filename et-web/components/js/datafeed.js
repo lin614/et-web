@@ -27,7 +27,7 @@ export default (store) => {
             }]
         },
         resolveSymbol(symbolName, onResolve, onResolveErrorCallback) {
-            let info = store.state.market.pairs.filter(p => p.symbol == symbolName)[0]
+            let info = store.state.market.pairs.filter(p => p.name == symbolName)[0]
 
             let sysbolInfo = {
                 name: info.symbol,
@@ -46,7 +46,7 @@ export default (store) => {
 
         },
         getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) {
-            
+
             // let bar = {
             //     close: 1165.08,
             //     high: 1173.6,

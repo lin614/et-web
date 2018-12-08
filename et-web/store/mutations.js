@@ -26,15 +26,21 @@ export default {
     },
     setPairs(state, pairs) {
         let list = []
+        let group = {}
         for (let p in pairs) {
-            list.push({
-                symbol: p,
+            let info = {
+                name: p,
                 ...pairs[p]
-            })
+            }
+            list.push(info)
+            let coin = p.split('/')[1]
+            group[coin] || (group[coin] = {})
+            group[coin][pairs[p].domain] || (group[coin][pairs[p].domain] = [])
+            group[coin][pairs[p].domain].push(info)
         }
 
         state.market.pairs = list
-
+        state.market.groups = group
     },
     //k线数据
     setBars(state, bars) {
@@ -42,6 +48,10 @@ export default {
     },
     //首页交易对价格数据
     setPrices(state, data) {
-        state.market.prices = data
+        data.forEach(p => {
+            let info = state.market.pairs.filter(c => c.name == p.name)[0]
+
+            info && (info.priceData = p)
+        })
     }
 }
