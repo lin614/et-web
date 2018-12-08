@@ -16,24 +16,23 @@
   </div>
 </template>
 <script>
-import ExBanner from '@/components/ExBanner'
-import ExShow from '@/components/ExShow'
-import ExCoinList from '@/components/ExCoinList'
+import ExBanner from "@/components/ExBanner";
+import ExShow from "@/components/ExShow";
+import ExCoinList from "@/components/ExCoinList";
 export default {
   components: { ExBanner, ExShow, ExCoinList },
   data() {
-    var vu = this
+    var vu = this;
     return {
       // aa: setInterval(() => {
       //   this.$store.commit('setTime')
       // })
-    }
+    };
   },
-  mounted() {
-    
-  }
-  async asyncData({dispatch}){
-    await dispatch('initPrices')
+  mounted() {},
+  async asyncData({ store }) {
+    // await store.dispatch("initPairs");
+    await store.dispatch("initPrices");
   }
   // asyncData({ store }) {
   //   let aa = setInterval(() => {
@@ -50,7 +49,7 @@ export default {
   //   }
   //   return { banner: list }
   // }
-}
+};
 </script>
 <style lang="stylus" scoped>
 .main {

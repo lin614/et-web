@@ -9,7 +9,7 @@ import ExKline from "@/components/ExKline";
 export default {
   components: { ExKline },
   async asyncData({ store }) {
-    await store.dispatch("initPairs");
+    
     await store.dispatch("initBars");
   }
 };
