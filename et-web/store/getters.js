@@ -12,6 +12,9 @@ export default {
     ws(state) {
         return `ws${state.api.safe?'s':''}://service.${state.api.domain}/wsapp/` //行情订阅接口
     },
+    home(state) {
+        return `http${state.api.safe?'s':''}://www.${state.api.domain}`
+    },
     //免费期时间
     dayNum(state) {
         let tn = Math.floor(
@@ -23,5 +26,9 @@ export default {
     //是否打印控制台信息
     showLog(state) {
         return localStorage.getItem('showConsoleLog')
+    },
+    //平台支持的所有交易对
+    pairsStr(state) {
+        return state.market.pairs.map(p => p.symbol).join(',')
     }
 }

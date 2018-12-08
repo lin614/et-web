@@ -7,7 +7,11 @@
 import ExKline from "@/components/ExKline";
 // import TVChartContainer from "@/components/TVChartContainer.vue";
 export default {
-  components: { ExKline }
+  components: { ExKline },
+  async asyncData({ store }) {
+    await store.dispatch("initPairs");
+    await store.dispatch("initBars");
+  }
 };
 </script>
 

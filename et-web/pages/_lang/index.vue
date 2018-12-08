@@ -32,6 +32,9 @@ export default {
   mounted() {
     
   }
+  async asyncData({dispatch}){
+    await dispatch('initPrices')
+  }
   // asyncData({ store }) {
   //   let aa = setInterval(() => {
   //     // store.commit('setTime')

@@ -23,5 +23,25 @@ export default {
     },
     setTime(state) {
         state.test.time++
+    },
+    setPairs(state, pairs) {
+        let list = []
+        for (let p in pairs) {
+            list.push({
+                symbol: p,
+                ...pairs[p]
+            })
+        }
+
+        state.market.pairs = list
+
+    },
+    //k线数据
+    setBars(state, bars) {
+        state.market.bars = bars
+    },
+    //首页交易对价格数据
+    setPrices(state, data) {
+        state.market.prices = data
     }
 }

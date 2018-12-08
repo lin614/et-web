@@ -1,13 +1,13 @@
 <template>
-  <div
-    id="tv_chart_container"
-    
-  ></div>
+  <div>
+    <!-- {{$store.state.market.bars}} -->
+    <div id="tv_chart_container"></div>
+  </div>
 </template>
 
 <script>
 // import bb from "./js/charting_library.min";
-import aa from "./js/datafeed.js";
+import datafeed from "./js/datafeed.js";
 
 function getLanguageFromURL() {
   const regex = new RegExp("[\\?&]lang=([^&#]*)");
@@ -31,18 +31,21 @@ export default {
         : decodeURIComponent(results[1].replace(/\+/g, " "));
     }
     const widgetOptions = {
-      // debug: true, // uncomment this line to see Library errors and warnings in the console
+      debug: true, // uncomment this line to see Library errors and warnings in the console
       fullscreen: true,
-      symbol: "AAPL",
+
       interval: "D",
       container_id: "tv_chart_container",
 
       //	BEWARE: no trailing slash is expected in feed URL
-      datafeed: new Datafeeds.UDFCompatibleDatafeed(
-        "https://demo_feed.tradingview.com"
-      ),
+      // datafeed: new Datafeeds.UDFCompatibleDatafeed(
+      //   "https://demo_feed.tradingview.com"
+      // ),
+      // symbol: "AAPL",
+      symbol: "BTC/USDT",
+      datafeed: datafeed(this.$store),
       library_path: "charting_library/",
-      locale: 'zh', //getParameterByName("lang") || "en",
+      locale: "zh", //getParameterByName("lang") || "en",
 
       disabled_features: ["use_localstorage_for_settings"],
       enabled_features: ["study_templates"],
@@ -54,8 +57,8 @@ export default {
     };
 
     // TradingView.onready(function() {
-      // debugger;
-      var widget = (window.tvWidget = new TradingView.widget(widgetOptions));
+    // debugger;
+    var widget = (window.tvWidget = new TradingView.widget(widgetOptions));
     // });
   }
 };
