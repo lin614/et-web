@@ -1,36 +1,46 @@
 // Import and define Vuetify color theme
 // https://vuetifyjs.com/en/style/colors
 // @import './iconfont.css'
-@require '~vuetify/src/stylus/settings/_colors'
-$theme := {
-  primary:     $blue.darken-2
-  accent:      $blue.accent-2
-  secondary:   $grey.lighten-1
-  info:        $blue.lighten-1
-  warning:     $amber.darken-2
-  error:       $red.accent-4
-  success:     $green.lighten-2
-}
+@require '~vuetify/src/stylus/settings/_colors';
 
-$body-font-family := 'Roboto', "Arial","Microsoft YaHei","黑体","宋体",sans-serif;
+$theme ?= {
+  primary: $blue.darken-2,
+  accent: $blue.accent-2,
+  secondary: $grey.lighten-1,
+  info: $blue.lighten-1,
+  warning: $amber.darken-2,
+  error: $red.accent-4,
+  success: $green.lighten-2
+};
+$body-font-family ?= 'Microsoft YaHei', 'Roboto', '黑体', '宋体', sans-serif;
 
 // Import Vuetify styling
-@require '~vuetify/src/stylus/app'
-//页面切换效果
-.page
-  @extend .fade-transition
+@require '~vuetify/src/stylus/app';
+
+// 页面切换效果
+.page {
+  @extend .fade-transition;
+}
 
 .page-enter-active, .page-leave-active {
-    transition: opacity 0.3s;
-}
-.page-enter, .page-leave-active {
-    opacity: 0;
+  transition: opacity 0.3s;
 }
 
-//默认样式
-ul{
-  list-style: none
+.page-enter, .page-leave-active {
+  opacity: 0;
 }
-a{
-  text-decoration-line:none
+
+// 默认样式
+ul {
+  list-style: none;
 }
+
+a {
+  text-decoration-line: none;
+}
+
+.v-card {
+  border-radius: 0!important;
+}
+
+

@@ -2,13 +2,13 @@
   <div>
     <ex-banner></ex-banner>
     <div class="main">
-      <div class="mt-3">
+      <div class="mt-2">
         <ex-show />
       </div>
-      <div class="mt-3">
+      <div class="mt-2">
         <ex-pairs />
       </div>
-      <div class="mt-3">
+      <div class="mt-2">
 
       </div>
     </div>
@@ -32,7 +32,7 @@ export default {
   mounted() {},
   async asyncData({ store }) {
     // await store.dispatch("initPairs");
-    await store.dispatch("initPrices");
+    // await store.dispatch("initPrices");
   }
   // asyncData({ store }) {
   //   let aa = setInterval(() => {

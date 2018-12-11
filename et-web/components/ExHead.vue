@@ -1,11 +1,6 @@
 <template>
-  <div class="ExHead">
-    <v-toolbar
-      height="40"
-      fixed
-      app
-      dark
-    >
+  <div class="ExHead grey--text">
+    <v-toolbar height="40" fixed app dark>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat>
           <ex-logo />
@@ -17,36 +12,16 @@
         <v-btn flat>合作伙伴计划</v-btn>
         <v-btn flat>
           <v-badge color="none">
-            <i
-              slot="badge"
-              class="iconfont icon-new1"
-            ></i>
+            <i slot="badge" class="iconfont icon-new1"></i>
             <span>竞猜看涨跌</span>
           </v-badge>
         </v-btn>
       </v-toolbar-items>
       <v-spacer></v-spacer>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-menu
-          offset-y
-          left
-          :open-on-hover="true"
-        >
-          <v-btn
-            flat
-            slot="activator"
-            color="primary"
-          >
-            <!-- <i
-              class="iconfont"
-              :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"
-              :style="{color:($store.state.theme.dark?'white':'black')}"
-            ></i> -->
-            <i
-              class="iconfont"
-              :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"
-              :style="{color:'white'}"
-            ></i>
+        <!-- <v-menu offset-y left :open-on-hover="true">
+          <v-btn flat slot="activator" color="primary">
+            <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'" :style="{color:'white'}"></i>
           </v-btn>
           <v-list>
             <v-list-tile @click="changeLan('cn')">
@@ -56,21 +31,12 @@
               <v-list-tile-title> <i class="iconfont icon-EN"></i></v-list-tile-title>
             </v-list-tile>
           </v-list>
-        </v-menu>
-        <v-btn
-          flat
-          slot="activator"
-          color="primary"
-          @click="changeTheme()"
-        >
-          <!-- <i
-            class="iconfont icon-theme1"
-            :style="{color:($store.state.theme.dark?'white':'black')}"
-          ></i> -->
-          <i
-            class="iconfont icon-theme1"
-            :style="{color:'white'}"
-          ></i>
+        </v-menu> -->
+        <v-btn flat slot="activator" color="primary" @click="changeLan($store.state.lang.locale=='cn'?'en':'cn')">
+          <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"></i>
+        </v-btn>
+        <v-btn flat slot="activator" color="primary" @click="changeTheme()">
+          <i class="iconfont icon-theme1"></i>
         </v-btn>
 
         <v-btn flat>登录</v-btn>
@@ -109,13 +75,26 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
+@require '~vuetify/src/stylus/settings/_colors';
+
 .ExHead {
+  font-size: 12px;
+  font-weight: lighter;
+
   .v-btn {
-    border-radius: 0;
-    min-width: 0px;
     padding-left: w = 15px;
     padding-right: w;
-    // font-size: 16px;
+  }
+
+  .v-btn, i {
+    border-radius: 0;
+    min-width: 0px;
+    color: $grey.lighten-1 !important;
+    font-size: 14px;
+
+    &:hover {
+      color: $grey.lighten-5 !important;
+    }
   }
 }
 </style>

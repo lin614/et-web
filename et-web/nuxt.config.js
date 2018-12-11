@@ -61,7 +61,10 @@ export default {
     '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'
   ],
   generate: {
-    routes: ['/', '/inspire', '/en', '/en/inspire']
+    minify: {
+      collapseWhitespace: false
+    },
+    routes: ['/', '/en', '/inspire', '/en/inspire', '/market', '/en/market', '/test', '/en/test']
   },
   css: [
     '~/assets/style/app.styl', '~/assets/style/iconfont.css'

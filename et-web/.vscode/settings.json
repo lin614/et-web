@@ -1,0 +1,13 @@
+{
+    "vetur.format.defaultFormatterOptions": {
+        "js-beautify-html": {
+            "wrap_attributes": "auto"
+        },
+        "prettyhtml": {
+            "printWidth": 300,
+            "singleQuote": false,
+            "wrapAttributes": false,
+            "sortAttributes": false
+        }
+    }
+}
