@@ -32,6 +32,8 @@
             </v-list-tile>
           </v-list>
         </v-menu> -->
+        <v-btn flat>登录</v-btn>
+        <v-btn flat>注册</v-btn>
         <v-btn flat slot="activator" color="primary" @click="changeLan($store.state.lang.locale=='cn'?'en':'cn')">
           <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"></i>
         </v-btn>
@@ -39,8 +41,6 @@
           <i class="iconfont icon-theme1"></i>
         </v-btn>
 
-        <v-btn flat>登录</v-btn>
-        <v-btn flat>注册</v-btn>
       </v-toolbar-items>
     </v-toolbar>
   </div>
@@ -93,7 +93,9 @@ export default {
     font-size: 14px;
 
     &:hover {
-      color: $grey.lighten-5 !important;
+      // color: $grey.lighten-5 !important;
+      color: white !important;
+      // color: #82b1ff !important;
     }
   }
 }

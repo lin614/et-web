@@ -2,30 +2,37 @@
   <v-hover>
     <div slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`">
       <v-tabs v-model="active">
-        <v-tab v-for="n in 3" :key="n" ripple>
-          {{['USDT 交易区','BTC 交易区','ETH 交易区'][n-1] }}
+        <v-tab v-for='(p,n) in [" USDT", "BTC" , "ETH" ]' :key="n" ripple>
+          {{p+'交易区'}}
 
         </v-tab>
         <v-spacer></v-spacer>
-        <v-tab>
-          <v-text-field v-model="search" append-icon="search" label="Search" :dark="theme.dark" single-line hide-details></v-text-field>
-        </v-tab>
-        <v-tab-item v-for="n in 3" :key="n">
-        </v-tab-item>
+        <!-- <v-tab>
+          
+        </v-tab> -->
+        <div ripple style="width:300px">
+          <v-text-field class="ma-1" v-model="search" append-icon="search" label="Search" :dark="theme.dark" single-line hide-details></v-text-field>
+        </div>
+        <!-- <v-tab-item v-for='(p,n) in [" USDT", "BTC" , "ETH" ]' :key="p">
+        </v-tab-item> -->
       </v-tabs>
 
       <div class="coinlist">
-        <div v-show="active==0">
-          <ex-pairs-table />
-          <ex-pairs-table domain='inv' />
-          <ex-pairs-table domain='vc' />
+        <div v-show="active=='0'">
+          <ex-pairs-table pair="USDT" />
+          <ex-pairs-table pair="USDT" domain='inv' />
+          <ex-pairs-table pair="USDT" domain='vc' />
         </div>
-        <div v-show="active==1">
-          <ex-pairs-table />
-          <ex-pairs-table domain='inv' />
-          <ex-pairs-table domain='vc' />
+        <div v-show="active=='1'">
+          <ex-pairs-table pair="BTC" />
+          <ex-pairs-table pair="BTC" domain='inv' />
+          <ex-pairs-table pair="BTC" domain='vc' />
         </div>
-        <div v-show="active==2">3</div>
+        <div v-show="active=='2'">
+          <ex-pairs-table pair="ETH" />
+          <ex-pairs-table pair="ETH" domain='inv' />
+          <ex-pairs-table pair="ETH" domain='vc' />
+        </div>
       </div>
     </div>
   </v-hover>

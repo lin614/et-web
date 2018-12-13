@@ -28,10 +28,10 @@ export default ({
         WS = new WebSocket(url);
         WS.onopen = (e) => {
             console.log('WebSocket open');
-            sendFunc({
-                event: "sub",
-                channel: 'huobi.market.btcusdt.kline.1day'
-            })
+            // sendFunc({
+            //     event: "sub",
+            //     channel: 'huobi.market.btcusdt.kline.1day'
+            // })
         };
         WS.onclose = (e) => {
             console.log('WebSocket onclose')

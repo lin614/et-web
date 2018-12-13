@@ -1,52 +1,40 @@
 <template>
-  <div class="pairstable">
-     <v-card width="1200" flat>
-        <v-card-title>
-          <span class="subheading mb-0">{{domain=='main'?'主区':domain=='inv'?'创新区':domain=='vc'?'创投区':'天使轮'}}
-          </span>
+  <div class="pairstable" v-show="market.groups[pair][domain]">
+    <v-card width="1200" flat>
+      <v-card-title>
+        <span class="subheading mb-0">
+          <v-icon>domain</v-icon>
+          {{domain=='main'?'主区':domain=='inv'?'创新区':domain=='vc'?'创投区':'天使轮'}}
+        </span>
 
-        </v-card-title>
-        <v-card-text class="pa-0">
-          <v-data-table :headers="headers" :items="desserts" hide-actions>
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.name }}</td>
-              <td>{{ props.item.close }}</td>
-              <td>{{ props.item.priceChange }}</td>
-              <td>{{ props.item.high }}</td>
-              <td>{{ props.item.low }}</td>
-              <td>{{ props.item.volume }}</td>
-            </template>
-          </v-data-table>
-        </v-card-text>
-      </v-card>
-    <!-- <v-hover>
-      <v-card width="1200" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`">
-        <v-card-title>
-          <span class="subheading mb-0">{{domain=='main'?'主区':domain=='inv'?'创新区':domain=='vc'?'创投区':'天使轮'}}
-          </span>
-
-        </v-card-title>
-        <v-card-text class="pa-0">
-          <v-data-table :headers="headers" :items="desserts" hide-actions>
-            <template slot="items" slot-scope="props">
-              <td>{{ props.item.name }}</td>
-              <td>{{ props.item.close }}</td>
-              <td>{{ props.item.priceChange }}</td>
-              <td>{{ props.item.high }}</td>
-              <td>{{ props.item.low }}</td>
-              <td>{{ props.item.volume }}</td>
-            </template>
-          </v-data-table>
-        </v-card-text>
-      </v-card>
-    </v-hover> -->
-
+      </v-card-title>
+      <v-card-text class="pa-0">
+        <v-data-table :headers="headers" :items="market.groups[pair][domain]" hide-actions>
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.name }}</td>
+            <td>{{ props.item.priceData.close }}</td>
+            <td>{{ props.item.priceData.priceChange }}</td>
+            <td>{{ props.item.priceData.high }}</td>
+            <td>{{ props.item.priceData.low }}</td>
+            <td>{{ props.item.priceData.volume }}</td>
+          </template>
+        </v-data-table>
+      </v-card-text>
+    </v-card>
   </div>
 </template>
 <script>
+import { mapState } from "vuex";
 export default {
   props: {
+    pair: { default: "USDT" },
     domain: { default: "main" }
+  },
+  computed: {
+    ...mapState(["market"])
+  },
+  mounted() {
+    console.log(this.market.groups[this.pair][this.domain]);
   },
   data() {
     return {
@@ -78,9 +66,12 @@ export default {
   }
 };
 </script>
+<style>
+</style>
+
 <style lang="stylus" scoped>
-.pairstable{
-  margin-top:1px;
+.pairstable {
+  margin-top: 1px;
 }
 </style>
 
