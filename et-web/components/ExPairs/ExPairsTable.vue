@@ -1,6 +1,25 @@
 <template>
   <div class="pairstable">
-    <v-hover>
+     <v-card width="1200" flat>
+        <v-card-title>
+          <span class="subheading mb-0">{{domain=='main'?'主区':domain=='inv'?'创新区':domain=='vc'?'创投区':'天使轮'}}
+          </span>
+
+        </v-card-title>
+        <v-card-text class="pa-0">
+          <v-data-table :headers="headers" :items="desserts" hide-actions>
+            <template slot="items" slot-scope="props">
+              <td>{{ props.item.name }}</td>
+              <td>{{ props.item.close }}</td>
+              <td>{{ props.item.priceChange }}</td>
+              <td>{{ props.item.high }}</td>
+              <td>{{ props.item.low }}</td>
+              <td>{{ props.item.volume }}</td>
+            </template>
+          </v-data-table>
+        </v-card-text>
+      </v-card>
+    <!-- <v-hover>
       <v-card width="1200" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`">
         <v-card-title>
           <span class="subheading mb-0">{{domain=='main'?'主区':domain=='inv'?'创新区':domain=='vc'?'创投区':'天使轮'}}
@@ -16,12 +35,11 @@
               <td>{{ props.item.high }}</td>
               <td>{{ props.item.low }}</td>
               <td>{{ props.item.volume }}</td>
-              <!-- <td class="text-xs-right">{{ props.item.volume }}</td> -->
             </template>
           </v-data-table>
         </v-card-text>
       </v-card>
-    </v-hover>
+    </v-hover> -->
 
   </div>
 </template>

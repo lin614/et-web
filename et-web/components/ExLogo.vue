@@ -17,7 +17,7 @@ export default {
 <style lang="stylus" scoped>
 .ExLogo {
   img {
-    height: 32px;
+    height: 28px;
   }
 
   .logo {

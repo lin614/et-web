@@ -31,30 +31,17 @@ export default {
   },
   mounted() {},
   async asyncData({ store }) {
-    // await store.dispatch("initPairs");
-    // await store.dispatch("initPrices");
+    await store.dispatch("initPairs");
+    await store.dispatch("initPrices");
+    await store.dispatch("upEt");
   }
-  // asyncData({ store }) {
-  //   let aa = setInterval(() => {
-  //     // store.commit('setTime')
-  //   }, 10000)
-  //   return { aa }
-  // }
-  // async asyncData({ app, store }) {
-  //   let i18n = app.i18n.getLocaleMessage(app.i18n.locale)
-  //   let list = i18n.static.banner
-  //   for (let ban of list) {
-  //     ban.bg_dataurl = await app.dataurl(ban.bgUrl)
-  //     ban.img_dataurl = await app.dataurl(ban.imgUrl)
-  //   }
-  //   return { banner: list }
-  // }
 };
 </script>
 <style lang="stylus" scoped>
 .main {
   margin: 0 auto;
   width: 1200px;
+  min-height: 800px;
 }
 </style>
 
