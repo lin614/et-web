@@ -1,7 +1,7 @@
 <template>
   <v-hover>
     <div slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`">
-      <v-tabs v-model="active">
+      <v-tabs style="background:none!important" v-model="active">
         <v-tab v-for='(p,n) in [" USDT", "BTC" , "ETH" ]' :key="n" ripple>
           {{p+'交易区'}}
 

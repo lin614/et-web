@@ -58,6 +58,10 @@ export default {
       src: '~plugins/ws.js',
       ssr: false
     },
+    {
+      src: '~plugins/h2c.js',
+      ssr: false
+    },
     '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'
   ],
   generate: {

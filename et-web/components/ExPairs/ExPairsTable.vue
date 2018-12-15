@@ -12,11 +12,11 @@
         <v-data-table :headers="headers" :items="market.groups[pair][domain]" hide-actions>
           <template slot="items" slot-scope="props">
             <td>{{ props.item.name }}</td>
-            <td>{{ props.item.priceData.close }}</td>
-            <td>{{ props.item.priceData.priceChange }}</td>
-            <td>{{ props.item.priceData.high }}</td>
-            <td>{{ props.item.priceData.low }}</td>
-            <td>{{ props.item.priceData.volume }}</td>
+            <td>{{ props.item.priceData?props.item.priceData.close:'-' }}</td>
+            <td>{{ props.item.priceData?props.item.priceData.priceChange:'-' }}</td>
+            <td>{{ props.item.priceData?props.item.priceData.high:'-' }}</td>
+            <td>{{ props.item.priceData?props.item.priceData.low:'-' }}</td>
+            <td>{{ props.item.priceData?props.item.priceData.volume:'-' }}</td>
           </template>
         </v-data-table>
       </v-card-text>
