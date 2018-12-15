@@ -2,11 +2,11 @@
   <div class="ExHead grey--text">
     <v-toolbar height="40" fixed app dark>
       <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn flat>
+        <v-btn flat @click="$router.push('/')">
           <ex-logo />
         </v-btn>
         <v-btn flat>法币</v-btn>
-        <v-btn flat>交易</v-btn>
+        <v-btn flat @click="$router.push('/market')">交易</v-btn>
         <v-btn flat>ET</v-btn>
         <v-btn flat>白皮书</v-btn>
         <v-btn flat>合作伙伴计划</v-btn>

@@ -7,7 +7,7 @@
 
 <script>
 // import bb from "./js/charting_library.min";
-import datafeed from "./js/datafeed.js";
+import datafeed from "@/js/datafeed.js";
 
 function getLanguageFromURL() {
   const regex = new RegExp("[\\?&]lang=([^&#]*)");
@@ -34,7 +34,7 @@ export default {
       debug: true, // uncomment this line to see Library errors and warnings in the console
       fullscreen: true,
 
-      interval: "D",
+      interval: "1",
       container_id: "tv_chart_container",
 
       //	BEWARE: no trailing slash is expected in feed URL
@@ -43,10 +43,10 @@ export default {
       // ),
       // symbol: "AAPL",
       symbol: "BTC/USDT",
-      datafeed: datafeed(this.$store),
+      datafeed: datafeed(this),
       library_path: "charting_library/",
       locale: "zh", //getParameterByName("lang") || "en",
-
+      timezone: "America/New_York",
       disabled_features: ["use_localstorage_for_settings"],
       enabled_features: ["study_templates"],
       charts_storage_url: "http://saveload.tradingview.com",

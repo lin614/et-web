@@ -1,4 +1,5 @@
 import axios from 'axios'
+import Vue from 'vue'
 export default function ({
     app,
     store,
@@ -17,11 +18,11 @@ export default function ({
     if (env.api) {
         store.commit('setApi', env.api)
     }
-    app.service = ax(store.getters.service)
-    app.invite = ax(store.getters.invite)
-    app.stats = ax(store.getters.stats)
-    app.home = ax(store.getters.home)
-    app.ax = axios
+    Vue.prototype.$service = app.service = ax(store.getters.service)
+    Vue.prototype.$invite = app.invite = ax(store.getters.invite)
+    Vue.prototype.$stats = app.stats = ax(store.getters.stats)
+    Vue.prototype.$home = app.home = ax(store.getters.home)
+    Vue.prototype.$ax = app.ax = axios
     //请求图片获取到dataurl
     app.dataurl = url => {
         return axios

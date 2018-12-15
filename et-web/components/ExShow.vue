@@ -2,7 +2,7 @@
   <div class="show">
     <v-hover>
       <!-- <v-card :style="`background:url('${imgET}')`" width="399" height="100" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple> -->
-      <v-card width="399" height="100" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
         <!-- <img :url="imgET" /> -->
         <v-card-title>
           <div>
@@ -22,7 +22,7 @@
       </v-card>
     </v-hover>
     <v-hover>
-      <v-card color=" " width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
         <!-- <img class="timq" src='../assets/images/timq/2.jpg' /> -->
         <v-card-title>
           <div>
@@ -39,7 +39,7 @@
       </v-card>
     </v-hover>
     <v-hover>
-      <v-card color=" " width="400" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <v-card width="400" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
         <!-- <img class="timq" src='../assets/images/timq/5.jpg' /> -->
         <v-card-title>
           <div>
@@ -61,8 +61,8 @@
 </template>
 <script>
 import { mapState, mapGetters } from "vuex";
-import opt from "@/components/js/chartShowOption.js";
-import std from "svg-to-dataurl";
+// import opt from "@/components/js/chartShowOption.js";
+// import std from "svg-to-dataurl";
 export default {
   data() {
     return {
