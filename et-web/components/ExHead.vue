@@ -41,6 +41,8 @@
           <i class="iconfont icon-theme1"></i>
         </v-btn>
 
+        <router-link to="/user/login"><v-btn flat>登录</v-btn></router-link>
+        <router-link to="/user/register"><v-btn flat>注册</v-btn></router-link>
       </v-toolbar-items>
     </v-toolbar>
   </div>
