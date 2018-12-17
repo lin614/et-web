@@ -25,13 +25,9 @@ export default (localStorage) => ({
     domain: ''
   },
   theme: {
-    dark: () => {
-      if (localStorage.exchain) {
-        let theme = JSON.parse(localStorage.exchain).theme.dark
-        return !(theme.dark)
-      } else {
-        return false
-      }
-    }
+    dark: true
+  },
+  test: {
+    time: 1
   }
 })

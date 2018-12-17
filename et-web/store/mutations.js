@@ -24,5 +24,7 @@ export default {
     set_dark(state, dark) {
         state.theme.dark = dark
     },
-
+    setTime(state) {
+        state.test.time++
+    }
 }
