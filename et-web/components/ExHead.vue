@@ -32,8 +32,8 @@
             </v-list-tile>
           </v-list>
         </v-menu> -->
-        <v-btn flat>登录</v-btn>
-        <v-btn flat>注册</v-btn>
+        <router-link to="/user/login"><v-btn flat>登录</v-btn></router-link>
+        <router-link to="/user/register"><v-btn flat>注册</v-btn></router-link>
         <v-btn flat slot="activator" color="primary" @click="changeLan($store.state.lang.locale=='cn'?'en':'cn')">
           <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"></i>
         </v-btn>

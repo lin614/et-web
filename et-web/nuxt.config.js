@@ -3,7 +3,6 @@ export default {
     api: {
       safe: true, //true:https,wss,false:http,ws
       domain: 'exchain.com',
-
     }
   },
 
@@ -46,20 +45,24 @@ export default {
         rel: 'stylesheet',
         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
       }
+    ],
+    script: [
+      { src: '/gt.js' },
+      { src: '/gt.sense.js' }
     ]
   },
   router: {
     middleware: 'i18n'
   },
   plugins: [{
-      src: '~/plugins/localStorage.js',
-      ssr: false
-    }, {
-      src: '~plugins/ws.js',
-      ssr: false
-    },
-    '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'
-  ],
+    src: '~/plugins/localStorage.js',
+    ssr: false
+  }, 
+  { src: '~/plugins/global.js', ssr: false },
+  {
+    src: '~plugins/ws.js',
+    ssr: false
+  }, '~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', '~plugins/echarts.js'],
   generate: {
     minify: {
       collapseWhitespace: false
@@ -67,7 +70,7 @@ export default {
     routes: ['/', '/en', '/inspire', '/en/inspire', '/market', '/en/market', '/test', '/en/test']
   },
   css: [
-    '~/assets/style/app.styl', '~/assets/style/iconfont.css'
+    '~/assets/style/app.styl', '~/assets/style/iconfont.css', '~/assets/style/main.css'
   ],
   /*
    ** Customize the progress bar color

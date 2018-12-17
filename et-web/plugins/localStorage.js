@@ -8,6 +8,6 @@ export default ({
     //考虑主题初始化
     createPersistedState({
         key: 'exchain',
-        paths: ['lang']
+        paths: ['lang', 'theme']
     })(store)
 }
