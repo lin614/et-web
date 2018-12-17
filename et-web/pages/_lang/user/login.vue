@@ -6,28 +6,27 @@
 
         <div class="card-cnt">
           
-          <v-form class="form" ref="form" v-model="valid">
+          <v-form class="form" ref="form">
             <v-text-field
               v-model="email"
-              :rules="emailRules"
               :label="$t('userCenter.login.email')"
+              :error-messages="emailErrors"
+              @input="$v.email.$touch()"
+              @blur="$v.email.$touch()"
               required>
             </v-text-field>
 
             <v-text-field
               v-model="password"
-              :rules="passwordRules"
               :label="$t('userCenter.login.password')"
               type="password"
+              :error-messages="passwordErrors"
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
               required>
             </v-text-field>
 
-            <v-btn
-              :disabled="!valid"
-              ref="loginBefore"
-            >
-              submit
-            </v-btn>
+            <v-btn ref="loginBefore" :loading="loginLoading">submit</v-btn>
             
           </v-form>
 
@@ -46,6 +45,8 @@
   import cookie from 'js-cookie'
   import md5 from 'crypto-md5'
   import ExCard from '@/components/ExCard'
+  import { validationMixin } from 'vuelidate'
+  import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword} from '@/utils/validate'
   import {login, initCaptcha} from '@/api/user'
 
@@ -56,22 +57,36 @@
       ExCard
     },
 
+    mixins: [validationMixin],
+
+    validations: {
+      email: {required, email},
+      password: {required},
+    },
+
     data: () => ({
-      valid: false,
       loginLoading: false,
       email: '',
-      emailRules: [
-        v => !!v || instance.$t('errorMsg.EMAIL_BLANK'),
-        v => validateEmail(v) || instance.$t('errorMsg.EMAIL_ERR'),
-        v => v.length < 100 || instance.$t('errorMsg.EMAIL_LIMIT_LENGTH')
-      ],
       password: '',
-      passwordRules: [
-        v => !!v || instance.$t('errorMsg.PWD_BLANK'),
-        v => validatePassword(v) || instance.$t('errorMsg.PWD_LIMIT')
-      ],
       sense: null
     }),
+
+    computed: {
+      emailErrors () {
+        const errors = []
+        if (!this.$v.email.$dirty) return errors
+        !this.$v.email.required && errors.push(this.$t('errorMsg.EMAIL_BLANK'))
+        !this.$v.email.email && errors.push(this.$t('errorMsg.EMAIL_ERR'))
+        return errors
+      },
+      passwordErrors () {
+        const errors = []
+        if (!this.$v.password.$dirty) return errors
+        !this.$v.password.required && errors.push(this.$t('errorMsg.PWD_BLANK'))
+        !validatePassword(this.password) && errors.push(this.$t('errorMsg.PWD_LIMIT'))
+        return errors
+      }
+    },
 
     created() {
       instance = this
@@ -102,7 +117,7 @@
           id: data.id,
           lang: this.$t('common.lang') === 'cn' ? 'zh-cn' : 'en',     
           onError:function(err){
-              etLog('gt error', err)
+              this.etLog('gt error', err)
           }
         }, sense => {
           this.sense = sense;
@@ -115,10 +130,10 @@
             let params = {geetest_challenge: data.challenge}
             this.loginFn(params)
           }).onClose(() => {
-            etLog('close')
+            this.etLog('close')
             this.loginLoading = false
           }).onError(err => {
-            etLog(err);
+            this.etLog(err);
             if(err && err.code === '1001'){
                 submit({})
             }
@@ -131,11 +146,12 @@
        * @param {object} data 极验验证码相关数据
        */
       loginBefore() {
+        this.$v.$touch()
         if (this.loginLoading) {
           return
         }
         this.loginLoading = true
-        if (this.$refs.form.validate()) {
+        if (!this.$v.$error) {
           this.sense.sense();
         } else {
           this.loginLoading = false
@@ -178,13 +194,13 @@
             this.$router.push('/')
           } else {
             this.loginLoading = false
-            // apiError(this, res);
+            apiError(this, res);
           }
         })
         .catch(err => {
           this.loginLoading = false
           // this.geettest.reset()
-          // apiReqError(this, err);
+          apiReqError(this, err);
         })
       },
     }

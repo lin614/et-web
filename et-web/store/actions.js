@@ -10,7 +10,8 @@ export default {
     }) {
         let etBtc = await ax.get(getters.service + '/api/quotation/getQuantAmount')
         let volAll = await ax.get(getters.stats + '/api/exet/stats/etCirculate')
-        
-        etBtc.data && volAll.data && commit('upEt', [etBtc.data.result.total, volAll.data.data.etCirculate])
+        console.log(etBtc)
+        console.log(volAll)
+        // etBtc.data && volAll.data && commit('upEt', [etBtc.data.result.total, volAll.data.data.etCirculate])
     }
 }

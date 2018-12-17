@@ -8,10 +8,11 @@
           <v-form class="form" ref="form" v-model="valid">
             <div>
               <v-text-field
-                v-model="form.email"
-                :rules="emailRules"
+                v-model="email"
                 :label="$t('register.email')"
-                :placeholder="$t('register.pleaseIptEmail')"
+                :error-messages="emailErrors"
+                @input="$v.email.$touch()"
+                @blur="$v.email.$touch()"
                 required>
               </v-text-field>
               <div>{{$t('register.emailTip')}}</div>
@@ -20,9 +21,11 @@
             <div class="email-code-wrap clearfix">
               <v-text-field
                 class="fl"
-                v-model="form.emailcode"
-                :rules="emailcodeRules"
+                v-model="emailcode"
                 :label="$t('register.emailcode')"
+                :error-messages="emailcodeErrors"
+                @input="$v.emailcode.$touch()"
+                @blur="$v.emailcode.$touch()"
                 :placeholder="$t('register.pleaseIptEmailCode')"
                 required>
               </v-text-field>
@@ -31,49 +34,49 @@
             
 
             <v-text-field
-              v-model="form.pwd"
-              :rules="emailRules"
+              v-model="pwd"
               :label="$t('register.pwd')"
+              :error-messages="pwdErrors"
+              @input="$v.pwd.$touch()"
+              @blur="$v.pwd.$touch()"
               :placeholder="$t('register.pleaseIptPwd')"
               type="password"
               required>
             </v-text-field>
 
             <v-text-field
-              v-model="form.pwd2"
-              :rules="emailRules"
+              v-model="pwd2"
               :label="$t('register.pwd2')"
+              :error-messages="pwd2Errors"
+              @input="$v.pwd2.$touch()"
+              @blur="$v.pwd2.$touch()"
               :placeholder="$t('register.pleaseIptPwd')"
               type="password"
               required>
             </v-text-field>
 
             <v-text-field
-              v-model="form.code"
-              :rules="emailRules"
+              v-model="code"
               :label="$t('register.code')"
               :placeholder="$t('register.pleaseIptPwd')"
               required>
             </v-text-field>
 
-            <!-- <v-checkbox
-              v-model="form.protocol"
-              :error-messages="checkboxErrors"
-              label="Do you agree?"
-              required
-              @change="$v.checkbox.$touch()"
-              @blur="$v.checkbox.$touch()"
-            >
-              {{$t('register.readed')}}
-                    <router-link class="login" to="/cont" target="_blank">{{$t('register.protocol')}}</router-link>
-            </v-checkbox> -->
+            <div class="protocol">
+              <v-checkbox
+                v-model="protocol"
+                :label="$t('register.readed')"
+                :error-messages="protocolErrors"
+                type="checkbox"
+                @input="$v.protocol.$touch()"
+                @blur="$v.protocol.$touch()"
+                required>
+                <router-link class="login" to="/cont" target="_blank">{{$t('register.protocol')}}</router-link>
+              </v-checkbox>
+            </div>
 
-            <v-btn
-              :disabled="!valid"
-              ref="regUser"
-            >
-              {{$t('register.registerBtn')}}
-            </v-btn>
+            <v-btn ref="regUser" :loading="regLoading">{{$t('register.registerBtn')}}</v-btn>
+
             {{$t('register.toLogin')}}
             <router-link class="login" to="/login">{{$t('register.login')}}</router-link>
           </v-form>
@@ -88,6 +91,8 @@
   import cookie from 'js-cookie'
   import md5 from 'crypto-md5'
   import ExCard from '@/components/ExCard'
+  import { validationMixin } from 'vuelidate'
+  import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword, validateEmailCode} from '@/utils/validate'
   import {register, verifyRegister, initCaptcha} from '@/api/user'
 
@@ -97,43 +102,29 @@ export default {
   components: {
     ExCard
   },
+
+  mixins: [validationMixin],
+
+  validations: {
+    email: {required, email},
+    emailcode: {required},
+    pwd: {required},
+    pwd2: {required},
+    protocol: {}
+  },
+
   data() {
     return {
-      valid: false,
       regtoken: '',
       gtserver: '',
       email: '',
-      form: {
-        email: '',
-        emailcode: '',
-        source: '',
-        pwd: '',
-        pwd2: '',
-        code: '',
-        protocol: false
-      },
-      emailRules: [
-        v => !!v || instance.$t('errorMsg.EMAIL_BLANK'),
-        v => v.length < 100 || instance.$t('errorMsg.EMAIL_LIMIT_LENGTH'),
-        v => validateEmail(v) || instance.$t('errorMsg.EMAIL_ERR'),
-      ],
-      emailcodeRules: [
-        v => !!v || instance.$t('errorMsg.EMAIL_CODE_BLANK'),
-        v => v.length < 20 || instance.$t('errorMsg.EMAIL_CODE_LIMIT_LENGTH'),
-        v => validateEmailCode(v) || instance.$t('errorMsg.SYMBOL_ERR'),
-      ],
-      pwdRules: [
-        v => !!v || instance.$t('errorMsg.PWD_BLANK'),
-        v => validatePassword(v) || instance.$t('errorMsg.PWD_LIMIT'),
-      ],
-      pwd2Rules: [
-        v => !!v || instance.$t('errorMsg.PWD2_BLANK'),
-        v => validatePassword(v) || instance.$t('errorMsg.PWD_LIMIT'),
-        v => v !== instance.form.pwd || instance.$t('errorMsg.DIFFERENT_PASSWORD_IPT'),
-      ],
-      protocolRules: [
-        v => !!v || instance.$t('errorMsg.PROTOCOL_BLANK'),
-      ],
+      emailcode: '',
+      source: '',
+      pwd: '',
+      pwd2: '',
+      code: '',
+      protocol: false,
+      
       sense: null,
       geettestFlag: '',
       regLoading: false,
@@ -144,13 +135,62 @@ export default {
       sendCodeLoading: false
     }
   },
+
   computed: {
-    activeLang() {
-      return this.$store.state.activeLang
+    
+    emailErrors() {
+      const errors = [];
+      if (!this.$v.email.$dirty) return errors;
+      !this.$v.email.required && errors.push(this.$t('errorMsg.EMAIL_BLANK'));
+      !this.$v.email.email && errors.push(this.$t('errorMsg.EMAIL_ERR'));
+      return errors;
+    },
+
+    emailcodeErrors() {
+      const errors = [];
+      if (!this.$v.emailcode.$dirty) return errors;
+      !this.$v.emailcode.required && errors.push(this.$t('errorMsg.EMAIL_CODE_BLANK'));
+      this.emailcode.length > 20 && errors.push(this.$t('errorMsg.EMAIL_CODE_LIMIT_LENGTH'));
+      !validateEmailCode(this.emailcode) && errors.push(this.$t('errorMsg.SYMBOL_ERR'))
+      return errors;
+    },
+
+    pwdErrors() {
+      const errors = [];
+      if (!this.$v.pwd.$dirty) return errors;
+      !this.$v.pwd.required && errors.push(this.$t('errorMsg.PWD_BLANK'));
+      !validatePassword(this.pwd) && errors.push(this.$t('errorMsg.PWD_LIMIT'));
+      return errors;
+    },
+
+    pwd2Errors() {
+      const errors = [];
+      if (!this.$v.pwd2.$dirty) return errors;
+      !this.$v.pwd2.required && errors.push(this.$t('errorMsg.PWD2_BLANK'));
+      !validatePassword(this.pwd2) && errors.push(this.$t('errorMsg.PWD_LIMIT'));
+      this.pwd !== this.pwd2 && errors.push(this.$t('errorMsg.DIFFERENT_PASSWORD_IPT'));
+      return errors;
+    },
+
+    protocolErrors() {
+      const errors = [];
+      if (!this.$v.protocol.$dirty) return errors;
+      !this.protocol && errors.push(this.$t('errorMsg.PROTOCOL_BLANK'));
+      return errors;
+    },
+
+    lang() {
+      return this.$store.state.lang.locale
     }
   },
   created() {
     instance = this
+  },
+
+  watch: {
+    lang() {
+      this.codeDownText = this.$t('register.sendCode')
+    }
   },
 
   mounted() {
@@ -185,7 +225,7 @@ export default {
         id: data.id,
         lang: this.$t('common.lang') === 'cn' ? 'zh-cn' : 'en',     
         onError:function(err){
-            etLog('gt error', err)
+            this.etLog('gt error', err)
         }
       }, sense => {
         this.sense = sense;
@@ -204,10 +244,10 @@ export default {
             this.sendEmail(params)
           }
         }).onClose(() => {
-          etLog('close')
+          this.etLog('close')
           this.loginLoading = false
         }).onError(err => {
-          etLog(err);
+          this.etLog(err);
           if(err && err.code === '1001'){
               submit({})
           }
@@ -222,12 +262,12 @@ export default {
     regUserFn(params) {
       let captcha_type = this.$t('common.lang') === 'cn' ? 'dk-register' : 'dk-register-en';
 
-      params.email = this.form.email;
-      params.code = this.form.emailcode;
-      params.channel = this.form.source;
-      params.inviteCode = this.form.code;
+      params.email = this.email;
+      params.code = this.emailcode;
+      params.channel = this.source;
+      params.inviteCode = this.code;
       params.token = this.regtoken;
-      params.password = md5(this.form.pwd);
+      params.password = md5(this.pwd);
       params.captcha_type = captcha_type;
 
       verifyRegister(params).then(res => {
@@ -240,12 +280,10 @@ export default {
           this.$router.push('/login')
         } else {
           this.regLoading = false
-          // apiError(this, res)
         }
       })
         .catch((err) => {
           this.regLoading = false
-          // apiReqError(this, err)
         })
     },
     /**
@@ -256,7 +294,7 @@ export default {
       let lang = this.$t('common.lang') === 'cn' ? 'zh-cn' : 'en-us'
       let captcha_type = this.$t('common.lang') === 'cn' ? 'dk-register' : 'dk-register-en';
       
-      params.email = this.form.email;
+      params.email = this.email;
       params.language = lang;
       params.captcha_type = captcha_type;
       
@@ -267,15 +305,11 @@ export default {
         if (res.data.errorCode == 0) {
           this.regtoken = res.data.result.token
           alert(this.$t('errorMsg.EMAIL_SEND_SUCC'))
-          
           this.handleCodeDown();
-        } else {
-          // apiError(this, res);
         }
       })
       .catch((err) => {
         this.sendCodeLoading = false
-        // apiReqError(this, err);
       })
     },
 
@@ -307,45 +341,45 @@ export default {
      * 唤起验证码（发送邮件）
      */
     sendemailBefore() {
-      this.$refs.form.$touch()
-      if (this.sendCodeLoading) {
+      this.$v.email.$touch()
+      if (this.$v.email.$error || this.sendCodeLoading) {
         return
       }
 
-      if (this.$refs.form.validate('email')) {
-        this.geettestFlag = 'SEND_EMAIL_CODEA';
-        this.sense.sense();
-      }
+      this.geettestFlag = 'SEND_EMAIL_CODEA';
+      this.sense.sense();
     },
     /**
      * 唤起验证码（注册用户）
      */
     regUser() {
-      this.regLoading = true
-      if (this.$refs.form.validate()) {
-        this.geettestFlag = 'SUBMIT_DATA';
-        this.sense.sense();
+      this.$v.$touch()
+      if (this.$v.$error || this.regLoading) {
+        return
       }
+      this.regLoading = true
+      this.geettestFlag = 'SUBMIT_DATA';
+      this.sense.sense();
     },
     /**
      * 邀请码和来源处理
      */
     init() {
-      this.form.code = this.$route.params.code
-      this.form.source = this.$route.query.source
+      this.code = this.$route.params.code
+      this.source = this.$route.query.source
       // 邀请码
-      if (this.form.code) {
-        window.sessionStorage.setItem('regInviteCode', this.form.code);
+      if (this.code) {
+        window.sessionStorage.setItem('regInviteCode', this.code);
       } else {
         let regInviteCode = window.sessionStorage.getItem('regInviteCode');
-        this.form.code = regInviteCode ? regInviteCode : '';
+        this.code = regInviteCode ? regInviteCode : '';
       }
       // 来源
-      if (this.form.source) {
-        window.sessionStorage.setItem('regSource', this.form.source);
+      if (this.source) {
+        window.sessionStorage.setItem('regSource', this.source);
       } else {
         let source = window.sessionStorage.getItem('regSource');
-        this.form.source = source ? source : '';
+        this.source = source ? source : '';
       }
     }
   }
@@ -366,7 +400,13 @@ export default {
     line-height: 40px;
   }
   .email-code-wrap .v-input{
-    width: 400px;
+    width: 360px;
+  }
+  .email-code-wrap .v-btn{
+    float: right;
+  }
+  .protocol {
+    margin-bottom: 10px;
   }
 }
 </style>

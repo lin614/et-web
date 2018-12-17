@@ -16,6 +16,7 @@ import {
   VCarousel,
   VDivider,
   VForm,
+  VCheckbox,
   VInput,
   VTextField,
   VALERT,
@@ -40,6 +41,7 @@ Vue.use(Vuetify, {
     VCarousel,
     VDivider,
     VForm,
+    VCheckbox,
     VInput,
     VTextField,
     VALERT

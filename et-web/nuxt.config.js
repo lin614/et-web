@@ -1,7 +1,7 @@
 export default {
   env: {
     api: {
-      safe: false, //true:https,wss,false:http,ws
+      safe: false , //true:https,wss,false:http,ws
       domain: 'exchain.com',
     }
   },
@@ -50,7 +50,7 @@ export default {
   plugins: ['~/plugins/vuetify.js', '~/plugins/axios.js', '~/plugins/i18n.js', {
     src: '~/plugins/localStorage.js',
     ssr: false
-  }],
+  },{ src: '~/plugins/global.js', ssr: false }],
   generate: {
     routes: ['/', '/inspire', '/en', '/en/inspire']
   },
