@@ -24,7 +24,7 @@
   </div>
 </template>
 <script>
-import ExNotice from "./ExNotice2";
+import ExNotice from "./ExNotice";
 export default {
   components: { ExNotice },
   data() {

@@ -11,14 +11,14 @@ export default (localStorage) => ({
   lang: {
     //国际化
     locales: ['cn', 'en'],
-    locale: () => {
-      if (localStorage.exchain) {
-        let lang = JSON.parse(localStorage.exchain).lang.locale
-        return lang.locale ? lang.locale : 'cn'
-      } else {
-        return 'cn'
-      }
-    }
+    locale: 'cn'
+    //   if (localStorage.exchain) {
+    //     let lang = JSON.parse(localStorage.exchain).lang.locale
+    //     return lang.locale ? lang.locale : 'cn'
+    //   } else {
+    //     return 'cn'
+    //   }
+    // }
   },
   api: {
     safe: false,
