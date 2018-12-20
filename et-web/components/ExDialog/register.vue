@@ -1,96 +1,66 @@
 <template>
-  <v-container class="register">
-    <div class="v-wrap">
-      <ex-card>
-        <span slot="title">{{ $t('register.title') }}</span>
-        
-        <div class="card-cnt">
-          <v-form class="form" ref="form">
-            <div>
-              <v-text-field
-                v-model="email"
-                :label="$t('register.email')"
-                :error-messages="emailErrors"
-                @input="$v.email.$touch()"
-                @blur="$v.email.$touch()"
-                required>
-              </v-text-field>
-              <div>{{$t('register.emailTip')}}</div>
-            </div>
+  <v-dialog v-model="dialog" persistent max-width="600px" class="login">
+    <v-card>
 
-            <div class="email-code-wrap clearfix">
-              <v-text-field
-                class="fl"
-                v-model="emailcode"
-                :label="$t('register.emailcode')"
-                :error-messages="emailcodeErrors"
-                @input="$v.emailcode.$touch()"
-                @blur="$v.emailcode.$touch()"
-                :placeholder="$t('register.pleaseIptEmailCode')"
-                required>
-              </v-text-field>
-              <v-btn color="info" :loading="sendCodeLoading" ref="sendEmail">{{codeDownText}}</v-btn>
-            </div>
+      <v-card-title>
+        <span class="headline">{{ $t('register.title') }}</span>
+      </v-card-title>
+
+      <v-card-text>
+        <v-container grid-list-md>
+          <v-layout wrap>
+            <v-form class="form" ref="form">
+              <v-flex xs12>
+                <v-text-field v-model="email" :label="$t('register.email')" :error-messages="emailErrors" @input="$v.email.$touch()" @blur="$v.email.$touch()" required> </v-text-field>
+                <div>{{$t('register.emailTip')}}</div>
+              </v-flex>
+
+              <v-flex xs12>
+                <div class="email-code-wrap clearfix">
+                  <v-text-field class="fl" v-model="emailcode" :label="$t('register.emailcode')" :error-messages="emailcodeErrors" @input="$v.emailcode.$touch()" @blur="$v.emailcode.$touch()" :placeholder="$t('register.pleaseIptEmailCode')" required> </v-text-field>
+                  <v-btn class="fr" color="info" :loading="sendCodeLoading" ref="sendEmail">{{codeDownText}}</v-btn>
+                </div>
+              </v-flex>
+
+              <v-flex xs12>
+                <v-text-field v-model="pwd" :label="$t('register.pwd')" :error-messages="pwdErrors" @input="$v.pwd.$touch()" @blur="$v.pwd.$touch()" :placeholder="$t('register.pleaseIptPwd')" type="password" required> </v-text-field>
+              </v-flex>
+
+              <v-flex xs12>
+                <v-text-field v-model="pwd2" :label="$t('register.pwd2')" :error-messages="pwd2Errors" @input="$v.pwd2.$touch()" @blur="$v.pwd2.$touch()" :placeholder="$t('register.pleaseIptPwd')" type="password" required> </v-text-field>
+              </v-flex>
+
+              <v-flex xs12>
+                <v-text-field v-model="code" :label="$t('register.code')" :placeholder="$t('register.pleaseIptPwd')" required> </v-text-field>
+              </v-flex>
+
+              <v-flex xs12>
+                <v-checkbox class="fl" v-model="protocol" :label="$t('register.readed')" :error-messages="protocolErrors" type="checkbox" @input="$v.protocol.$touch()" @blur="$v.protocol.$touch()" required>
+                  <router-link slot="append" class="protocol" to="/cont" target="_blank">{{$t('register.protocol')}}</router-link>
+                </v-checkbox>
+
+                <span class="to-login fr">{{$t('register.toLogin')}} <span class="highlight pointer" @click="toLogin">{{ $t('register.login') }}</span></span>
+              </v-flex>
+
+            </v-form>
+          </v-layout>
+        </v-container>
+
+      </v-card-text>
             
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn color="blue darken-1" flat @click="setDialog">{{ $t('common.cancel') }}</v-btn>
+        <v-btn color="blue darken-1" flat ref="regUser" :loading="regLoading">{{ $t('register.registerBtn') }}</v-btn>
+      </v-card-actions>
 
-            <v-text-field
-              v-model="pwd"
-              :label="$t('register.pwd')"
-              :error-messages="pwdErrors"
-              @input="$v.pwd.$touch()"
-              @blur="$v.pwd.$touch()"
-              :placeholder="$t('register.pleaseIptPwd')"
-              type="password"
-              required>
-            </v-text-field>
-
-            <v-text-field
-              v-model="pwd2"
-              :label="$t('register.pwd2')"
-              :error-messages="pwd2Errors"
-              @input="$v.pwd2.$touch()"
-              @blur="$v.pwd2.$touch()"
-              :placeholder="$t('register.pleaseIptPwd')"
-              type="password"
-              required>
-            </v-text-field>
-
-            <v-text-field
-              v-model="code"
-              :label="$t('register.code')"
-              :placeholder="$t('register.pleaseIptPwd')"
-              required>
-            </v-text-field>
-
-            <div class="protocol">
-              <v-checkbox
-                v-model="protocol"
-                :label="$t('register.readed')"
-                :error-messages="protocolErrors"
-                type="checkbox"
-                @input="$v.protocol.$touch()"
-                @blur="$v.protocol.$touch()"
-                required>
-                <router-link class="login" to="/cont" target="_blank">{{$t('register.protocol')}}</router-link>
-              </v-checkbox>
-            </div>
-
-            <v-btn ref="regUser" :loading="regLoading">{{$t('register.registerBtn')}}</v-btn>
-
-            {{$t('register.toLogin')}}
-            <router-link class="login" to="/login">{{$t('register.login')}}</router-link>
-          </v-form>
-
-        </div>
-      </ex-card>
-    </div>
-  </v-container>
+    </v-card>
+  </v-dialog>
 </template>
 
 <script>
   import cookie from 'js-cookie'
   import md5 from 'crypto-md5'
-  import ExCard from '@/components/ExCard'
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword, validateEmailCode} from '@/utils/validate'
@@ -99,9 +69,8 @@
   let instance = null
 
 export default {
-  components: {
-    ExCard
-  },
+  name: 'ExdialogRegister',
+  props: ['dialog'],
 
   mixins: [validationMixin],
 
@@ -201,10 +170,15 @@ export default {
   },
   destroyed () {
     clearInterval(this.timer)
-    // bus.$off('langChange');
     window.removeEventListener('keyup', this.onEnter)
   },
   methods: {
+    setDialog() {
+      this.$emit('setDialog', {loginDialog: false, registerDialog: false});
+    },
+    toLogin() {
+      this.$emit('setDialog', {loginDialog: true, registerDialog: false});
+    },
     /**
      * 获取极验验证码相关数据
      */
@@ -302,6 +276,7 @@ export default {
 
       register(params).then(res => {
         this.sendCodeLoading = false
+
         if (res.data.errorCode == 0) {
           this.regtoken = res.data.result.token
           alert(this.$t('errorMsg.EMAIL_SEND_SUCC'))
@@ -388,25 +363,20 @@ export default {
 
 <style lang="less" scoped>
 // @import url(./style/config.less);
-.register {
-  .v-form {
-    width: 520px;
-    display: inline-block;
+.protocol {
+  margin-top: 4px;
+}
+.v-form {
+  width: 100%;
+  display: inline-block;
+}
+.email-code-wrap {
+  display: flex;
+  .fl {
+    flex-grow: 1;
   }
-  .msg {
-    float: right;
-    background: #f2f3f7;
-    padding: 16px;
-    line-height: 40px;
-  }
-  .email-code-wrap .v-input{
-    width: 360px;
-  }
-  .email-code-wrap .v-btn{
-    float: right;
-  }
-  .protocol {
-    margin-bottom: 10px;
-  }
+}
+.to-login {
+  margin-top: 22px;
 }
 </style>

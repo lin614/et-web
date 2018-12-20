@@ -32,31 +32,83 @@
             </v-list-tile>
           </v-list>
         </v-menu> -->
-        <router-link to="/user/login"><v-btn flat>登录</v-btn></router-link>
-        <router-link to="/user/register"><v-btn flat>注册</v-btn></router-link>
+
+        <v-btn flat @click="loginDialog = true" v-if="!user.email">登录</v-btn>
+        <v-btn flat @click="registerDialog = true" v-if="!user.email">注册</v-btn>
+
+        <v-menu offset-y v-if="user.email">
+          <v-btn slot="activator" color="primary" dark>{{email}}</v-btn>
+
+          <v-list>
+            <v-list-tile v-for="(item, index) in items" :key="index" @click="setMenu(index)">
+              <v-list-tile-title>{{ item.title }}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+
+
         <v-btn flat slot="activator" color="primary" @click="changeLan($store.state.lang.locale=='cn'?'en':'cn')">
           <i class="iconfont" :class="$store.state.lang.locale=='cn'?'icon-CN':'icon-EN'"></i>
         </v-btn>
         <v-btn flat slot="activator" color="primary" @click="changeTheme()">
           <i class="iconfont icon-theme1"></i>
         </v-btn>
-
-        <router-link to="/user/login"><v-btn flat>登录</v-btn></router-link>
-        <router-link to="/user/register"><v-btn flat>注册</v-btn></router-link>
       </v-toolbar-items>
+
+      <!-- 登录 -->
+      <ExdialogLogin :dialog="loginDialog" @setDialog="setLoginDialog"></ExdialogLogin>
+      <!-- 注册 -->
+      <ExdialogRegister :dialog="registerDialog" @setDialog="setRegisterDialog"></ExdialogRegister>
+      <!-- 重置 -->
+      <ExdialogReset :dialog="resetDialog" @setDialog="setResetDialog"></ExdialogReset>
     </v-toolbar>
   </div>
 </template>
 <script>
 import ExLogo from "./ExLogo";
+import ExdialogLogin from "./ExDialog/login";
+import ExdialogRegister from "./ExDialog/register";
+import ExdialogReset from "./ExDialog/reset";
 import { mapMutations, mapState } from "vuex";
 export default {
-  components: { ExLogo },
+  components: { ExLogo, ExdialogLogin, ExdialogRegister, ExdialogReset },
   data() {
-    return {};
+    return {
+      loginDialog: false,
+      registerDialog: false,
+      resetDialog: false,
+      items: [
+        { title: this.$t("header.userCenter"), url: '/usercenter' },
+        { title: this.$t("header.promiseManage"), url: '/usercenter/entrust' },
+        { title: this.$t("header.partner"), url: '/bonus' },
+        { title: this.$t("header.api"), url: '/api' },
+        { title: this.$t("header.logout"), url: '' }
+      ]
+    };
   },
   computed: {
-    ...mapState(["theme"])
+    ...mapState(["user", "theme"]),
+    email() {
+      var info = this.user.email;
+      let pre = '';
+      if (!info) {
+        this.isLogin = false;
+        return "";
+      }
+      var emailArr = info.split("@");
+      if (emailArr[0].length > 4) {
+        pre = emailArr[0].slice(0, 4) + "...";
+      }
+
+      let domainArr = info.split('.');
+      let domain = '';
+      if (info.length - domainArr[domainArr.length -1].length - emailArr[0].length -2 > 4) {
+        domain = emailArr[1].slice(0, 4) + "...";
+        return pre + "@" + domain + '.' + domainArr[domainArr.length -1];
+      } else {
+        return pre + "@" + emailArr[1];
+      }
+    },
   },
   methods: {
     ...mapMutations(["set_lang", "set_dark"]),
@@ -70,9 +122,26 @@ export default {
     changeTheme() {
       let dark = !this.$store.state.theme.dark;
       this.set_dark(dark);
+    },
+    setLoginDialog(data) {
+      this.loginDialog = data.loginDialog;
+      typeof data.registerDialog !== 'undefined' && (this.registerDialog = data.registerDialog)
+      typeof data.resetDialog !== 'undefined' && (this.resetDialog = data.resetDialog)
+    },
+    setRegisterDialog(data) {
+      this.loginDialog = data.loginDialog;
+      this.registerDialog = data.registerDialog;
+    },
+    setResetDialog(data) {
+      this.loginDialog = data.loginDialog;
+      this.resetDialog = data.resetDialog;
+    },
+    setMenu(e) {
+      this.$router.push(this.items[e].url);
     }
   },
-  mounted() {}
+  mounted() {
+  }
 };
 </script>
 

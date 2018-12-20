@@ -6,6 +6,9 @@ let getService = (action, home) => {
         }
     })
 }
+let postService = (action, data) => {
+    return ax.post(action, data)
+}
 export default {
     async nuxtServerInit(context) {
         await context.dispatch("initPairs");
@@ -65,5 +68,28 @@ export default {
         } catch (e) {
             console.log(e)
         }
-    }
+    },
+
+    login({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/login', data)
+            .then((res) => {
+                res.status == '200' && res.data.errorCode == 0 && commit('setUserInfo', res.data.result)
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    initCaptcha({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/initCaptcha', data)
+            .then((res) => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
 }

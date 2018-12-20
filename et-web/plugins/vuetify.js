@@ -22,6 +22,9 @@ import {
   VTabs,
   VBadge,
   VDataTable,
+  VDialog,
+  VSelect,
+  VAutocomplete,
   VTextField
 } from 'vuetify'
 
@@ -48,6 +51,9 @@ Vue.use(Vuetify, {
     VTabs,
     VBadge,
     VDataTable,
+    VDialog,
+    VSelect,
+    VAutocomplete,
     VTextField
   }
 })
