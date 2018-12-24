@@ -12,13 +12,13 @@ export default {
 
   head: {
     title: 'et-web',
-    script: [{
-      src: '/charting_library/charting_library.min.js'
-    }, {
-      src: '/datafeeds/udf/dist/bundle.min.js'
-    }, {
-      src: '/datafeeds/udf/dist/polyfills.js'
-    }],
+    script: [
+      { src: '/gt.js' },
+      { src: '/gt.sense.js' },
+      { src: '/charting_library/charting_library.min.js' },
+      { src: '/datafeeds/udf/dist/bundle.js' },
+      { src: '/datafeeds/udf/dist/polyfills.js' }
+    ],
     meta: [{
         charset: 'utf-8'
       },
@@ -46,10 +46,6 @@ export default {
         href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons'
       }
     ],
-    script: [
-      { src: '/gt.js' },
-      { src: '/gt.sense.js' }
-    ]
   },
   router: {
     middleware: 'i18n'

@@ -14,6 +14,7 @@
     "withdrawAddress": "Withdraw Address"
   },
   "header": {
+    "api": "API",
     "exchange": "Exchange",
     "et": "ET",
     "whitepaper": "ET White Paper",

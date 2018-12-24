@@ -53,7 +53,8 @@ export default {
       charts_storage_api_version: "1.1",
       client_id: "tradingview.com",
       user_id: "public_user_id",
-      theme: getParameterByName("theme")
+      theme: getParameterByName("theme"),
+      // disabled_features: []
     };
 
     // TradingView.onready(function() {

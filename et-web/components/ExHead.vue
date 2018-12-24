@@ -70,6 +70,7 @@ import ExdialogLogin from "./ExDialog/login";
 import ExdialogRegister from "./ExDialog/register";
 import ExdialogReset from "./ExDialog/reset";
 import { mapMutations, mapState } from "vuex";
+
 export default {
   components: { ExLogo, ExdialogLogin, ExdialogRegister, ExdialogReset },
   data() {
@@ -77,13 +78,7 @@ export default {
       loginDialog: false,
       registerDialog: false,
       resetDialog: false,
-      items: [
-        { title: this.$t("header.userCenter"), url: '/usercenter' },
-        { title: this.$t("header.promiseManage"), url: '/usercenter/entrust' },
-        { title: this.$t("header.partner"), url: '/bonus' },
-        { title: this.$t("header.api"), url: '/api' },
-        { title: this.$t("header.logout"), url: '' }
-      ]
+      items: []
     };
   },
   computed: {
@@ -140,7 +135,17 @@ export default {
       this.$router.push(this.items[e].url);
     }
   },
+  create() {
+    this.items = [
+      { title: this.$t("header.userCenter"), url: '/usercenter' },
+      { title: this.$t("header.promiseManage"), url: '/usercenter/entrust' },
+      { title: this.$t("header.partner"), url: '/bonus' },
+      { title: this.$t("header.api"), url: '/api' },
+      { title: this.$t("header.logout"), url: '' }
+    ]
+  },
   mounted() {
+    
   }
 };
 </script>

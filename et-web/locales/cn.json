@@ -14,6 +14,7 @@
     "withdrawAddress": "提币地址"
   },
   "header": {
+    "api": "API 管理",
     "exchange": "交易",
     "et": "ET",
     "whitepaper": "白皮书",
