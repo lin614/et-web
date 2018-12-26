@@ -1,42 +1,26 @@
 <template>
-  <div>
-    <!-- {{$store.state.market.bars}} -->
-    <div id="tv_chart_container"></div>
+  <div class="kline">
+    <div id="tv_chart_container" style=""></div>
   </div>
 </template>
 
 <script>
-// import bb from "./js/charting_library.min";
 import datafeed from "@/js/datafeed.js";
-
-function getLanguageFromURL() {
-  const regex = new RegExp("[\\?&]lang=([^&#]*)");
-  const results = regex.exec(window.location.search);
-  return results === null
-    ? null
-    : decodeURIComponent(results[1].replace(/\+/g, " "));
-}
-
+import tvconfig from "@/js/tvConfig.js";
+import { mapState } from "vuex";
 export default {
   name: "ExKLine",
-
-  mounted() {
-    // debugger;
-    function getParameterByName(name) {
-      name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
-      var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
-        results = regex.exec(location.search);
-      return results === null
-        ? ""
-        : decodeURIComponent(results[1].replace(/\+/g, " "));
+  watch: {
+    lang: (n, o) => {
+      debugger;
     }
-    const widgetOptions = {
-      debug: true, // uncomment this line to see Library errors and warnings in the console
-      fullscreen: true,
-
-      interval: "1",
+  },
+  computed: {
+    ...mapState(["lang"])
+  },
+  mounted() {
+    let opt = Object.assign(tvconfig, {
       container_id: "tv_chart_container",
-
       //	BEWARE: no trailing slash is expected in feed URL
       // datafeed: new Datafeeds.UDFCompatibleDatafeed(
       //   "https://demo_feed.tradingview.com"
@@ -44,28 +28,147 @@ export default {
       // symbol: "AAPL",
       symbol: "BTC/USDT",
       datafeed: datafeed(this),
-      library_path: "charting_library/",
-      locale: "zh", //getParameterByName("lang") || "en",
-      timezone: "America/New_York",
-      disabled_features: ["use_localstorage_for_settings"],
-      enabled_features: ["study_templates"],
-      charts_storage_url: "http://saveload.tradingview.com",
-      charts_storage_api_version: "1.1",
-      client_id: "tradingview.com",
-      user_id: "public_user_id",
-      theme: getParameterByName("theme")
-    };
 
-    // TradingView.onready(function() {
-    // debugger;
-    var widget = (window.tvWidget = new TradingView.widget(widgetOptions));
-    // });
+      locale: this.$store.state.lang.locale == "cn" ? "zh" : "en",
+
+      theme: this.$store.state.theme.dark
+    });
+    var widget = (window.tvWidget = new TradingView.widget(opt));
+    let updateSelectedIntervalButton = function(button) {
+      widget.selectedIntervalButton &&
+        widget.selectedIntervalButton.removeClass("selected");
+      button.addClass("selected");
+      widget.selectedIntervalButton = button;
+    };
+    widget.onChartReady(() => {
+      let chart = widget.chart();
+      const btnList = [
+        {
+          class: "resolution_btn",
+          label: "分时",
+          resolution: "1",
+          chartType: 3
+        },
+        {
+          class: "resolution_btn",
+          label: "1m",
+          resolution: "1"
+        },
+        {
+          class: "resolution_btn",
+          label: "5m",
+          resolution: "5"
+        },
+        {
+          class: "resolution_btn",
+          label: "15m",
+          resolution: "15"
+        },
+        {
+          class: "resolution_btn",
+          label: "30m",
+          resolution: "30"
+        },
+        {
+          class: "resolution_btn",
+          label: "1h",
+          resolution: "60"
+        },
+        {
+          class: "resolution_btn",
+          label: "2h",
+          resolution: "120"
+        },
+        {
+          class: "resolution_btn",
+          label: "4h",
+          resolution: "240"
+        },
+        {
+          class: "resolution_btn",
+          label: "8h",
+          resolution: "480"
+        },
+        {
+          class: "resolution_btn",
+          label: "1D",
+          resolution: "1D"
+        },
+        {
+          class: "resolution_btn",
+          label: "1W",
+          resolution: "1W"
+        },
+        {
+          class: "resolution_btn",
+          label: "1M",
+          resolution: "1M"
+        }
+      ];
+      chart.onIntervalChanged().subscribe(null, function(interval, obj) {
+        widget.changingInterval = false;
+      });
+      btnList.forEach(function(item) {
+        let button = widget.createButton({
+          align: "left"
+        });
+        item.resolution === widget._options.interval &&
+          updateSelectedIntervalButton(button);
+        button
+          .attr("class", "button " + item.class)
+          .attr(
+            "data-chart-type",
+            item.chartType === undefined ? 1 : item.chartType
+          )
+          .on("click", function(e) {
+            if (!widget.changingInterval && !button.hasClass("selected")) {
+              let chartType = +button.attr("data-chart-type");
+              // let resolution = button.attr("data-resolution");
+              if (chart.resolution() !== item.resolution) {
+                widget.changingInterval = true;
+                chart.setResolution(item.resolution);
+              }
+              if (chart.chartType() !== chartType) {
+                chart.setChartType(chartType);
+              }
+              updateSelectedIntervalButton(button);
+            }
+          })
+          .append(item.label);
+      });
+      widget
+        .chart()
+        .createStudy("Moving Average", false, true, [5, "close", 0], null, {
+          "Plot.color": "#7D53A8"
+        });
+      widget
+        .chart()
+        .createStudy("Moving Average", false, true, [10, "close", 0], null, {
+          "Plot.color": "#7699C2"
+        });
+      widget
+        .chart()
+        .createStudy("Moving Average", false, true, [30, "close", 0], null, {
+          "Plot.color": "#A0D75B"
+        });
+      // debugger;
+    });
   }
 };
 </script>
 
 <style lang="stylus" scoped>
+.kline {
+  width: 1200px;
+  margin: 0 auto;
+  height: 400px;
+}
+
 .TVChartContainer {
-  height: calc(100vh - 80px);
+  height: calc(100vh - 480px);
+}
+
+.wrap-18oKCBRc- {
+  flex: auto !important;
 }
 </style>

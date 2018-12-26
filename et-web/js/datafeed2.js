@@ -4,7 +4,17 @@ export default (vue) => {
         onReady(callback) {
 
             callback({
-
+                exchanges: [{
+                    value: "Exchain",
+                    name: "All Exchanges",
+                    desc: ""
+                }, ],
+                supports_search: true,
+                supports_group_request: true,
+                supported_resolutions: ['1', '5', '15', '30', '60', '1D', '1W', '1M'],
+                supports_marks: true,
+                supports_timescale_marks: true,
+                supports_time: true
             })
         },
         searchSymbols(userInput, exchange, symbolType, onResultReadyCallback) {
@@ -18,26 +28,17 @@ export default (vue) => {
         },
         resolveSymbol(symbolName, onResolve, onResolveErrorCallback) {
             let info = vue.$store.state.market.pairs.filter(p => p.name == symbolName)[0]
-            // if (!info) return
+
             let sysbolInfo = {
                 name: info.name,
                 ticker: info.name,
                 type: 'bitcoin',
-                description: '-',
                 session: '24x7',
-                // exchange: 'Exchain',
-                // listed_exchange: ['Exchain'],
                 timezone: 'Asia/Hong_Kong',
                 minmove: info.price_min_input,
                 pricescale: info.price_precision,
                 has_no_volume: false,
                 pointvalue: 1,
-                // data_status: 'streaming',
-                industry: '数字货币',
-                sector: '数字货币',
-                currency_code: 'currency_code',
-                // has_intraday: true,
-                // intraday_multipliers: [1],
                 supported_resolutions: ['1', '5', '15', '30', '60', '1D', '1W', '1M'],
                 volume_precision: info.amount_precision
             }
@@ -47,7 +48,6 @@ export default (vue) => {
 
         },
         async getBars(symbolInfo, resolution, from, to, onHistoryCallback, onErrorCallback, firstDataRequest) {
-            debugger
             let res = await vue.$service.get('api/v1-b/market/kline_history?period=1day&type=market&market=huobi&name=btcusdt')
             if (res.status != '200' || res.data.code != '0') {
                 return
@@ -73,7 +73,7 @@ export default (vue) => {
 
         },
         unsubscribeBars(subscriberUID) {
-
+            
         }
 
     }

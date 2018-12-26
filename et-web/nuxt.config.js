@@ -67,7 +67,8 @@ export default {
     routes: ['/', '/en', '/inspire', '/en/inspire', '/market', '/en/market', '/test', '/en/test']
   },
   css: [
-    '~/assets/style/app.styl', '~/assets/style/iconfont.css'
+    '~/assets/style/app.styl',
+    '~/assets/style/iconfont.css'
   ],
   /*
    ** Customize the progress bar color

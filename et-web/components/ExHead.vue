@@ -12,7 +12,8 @@
         <v-btn flat>合作伙伴计划</v-btn>
         <v-btn flat>
           <v-badge color="none">
-            <i slot="badge" class="iconfont icon-new1"></i>
+            <i slot="badge" class="iconfont icon-new1" style="color:white !important;font-size:16px"></i>
+            <!-- <i slot="badge" class="iconfont icon-new1" style="color:gold !important;font-size:16px"></i> -->
             <span>竞猜看涨跌</span>
           </v-badge>
         </v-btn>

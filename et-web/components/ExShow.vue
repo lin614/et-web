@@ -1,8 +1,8 @@
 <template>
   <div class="show">
     <v-hover>
-      <!-- <v-card :style="`background:url('${imgET}')`" width="399" height="100" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple> -->
-      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <!-- <v-card :style="`background:url('${imgET}')`" width="399" height="100" slot-scope="{ hover }" :class="`elevation-${hover ? 0: 0}`" ripple> -->
+      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 0: 0}`" ripple>
         <!-- <img :url="imgET" /> -->
         <v-card-title>
           <div>
@@ -22,7 +22,7 @@
       </v-card>
     </v-hover>
     <v-hover>
-      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <v-card width="399" slot-scope="{ hover }" :class="`elevation-${hover ? 0: 0}`" ripple>
         <!-- <img class="timq" src='../assets/images/timq/2.jpg' /> -->
         <v-card-title>
           <div>
@@ -39,7 +39,7 @@
       </v-card>
     </v-hover>
     <v-hover>
-      <v-card width="400" slot-scope="{ hover }" :class="`elevation-${hover ? 5: 0}`" ripple>
+      <v-card width="400" slot-scope="{ hover }" :class="`elevation-${hover ? 0: 0}`" ripple>
         <!-- <img class="timq" src='../assets/images/timq/5.jpg' /> -->
         <v-card-title>
           <div>
