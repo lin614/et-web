@@ -22,7 +22,7 @@ export default (localStorage) => ({
   },
   api: {
     safe: false,
-    domain: ''
+    domain: 'www.exchain.com'
   },
   theme: {
     dark: true
@@ -30,7 +30,6 @@ export default (localStorage) => ({
   test: {
     time: 1
   },
-
   market: {
     pairs: [], //交易对信息
     bars: [], //k线数据

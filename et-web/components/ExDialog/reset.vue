@@ -54,7 +54,6 @@
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword, validateEmailCode} from '@/utils/validate'
-  import {resetPassword, verifyResetPassword, initCaptcha} from '@/api/user'
 
 export default {
   name: 'ExdialogReset',
@@ -147,8 +146,8 @@ export default {
     getGeetestData() {
       let params = {type: this.$t('common.lang') === 'cn' ? 'dk-reset' : 'dk-reset-en'};
 
-      initCaptcha(params).then(res => {
-        this.initSenseAction(res.data);
+      this.$store.dispatch('initCaptcha', params).then(res => {
+        this.initSenseAction(res);
       })
     },
     /**
@@ -179,19 +178,19 @@ export default {
       
       this.sendCodeLoading = true
 
-      resetPassword(params).then(res => {
-          this.sendCodeLoading = false
+      this.$store.dispatch('resetPassword', params).then(res => {
+        this.sendCodeLoading = false
 
-          if (res.data.errorCode == 0) {
-            this.resettoken = res.data.result.token
-            alert(this.$t('errorMsg.EMAIL_SEND_SUCC'));
-            this.handleCodeDown();
-          }
-        })
-        .catch((err) => {
-          this.sendCodeLoading = false
-          apiReqError(this, err);
-        });
+        if (res.errorCode == 0) {
+          this.resettoken = res.result.token
+          alert(this.$t('errorMsg.EMAIL_SEND_SUCC'));
+          this.handleCodeDown();
+        }
+      })
+      .catch((err) => {
+        this.sendCodeLoading = false
+        apiReqError(this, err);
+      });
     },
 
     /**
@@ -221,8 +220,8 @@ export default {
       params.password = md5(this.pwd);
       params.captcha_type = captcha_type;
 
-      verifyResetPassword(params).then(res => {
-        if (res.data.errorCode == 0) {
+      this.$store.dispatch('verifyResetPassword', params).then(res => {
+        if (res.errorCode == 0) {
           alert(this.$t('errorMsg.RESET_SUCC'))
           this.$emit('setDialog', {loginDialog: true, resetDialog: false});
         } else {
@@ -391,6 +390,7 @@ export default {
 //     }
 //   }
 // }
+
 .v-form {
   width: 100%;
   display: inline-block;

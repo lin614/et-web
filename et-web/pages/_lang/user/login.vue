@@ -48,7 +48,6 @@
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword} from '@/utils/validate'
-  import {login, initCaptcha} from '@/api/user'
 
   let instance = null
 
@@ -103,8 +102,8 @@
       getGeetestData() {
         let params = {type: this.$t('common.lang') === 'cn' ? 'dk-login' : 'dk-login-en'};
 
-        initCaptcha(params).then(res => {
-          this.initSenseAction(res.data);
+        this.$store.dispatch('initCaptcha', params).then(res => {
+          this.initSenseAction(res);
         })
       },
 

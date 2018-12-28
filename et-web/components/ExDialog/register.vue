@@ -64,7 +64,6 @@
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword, validateEmailCode} from '@/utils/validate'
-  import {register, verifyRegister, initCaptcha} from '@/api/user'
 
   let instance = null
 
@@ -185,8 +184,8 @@ export default {
     getGeetestData() {
       let params = {type: this.$t('common.lang') === 'cn' ? 'dk-register' : 'dk-register-en'};
 
-      initCaptcha(params).then(res => {
-        this.initSenseAction(res.data);
+      this.$store.dispatch('initCaptcha', params).then(res => {
+        this.initSenseAction(res);
       })
     },
 
@@ -244,8 +243,8 @@ export default {
       params.password = md5(this.pwd);
       params.captcha_type = captcha_type;
 
-      verifyRegister(params).then(res => {
-        if (res.data.errorCode == 0) {
+      this.$store.dispatch('verifyRegister', params).then(res => {
+        if (res.errorCode == 0) {
           window.sessionStorage.removeItem('regSource');
           window.sessionStorage.removeItem('regInviteCode');
 
@@ -256,9 +255,9 @@ export default {
           this.regLoading = false
         }
       })
-        .catch((err) => {
-          this.regLoading = false
-        })
+      .catch((err) => {
+        this.regLoading = false
+      })
     },
     /**
      * 发送邮件
@@ -274,11 +273,11 @@ export default {
       
       this.sendCodeLoading = true
 
-      register(params).then(res => {
+      this.$store.dispatch('register', params).then(res => {
         this.sendCodeLoading = false
 
-        if (res.data.errorCode == 0) {
-          this.regtoken = res.data.result.token
+        if (res.errorCode == 0) {
+          this.regtoken = res.result.token
           alert(this.$t('errorMsg.EMAIL_SEND_SUCC'))
           this.handleCodeDown();
         }

@@ -1,4 +1,6 @@
 import ax from 'axios'
+import {toParmStr} from '@/js/utils/util.js'
+
 let getService = (action, home) => {
     return ax.get(action, {
         headers: {
@@ -49,7 +51,7 @@ export default {
         try {
             // ax.defaults.headers.post['Referer'] = getters.home
             let res = await getService(getters.service + '/api/v1-b/market/price_change?markets=' + getters.pairsStr, getters.home)
-            res.status == '200' && res.data.errorCode == 0 && commit('setBars', res.data.result)
+            res.status == '200' && res.data.errorCode == 0
         } catch (e) {
             console.log(e)
         }
@@ -82,6 +84,50 @@ export default {
         });
     },
 
+    register({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/register', data)
+            .then((res) => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    verifyRegister({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/verifyRegister', data)
+            .then((res) => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    verifyResetPassword({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/verifyResetPassword', data)
+            .then((res) => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    resetPassword({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/resetPassword', data)
+            .then((res) => {
+                resolve(res.data)
+            })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
     initCaptcha({commit,getters}, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/initCaptcha', data)
@@ -92,4 +138,15 @@ export default {
             reject(error)
         });
     },
+
+    getKlineHistory({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.service + '/api/quotation/klineHistoryTradingView?' + toParmStr(data))
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    }
 }

@@ -5,7 +5,6 @@ export default ({
 }, inject) => {
 
     if (process.client && typeof WebSocket === 'undefined') {
-        debug
         alert('您的浏览器不支持WebSocket,推荐使用谷歌浏览器');
         return
     }
@@ -23,7 +22,9 @@ export default ({
         return aa
     }
     let WS = null
-    let sendFunc = params => WS.send(JSON.stringify(params))
+    let sendFunc = (params, callback) => {
+        WS.send(JSON.stringify(params))
+    }
     let connect = () => {
         WS = new WebSocket(url);
         WS.onopen = (e) => {
@@ -42,11 +43,15 @@ export default ({
         }
         WS.onmessage = (e) => {
             let msg = JSON.parse(decode(e.data));
+            console.log(11111111111111);
+            console.log(msg);
             if (msg.channel) {
                 console.log('channel', msg.channel)
                 console.log('data', msg.data)
                 if (msg.status === 0) {
-                    //store.commit
+                    if (msg.channel.indexOf('kline')) {
+                        store.commit('setBars', msg.data)
+                    }
                 }
             } else {
                 console.log('保活!')
@@ -73,5 +78,5 @@ export default ({
         store.commit('setTime')
     }, 5000)
 
-
+    app.WS = WS;
 }
