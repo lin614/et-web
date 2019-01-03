@@ -1,4 +1,6 @@
 import Vue from 'vue'
+import colors from 'vuetify/es5/util/colors'
+import theme from './theme'
 import {
   Vuetify,
   VApp,
@@ -41,7 +43,8 @@ Vue.use(Vuetify, {
     VBadge,
     VDataTable,
     VTextField
-  }
+  },
+  theme: theme
 })
 
 // import ExHover from '../components/common/ExHover.vue'

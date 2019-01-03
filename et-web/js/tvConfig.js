@@ -1,9 +1,9 @@
 export default {
     debug: true, // uncomment this line to see Library errors and warnings in the console
-    fullscreen: true,
+    fullscreen: false,
     autosize: true,
-    // wdith: '100%',
-    // height: "600",
+    // wdith: '100vw',
+    // height: 800,
     interval: "1d",
     exchanges: [{
         value: "Exchain",
@@ -36,5 +36,15 @@ export default {
             resolution: "1",
             text: "1d"
         }
-    ]
+    ],
+    // widgetbar: {
+    //     details: true,
+    //     watchlist: true,
+    //     watchlist_settings: {
+    //         default_symbols: ["NYSE:AA", "NYSE:AAL", "NASDAQ:AAPL"],
+    //         readonly: false
+    //     }
+    // },
+    hide_side_toolbar: true
+
 }

@@ -159,16 +159,13 @@ export default {
 
 <style lang="stylus" scoped>
 .kline {
-  width: 1200px;
+  width: 100%;
   margin: 0 auto;
-  height: 400px;
+  height: calc(100%);
 }
 
-.TVChartContainer {
-  height: calc(100vh - 480px);
-}
-
-.wrap-18oKCBRc- {
-  flex: auto !important;
+#tv_chart_container {
+  height: 100%;
+  width: 100%;
 }
 </style>

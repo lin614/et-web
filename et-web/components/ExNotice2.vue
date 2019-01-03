@@ -4,7 +4,7 @@
       <v-list two-line :dark="theme.dark" slot-scope="{ hover }" :class="`elevation-${hover ? 0: 0}`">
         <template v-for="(item, index) in $t('static.notice')">
           <v-list-tile :key="index" avatar ripple @click="">
-            <v-list-tile-content>
+            <v-list-tile-content class="px-3">
               <v-list-tile-title>{{ item.title }}</v-list-tile-title>
               <v-list-tile-sub-title>{{ item.subTitle }}</v-list-tile-sub-title>
             </v-list-tile-content>
