@@ -104,10 +104,10 @@ export default (vue) => {
             res.data.forEach(function (bar) {
                 arr.push({
                     time: Number(bar[0]),
-                    close: Number(bar[1]),
-                    open: Number(bar[2]),
-                    high: Number(bar[3]),
-                    low: Number(bar[4]),
+                    open: Number(bar[1]),
+                    high: Number(bar[2]),
+                    low: Number(bar[3]),
+                    close: Number(bar[4]),
                     volume: Number(bar[5])
                 })
             });

@@ -6,6 +6,9 @@ export default {
     invite(state) {
         return `http${state.api.safe?'s':''}://invite.${state.api.domain}` //邀请相关接口地址
     },
+    guess(state) {
+        return `http${state.api.safe?'s':''}://guess.${state.api.domain}` //et信息接口地址
+    },
     stats(state) {
         return `http${state.api.safe?'s':''}://stats.${state.api.domain}` //et信息接口地址
     },

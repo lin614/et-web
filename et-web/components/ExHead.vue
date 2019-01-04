@@ -5,12 +5,12 @@
         <v-btn flat @click="$router.push('/')">
           <ex-logo />
         </v-btn>
-        <v-btn flat>法币</v-btn>
+        <v-btn flat @click="$router.push('/otc')">法币</v-btn>
         <v-btn flat @click="$router.push('/market')">交易</v-btn>
-        <v-btn flat>ET</v-btn>
-        <v-btn flat>白皮书</v-btn>
-        <v-btn flat>合作伙伴计划</v-btn>
-        <v-btn flat>
+        <v-btn flat @click="$router.push('/et')">ET</v-btn>
+        <v-btn flat @click="$router.push('/whitePaper')">白皮书</v-btn>
+        <v-btn flat @click="$router.push('/partner')">合作伙伴计划</v-btn>
+        <v-btn flat @click="$router.push('/guessing')">
           <v-badge color="none">
             <i slot="badge" class="iconfont icon-new1"></i>
             <span>竞猜看涨跌</span>

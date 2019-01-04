@@ -148,5 +148,39 @@ export default {
                 reject(error)
             });
         });
-    }
+    },
+
+    queryGuessInfo({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.guess + '/api/guess/queryGuessInfo')
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    },
+
+    queryBTCPrice({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.guess + '/api/guess/queryBTCPrice')
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    },
+
+    
+    queryLastGuessTops({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.guess + '/api/guess/queryLastGuessTops')
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    },
 }
