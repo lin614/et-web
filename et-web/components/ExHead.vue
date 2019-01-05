@@ -1,6 +1,6 @@
 <template>
   <div class="ExHead grey--text">
-    <v-toolbar height="40" fixed app dark>
+    <v-toolbar height="40"  fixed app dark>
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn flat @click="$router.push('/')">
           <ex-logo />

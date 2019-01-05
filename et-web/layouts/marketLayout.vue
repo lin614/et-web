@@ -8,9 +8,9 @@
       <nuxt />
     </v-content>
 
-    <v-footer :fixed="fixed" app>
+    <!-- <v-footer :fixed="false" app>
       <span>&copy; {{ new Date().getFullYear() }}</span>
-    </v-footer>
+    </v-footer> -->
   </v-app>
 </template>
 
