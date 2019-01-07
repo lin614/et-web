@@ -1,14 +1,14 @@
 <template>
   <div class="market">
     <div class="dash">
-      <div class="panel1">
+      <div class="regionMain">
         <ex-kline />
       </div>
-      <div class="panel2 " v-if="region1.status!=0">
+      <div class="region1 " v-if="region1.status!=0">
 
         <component :is="region1.menu.component"></component>
       </div>
-      <div class="panel3 " :class="`${region2.status==2?'wideWidth':''}`" v-if="region2.status!=0">
+      <div class="region2 " :class="`${region2.status==2?'wideWidth':''}`" v-if="region2.status!=0">
         {{region2.status}}
         {{region2.menu.component}}
         <component :is="region2.menu.component"></component>
@@ -17,7 +17,7 @@
     <v-navigation-drawer mini-variant :mini-variant-width="50" right hide-overlay stateless absolute fixed permanent>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0 sideMenu">
-          <v-list-tile v-for="menu in menu2s" :key="menu.id" @click="showMenu2(menu)">
+          <v-list-tile v-for="menu in menu2s" :key="menu.id" @click="showMenu2(menu)" ripple>
             <v-list-tile-action>
               <v-tooltip left>
 
@@ -27,8 +27,8 @@
             </v-list-tile-action>
 
           </v-list-tile>
-          <hr style="background-color:#121212" />
-          <v-list-tile v-for="menu in menu1s" :key="menu.id" @click="showMenu1(menu)">
+          <hr style="opacity:0.2" />
+          <v-list-tile v-for="menu in menu1s" :key="menu.id" @click="showMenu1(menu)" ripple>
             <v-list-tile-action>
               <v-tooltip left>
 
@@ -64,18 +64,24 @@ export default {
         },
         {
           id: "2",
+          icon: "icon-icon_Entrust",
+          size: "30",
+          tip: "委托管理"
+        },
+        {
+          id: "3",
           icon: "icon-dashboard",
           size: "28",
           tip: "币价分析"
         },
         {
-          id: "3",
+          id: "4",
           icon: "icon-news2",
           tip: "信息披露",
           size: "24"
         },
         {
-          id: "4",
+          id: "5",
           icon: "icon-money",
           size: "28",
           tip: "我的资产"
@@ -83,7 +89,7 @@ export default {
       ],
       menu1s: [
         {
-          id: "5",
+          id: "6",
           icon: "icon-dom",
           tip: "DOM 订单",
           size: "24",
@@ -144,12 +150,12 @@ export default {
     width: calc(100% - 46px);
     display: flex;
 
-    .panel1 {
+    .regionMain {
       width: calc(100%);
       height: calc(100%);
     }
 
-    .panel3 {
+    .region2 {
       width: 300px;
       min-width: 300px;
       max-width: 300px;
@@ -164,19 +170,13 @@ export default {
       max-width: 450px !important;
     }
 
-    .panel2 {
+    .region1 {
       width: 300px;
       min-width: 300px;
       max-width: 300px;
       height: calc(100%);
       background-color: $grey.base;
       margin-left: 4px;
-    }
-  }
-
-  .sideMenu {
-    & i {
-      font-size: 28px;
     }
   }
 }
