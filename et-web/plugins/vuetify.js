@@ -20,7 +20,8 @@ import {
   VTabs,
   VBadge,
   VDataTable,
-  VTextField
+  VTextField,
+  VTooltip
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -42,7 +43,8 @@ Vue.use(Vuetify, {
     VTabs,
     VBadge,
     VDataTable,
-    VTextField
+    VTextField,
+    VTooltip
   },
   theme: theme
 })

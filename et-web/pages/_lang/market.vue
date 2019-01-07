@@ -4,61 +4,39 @@
       <div class="panel1">
         <ex-kline />
       </div>
-      <div class="panel2" v-show="v1">
+      <div class="panel2 " v-if="region1.status!=0">
 
+        <component :is="region1.menu.component"></component>
       </div>
-      <div class="panel3" v-show="v2">
-
+      <div class="panel3 " :class="`${region2.status==2?'wideWidth':''}`" v-if="region2.status!=0">
+        {{region2.status}}
+        {{region2.menu.component}}
+        <component :is="region2.menu.component"></component>
       </div>
     </div>
-    <!-- <v-container fluid grid-list-md>
-      <v-layout row wrap>
-        <v-flex d-flex xs12 sm6 md7>
-          <v-card color="purple" dark>
-            <v-card-title primary class="title">Lorem</v-card-title>
-            <v-card-text>{{ lorem }}</v-card-text>
-          </v-card>
-        </v-flex>
-       
-        <v-flex d-flex xs12 sm6 md2 child-flex v-show="v2">
-          <v-card color="green lighten-2" dark>
-            <v-card-text>{{ lorem.slice(0, 90) }}</v-card-text>
-          </v-card>
-        </v-flex>
-        <v-flex d-flex xs12 sm6 md3 v-show="v1">
-          <v-card color="blue lighten-2" dark>
-            <v-card-text>{{ lorem.slice(0, 100) }}</v-card-text>
-          </v-card>
-        </v-flex>
-      </v-layout>
-    </v-container> -->
-    <!-- <ex-kline />
-    <div class="orderPanel" :style="`width:${orderWidth}px`" v-show="v1">
-
-    </div>
-    <div class="infoPanel" :style="`width:${infoWidth}px`" v-show="v2">
-      <div class="infoPanel_region">
-
-      </div>
-
-    </div> -->
-    <v-navigation-drawer :mini-variant="mini" :mini-variant-width="50" v-model="drawer" right hide-overlay stateless absolute fixed permanent>
+    <v-navigation-drawer mini-variant :mini-variant-width="50" right hide-overlay stateless absolute fixed permanent>
       <v-toolbar flat class="transparent">
         <v-list class="pa-0 sideMenu">
-
-          <v-list-tile @click="v2=!v2">
+          <v-list-tile v-for="menu in menu2s" :key="menu.id" @click="showMenu2(menu)">
             <v-list-tile-action>
-              <!-- <v-icon>dashboard</v-icon> -->
-              <i class="iconfont icon-news3"></i>
+              <v-tooltip left>
+
+                <i class="iconfont" :class="menu.icon" :style="{fontSize:`${menu.size}px`}" slot="activator"></i>
+                <span>{{menu.tip}}</span>
+              </v-tooltip>
             </v-list-tile-action>
 
           </v-list-tile>
-          <v-divider></v-divider>
-          <v-list-tile @click="v1=!v1">
+          <hr style="background-color:#121212" />
+          <v-list-tile v-for="menu in menu1s" :key="menu.id" @click="showMenu1(menu)">
             <v-list-tile-action>
-              <!-- <v-icon>question_answer</v-icon> -->
-              <i class="iconfont icon-anniu" />
+              <v-tooltip left>
+
+                <i class="iconfont" :class="menu.icon" :style="{fontSize:`${menu.size}px`}" slot="activator"></i>
+                <span>{{menu.tip}}</span>
+              </v-tooltip>
             </v-list-tile-action>
+
           </v-list-tile>
         </v-list>
       </v-toolbar>
@@ -67,48 +45,83 @@
 </template>
 <script>
 import ExKline from "@/components/ExKline";
+import PairListMenu from "@/components/MarketMenus/PairListMenu";
 export default {
-  components: { ExKline },
+  components: { ExKline, PairListMenu },
   async asyncData({ store }) {
     await store.dispatch("initBars");
   },
   layout: "marketLayout",
   data() {
     return {
-      drawer: true,
-      items: [
-        { title: "Home", icon: "dashboard" },
-        { title: "About", icon: "question_answer" }
+      menu2s: [
+        {
+          id: "1",
+          icon: "icon-order",
+          size: "28",
+          tip: "交易对",
+          component: PairListMenu
+        },
+        {
+          id: "2",
+          icon: "icon-dashboard",
+          size: "28",
+          tip: "币价分析"
+        },
+        {
+          id: "3",
+          icon: "icon-news2",
+          tip: "信息披露",
+          size: "24"
+        },
+        {
+          id: "4",
+          icon: "icon-money",
+          size: "28",
+          tip: "我的资产"
+        }
       ],
-      mini: true,
-      right: null,
-      v1: true,
-      v2: true,
-      infoWidth: 600,
-      infoWidthMin: 600,
-      infoWidthMax: 800,
-      orderWidth: 300,
-      lorem: `Lorem ipsum dolor sit amet, mel at clita quando. Te sit oratio vituperatoribus, nam ad ipsum posidonium mediocritatem, explicari dissentiunt cu mea. Repudiare disputationi vim in, mollis iriure nec cu, alienum argumentum ius ad. Pri eu justo aeque torquatos.`
+      menu1s: [
+        {
+          id: "5",
+          icon: "icon-dom",
+          tip: "DOM 订单",
+          size: "24",
+          region: 1
+        }
+      ],
+      region2: {
+        status: 1, //0，隐藏,1,正常,2,更宽,
+        menu: null
+      },
+      region1: {
+        status: 0, //0，隐藏,1,正常
+        menu: null
+      }
     };
   },
   methods: {
+    showMenu2(menu) {
+      let region = this.region2;
+      region.status =
+        region.menu && region.menu.id != menu.id ? 1 : (region.status + 1) % 3;
+      region.menu = menu;
+    },
+    showMenu1(menu) {
+      let region = this.region1;
+      region.status =
+        region.menu && region.menu.id != menu.id ? 1 : (region.status + 1) % 2;
+      region.menu = menu;
+    },
     toggleWidth(e) {
       this.infoWidth =
         this.infoWidth == this.infoWidthMin
           ? this.infoWidthMax
           : this.infoWidthMin;
-      // if (e.x) {
-      //   // let x = window.innerWidth - e.x - 50;
-      //   // this.infoWidth =
-      //   //   x > this.infoWidthMax
-      //   //     ? this.infoWidthMax
-      //   //     : x < this.infoWidthMin
-      //   //     ? this.infoWidthMin
-      //   //     : x;
-
-      // }
-      // debugger;
     }
+  },
+  created() {
+    this.region2.menu = this.menu2s[0];
   }
 };
 </script>
@@ -137,12 +150,18 @@ export default {
     }
 
     .panel3 {
-      width: 400px;
-      min-width: 400px;
-      max-width: 400px;
+      width: 300px;
+      min-width: 300px;
+      max-width: 300px;
       height: calc(100%);
       background-color: $blue.base;
       margin-left: 4px;
+    }
+
+    .wideWidth {
+      width: 450px !important;
+      min-width: 450px !important;
+      max-width: 450px !important;
     }
 
     .panel2 {
@@ -155,28 +174,9 @@ export default {
     }
   }
 
-  // .orderPanel {
-  // height: calc(100%);
-  // background-color: red;
-  // margin-top: 100px;
-  // }
-
-  // .infoPanel {
-  // height: calc(100%);
-  // border-left: 2px solid grey;
-
-  // // cursor: w-resize;
-  // // cursor: pointer;
-  // .infoPanel_region {
-  // width: 100%;
-  // height: calc(100%);
-  // background-color: yellow;
-  // cursor: default;
-  // }
-  // }
   .sideMenu {
     & i {
-      font-size: 24px;
+      font-size: 28px;
     }
   }
 }
