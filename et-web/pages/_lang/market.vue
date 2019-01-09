@@ -1,16 +1,15 @@
 <template>
   <div class="market">
     <div class="dash">
-      <div class="regionMain">
+      <div class="regionMain elevation-1">
         <ex-kline />
       </div>
-      <div class="region1 " v-if="region1.status!=0">
+      <div class="region1 elevation-1" v-if="region1.status!=0">
 
         <component :is="region1.menu.component"></component>
       </div>
-      <div class="region2 " :class="`${region2.status==2?'wideWidth':''}`" v-if="region2.status!=0">
-        {{region2.status}}
-        {{region2.menu.component}}
+      <div class="region2 elevation-1" :class="`${region2.status==2?'wideWidth':''}`" v-if="region2.status!=0">
+
         <component :is="region2.menu.component"></component>
       </div>
     </div>
@@ -46,12 +45,18 @@
 <script>
 import ExKline from "@/components/ExKline";
 import PairListMenu from "@/components/MarketMenus/PairListMenu";
+import DomMenu from "@/components/MarketMenus/DomMenu";
 export default {
-  components: { ExKline, PairListMenu },
+  components: { ExKline, PairListMenu, DomMenu },
   async asyncData({ store }) {
     await store.dispatch("initBars");
   },
   layout: "marketLayout",
+  async asyncData({ store }) {
+    await store.dispatch("initPairs");
+    await store.dispatch("initPrices");
+    await store.dispatch("upEt");
+  },
   data() {
     return {
       menu2s: [
@@ -93,7 +98,8 @@ export default {
           icon: "icon-dom",
           tip: "DOM 订单",
           size: "24",
-          region: 1
+          region: 1,
+          component: DomMenu
         }
       ],
       region2: {
@@ -160,7 +166,7 @@ export default {
       min-width: 300px;
       max-width: 300px;
       height: calc(100%);
-      background-color: $blue.base;
+      // background-color: $blue.base;
       margin-left: 4px;
     }
 
@@ -175,7 +181,7 @@ export default {
       min-width: 300px;
       max-width: 300px;
       height: calc(100%);
-      background-color: $grey.base;
+      // background-color: $grey.base;
       margin-left: 4px;
     }
   }
