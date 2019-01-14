@@ -1,57 +1,60 @@
 <template>
-  <v-dialog v-model="dialog" persistent max-width="600px" class="login">
-    <v-card>
-      <v-card-title>
-        <span class="headline">{{ $t('userCenter.login.login') }}</span>
-      </v-card-title>
+  <v-container class="login">
+    <div class="v-wrap">
+      <ex-card>
+        <span slot="title">{{ $t('userCenter.login.login') }}</span>
 
-      <v-card-text>
-        <v-container grid-list-md>
-          <v-layout wrap>
-            <v-form class="form" ref="form">
-              <v-flex xs12>
-                <v-text-field v-model="email" :label="$t('userCenter.login.email')" :error-messages="emailErrors" @input="$v.email.$touch()" @blur="$v.email.$touch()" required> </v-text-field>
-              </v-flex>
-
-              <v-flex xs12>
-                <v-text-field v-model="password" :label="$t('userCenter.login.password')" type="password" :error-messages="passwordErrors" @input="$v.password.$touch()" @blur="$v.password.$touch()" required> </v-text-field>
-              </v-flex>
-            </v-form>
-
-            <v-flex xs12>
-              <span class="fl">{{ $t('userCenter.login.isnotEXUser') }} ? <span class="highlight pointer" @click="toRegister">{{ $t('userCenter.login.signUp') }}</span></span>
-              <span class="fr">{{ $t('userCenter.login.forgotPassword') }} ? <span class="highlight pointer" @click="toReSet">{{ $t('userCenter.login.resetPassword') }}</span></span>
-            </v-flex>
-          </v-layout>
-        </v-container>
-
-        <div>
+        <div class="card-cnt">
           
-          </div>
-      </v-card-text>
-      
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="blue darken-1" flat @click="setDialog">{{ $t('common.cancel') }}</v-btn>
-        <v-btn color="blue darken-1" flat ref="loginBefore" :loading="loginLoading">{{ $t('userCenter.login.login') }}</v-btn>
-      </v-card-actions>
-    </v-card>
-  </v-dialog>
-</template>
+          <v-form class="form" ref="form">
+            <v-text-field
+              v-model="email"
+              :label="$t('userCenter.login.email')"
+              :error-messages="emailErrors"
+              @input="$v.email.$touch()"
+              @blur="$v.email.$touch()"
+              required>
+            </v-text-field>
 
+            <v-text-field
+              v-model="password"
+              :label="$t('userCenter.login.password')"
+              type="password"
+              :error-messages="passwordErrors"
+              @input="$v.password.$touch()"
+              @blur="$v.password.$touch()"
+              required>
+            </v-text-field>
+
+            <v-btn ref="loginBefore" :loading="loginLoading">submit</v-btn>
+            
+          </v-form>
+
+          <div class="msg">
+              <p>{{ $t('userCenter.login.isnotEXUser') }} ?</p>
+              <p>{{ $t('userCenter.login.quickReg') }}</p>
+              <router-link to="/reg">{{ $t('userCenter.login.signUp') }}</router-link>
+            </div>
+        </div>
+      </ex-card>
+      
+    </div>
+  </v-container>
+</template>
 <script>
   import cookie from 'js-cookie'
   import md5 from 'crypto-md5'
+  import ExCard from '@/components/ExCard'
   import { validationMixin } from 'vuelidate'
   import { required, email } from 'vuelidate/lib/validators'
   import {validateEmail, validatePassword} from '@/utils/validate'
-  // import axios from 'axios'
 
   let instance = null
 
   export default {
-    name: 'ExdialogLogin',
-    props: ['dialog'],
+    components: {
+      ExCard
+    },
 
     mixins: [validationMixin],
 
@@ -93,15 +96,6 @@
     },
 
     methods: {
-      toReSet () {
-        this.$emit('setDialog', {loginDialog: false, resetDialog: true});
-      },
-      toRegister () {
-        this.$emit('setDialog', {loginDialog: false, registerDialog: true});
-      },
-      setDialog() {
-        this.$emit('setDialog', {loginDialog: false, registerDialog: false});
-      },
       /**
        * 获取极验验证码相关数据
        */
@@ -170,11 +164,16 @@
         params.password = md5(this.password)
         params.captcha_type = captcha_type
 
-        this.$store.dispatch('login', params).then(res => {
-          if (res.errorCode == 0) {
-            if (res.result.pn) {
-              // axios.defaults.headers.post['X-EXCHAIN-PN'] = res.result.pn
-              cookie.set('PN', res.result.pn, {
+        login(params).then(res => {
+          if (res.data.errorCode == 0) {
+            this.$store.commit('setUserInfo', {
+              email: res.data.result.email,
+              mtime: res.data.result.mtime
+            })
+
+            if (res.data.result.pn) {
+              // ax.defaults.headers.post['X-EXCHAIN-PN'] = res.data.result.pn
+              cookie.set('PN', res.data.result.pn, {
                 domain: 'exchain.com',
                 expires: 0.08
               })
@@ -182,26 +181,25 @@
                 domain: 'exchain.com',
                 expires: 0.08
               })
-              cookie.set('uid', res.result.id, {
+              cookie.set('uid', res.data.result.id, {
                 domain: 'exchain.com',
                 expires: 0.08
               })
 
-              sessionStorage.setItem('PN', encodeURIComponent(res.result.pn))
-              sessionStorage.setItem('uid', res.result.id)
-              sessionStorage.setItem('email', res.result.email)
+              sessionStorage.setItem('PN', encodeURIComponent(res.data.result.pn))
+              sessionStorage.setItem('uid', res.data.result.id)
+              sessionStorage.setItem('email', res.data.result.email)
             }
-            this.loginLoading = false
-            this.$emit('setDialog', {loginDialog: false, registerDialog: false});
+            this.$router.push('/')
           } else {
             this.loginLoading = false
-            // apiError(this, res);
+            apiError(this, res);
           }
         })
         .catch(err => {
           this.loginLoading = false
           // this.geettest.reset()
-          // apiReqError(this, err);
+          apiReqError(this, err);
         })
       },
     }
@@ -209,10 +207,18 @@
 </script>
 <style lang="less" scoped>
 // @import url(../assets/style/config.less);
+.login {
   .v-form {
-    width: 100%;
+    width: 520px;
     display: inline-block;
   }
+  .msg {
+    float: right;
+    background: #f2f3f7;
+    padding: 16px;
+    line-height: 40px;
+  }
+}
 </style>
 
 

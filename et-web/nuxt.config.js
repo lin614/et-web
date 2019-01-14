@@ -1,7 +1,7 @@
 export default {
   env: {
     api: {
-      safe: true, //true:https,wss,false:http,ws
+      safe: false, //true:https,wss,false:http,ws
       domain: 'exchain.com',
     }
   },

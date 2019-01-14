@@ -1,5 +1,9 @@
 import ax from 'axios'
+import cookie from 'js-cookie'
+import Vue from 'Vue'
 import {toParmStr} from '@/js/utils/util.js'
+
+let vue = new Vue();
 
 let getService = (action, home) => {
     return ax.get(action, {
@@ -8,7 +12,7 @@ let getService = (action, home) => {
         }
     })
 }
-let postService = (action, data) => {
+let postService = (action, data) => {  
     return ax.post(action, data)
 }
 export default {
@@ -37,7 +41,6 @@ export default {
         getters
     }) {
         try {
-            // ax.defaults.headers.post['Referer'] = getters.home
             let res = await getService(getters.service + '/api/exchange/getMarketInfo', getters.home)
             res.status == '200' && res.data.errorCode == 0 && commit('setPairs', res.data.result)
         } catch (e) {
@@ -49,7 +52,6 @@ export default {
         getters
     }) {
         try {
-            // ax.defaults.headers.post['Referer'] = getters.home
             let res = await getService(getters.service + '/api/v1-b/market/price_change?markets=' + getters.pairsStr, getters.home)
             res.status == '200' && res.data.errorCode == 0
         } catch (e) {
@@ -61,8 +63,6 @@ export default {
         commit,
         getters
     }) {
-        // ax.defaults.headers.post['Referer'] = getters.home
-
         try {
             let res = await getService(getters.service + '/api/v1-b/market/price_change?markets=' + getters.pairsStr, getters.home)
             res.status == '200' && res.data.errorCode == 0 && commit('setPrices', res.data.result)
@@ -183,4 +183,38 @@ export default {
             });
         });
     },
+
+    queryGuessSum({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.guess + '/api/guess/queryGuessSum', data)
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    },
+
+    submitGuess({commit,getters}, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.guess + '/api/guess/submit', data)
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    },
+
+    queryGuessOrders({commit,getters,state}, data) {
+        ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+        return new Promise((resolve, reject) => {
+            postService(getters.guess + '/api/guess/queryGuessOrders', data)
+            .then((res) => {
+                resolve(res.data)
+            }).catch(error => {
+                reject(error)
+            });
+        });
+    }
 }

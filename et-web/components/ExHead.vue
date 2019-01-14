@@ -36,6 +36,15 @@
         <v-btn flat @click="loginDialog = true" v-if="!user.email">登录</v-btn>
         <v-btn flat @click="registerDialog = true" v-if="!user.email">注册</v-btn>
 
+        <v-btn flat @click="toMyAsset" v-if="user.email">我的资产</v-btn>
+
+        <router-link
+          to="/usercenter/asset"
+          v-if="isLogin"
+        >
+          <Button type="text">{{ $t("header.myAsset") }}</Button>
+        </router-link>
+
         <v-menu offset-y v-if="user.email">
           <v-btn slot="activator" color="primary" dark>{{email}}</v-btn>
 
@@ -133,6 +142,9 @@ export default {
     },
     setMenu(e) {
       this.$router.push(this.items[e].url);
+    },
+    toMyAsset() {
+      this.$router.push('/asset/index');
     }
   },
   create() {

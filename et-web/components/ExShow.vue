@@ -94,13 +94,11 @@ export default {
     //   renderer: "svg"
     // });
     // chart.setOption(opt);
-    // debugger;
     // // this.imgET = encodeURI(chart.getDataURL());
     // this.imgET = std(chart.getDataURL());
     // // this.imgET=await this.$html2canvas(this.$refs.chartET, {
     // //     type: 'dataURL'
     // //   });
-    // debugger;
   }
 };
 </script>

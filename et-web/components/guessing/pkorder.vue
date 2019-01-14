@@ -14,62 +14,57 @@
         <span>{{freezeAmount}} ET</span>
       </li>
       <li>
-        <span>数量</span>
-        <InputNumber
-          :max="10000"
-          :min="100"
-          v-model="vol"
-          style="width:300px;"
-        ></InputNumber>
+        <v-text-field v-model="vol" label="数量"> </v-text-field>
       </li>
       <li>
-        <Slider
+        <v-slider v-model="vol" min="0" :max="balance" label="Duration" thumb-label></v-slider>
+        <!-- <Slider
           @on-change="change"
           v-model="percent"
           :step="10"
           show-stops
           style="width:100%"
           :tip-format="tip"
-        ></Slider>
+        ></Slider> -->
       </li>
       <li>
-        <Button
-          :loading='time'
-          @click="showModal=true"
-          class="btn"
-          :type="`${sides==1?'success':'error'}`"
-          long
-        >{{sides==1?'看涨':'看跌'}}<span v-if="time">({{sec}})</span></Button>
-
+        <v-btn class="btn" :color="sides === 1 ? 'success' : 'error'" :loading="loginLoading" @click="showModal=true">{{sides === 1 ? '看涨' : '看跌'}}</v-btn>
       </li>
     </ul>
-    <Modal
-      v-model="showModal"
-      title="下注确认"
-      @on-ok="subOrder"
-    >
-      <h3>{{sides==1?'看涨':'看跌'}}：{{vol}} ET</h3>
-    </Modal>
+
+    <v-dialog v-model="showModal" persistent max-width="600px" class="login">
+      <v-card>
+        <v-card-title>
+          <span class="headline">下注确认</span>
+        </v-card-title>
+
+        <v-card-text>{{sides==1?'看涨':'看跌'}}：{{vol}} ET</v-card-text>
+    
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue darken-1" flat @click="showModal = false">取消</v-btn>
+          <v-btn color="blue darken-1" flat ref="loginBefore" :loading="loginLoading" @click="subOrder">确认</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 <script>
 import ax from "axios";
-import config from "../../config/config.js";
 import cookie from "js-cookie";
-ax.defaults.headers.post["X-EXCHAIN-PN"] = cookie.get("PN", {
-  domain: config.url.domain
-});
+
 export default {
   props: ["sides"],
   data() {
     return {
-      vol: 1000,
+      vol: 0,
       percent: 10,
       time: false,
       sec: 0,
       showModal: false,
       balance: 0, //可用et
-      freezeAmount: 0 //冻结et
+      freezeAmount: 0, //冻结et
+      loginLoading: false
     };
   },
   methods: {
@@ -83,29 +78,23 @@ export default {
       this.vol = val * 100;
     },
     getET() {
-      let vu = this;
       let parms = {
-        uid: cookie.get("uid", { domain: config.url.domain })
+        uid: cookie.get("uid", { domain: this.$store.state.api.domainName })
       };
-      ax.post(config.url.guess + "/api/guess/queryGuessSum", parms).then(
-        res => {
-          if (res.status == "200") {
-            vu.freezeAmount = parseInt(res.data.data.freezeAmount);
-            vu.balance = parseInt(res.data.data.balance);
-          }
-          // vu.time = false
-        }
-      );
+      this.$store.dispatch('queryGuessSum', parms).then(res => {
+        this.freezeAmount = parseInt(res.data.freezeAmount);
+        this.balance = parseInt(res.data.balance);
+      });
     },
     subOrder() {
       let vu = this;
 
       if (this.vol > this.balance) {
-        vu.$Message.error("下注失败：余额不足！");
+        alert("下注失败：余额不足！");
         return;
       }
       if (new Date().getHours() < 12) {
-        vu.$Message.error("下注失败：请在12：00 - 24:00 下注！");
+        alert("下注失败：请在12：00 - 24:00 下注！");
         return;
       }
 
@@ -122,28 +111,29 @@ export default {
       let parms = {
         amount: this.vol,
         sides: this.sides,
-        uid: cookie.get("uid", { domain: config.url.domain })
+        uid: cookie.get("uid", { domain: this.$store.state.api.domainName })
       };
-
-      ax.post(config.url.guess + "/api/guess/submit", parms).then(res => {
-        if (res.status == "200") {
-          if (res.data.meta.code == "0") {
-            vu.$Message.success("下注成功");
-            vu.freezeAmount = parseInt(res.data.data.freezeAmount);
-            vu.balance = parseInt(res.data.data.balance);
-            bus.$emit("upInfo", res.data.data);
-          } else {
-            // vu.$Message.error(res.data.meta.message);
-            let msg = ["6", "7"].includes(code)
-              ? "未登录！"
-              : code == ""
-              ? "超出投注时间范围！"
-              : code == ""
-              ? "投注数量"
-              : "系统错误！";
-            vu.$Message.error("下注错误:" + msg);
-            if (["6", "7"].includes(code)) vu.$route.push("/login");
-          }
+      this.loginLoading = true
+      
+      this.$store.dispatch('submitGuess', parms).then(res => {
+        this.loginLoading = false
+        if (res.meta.code == "0") {
+          vu.$Message.success("下注成功");
+          vu.freezeAmount = parseInt(res.data.freezeAmount);
+          vu.balance = parseInt(res.data.balance);
+          // bus.$emit("upInfo", res.data.data);
+        } else {
+          let code = res.meta.code;
+          let msg = res.meta.message;
+          msg = ["6", "7"].includes(code)
+            ? "未登录！"
+            : code == ""
+            ? "超出投注时间范围！"
+            : code == ""
+            ? "投注数量"
+            : "系统错误！";
+          alert("下注错误:" + msg);
+          if (["6", "7"].includes(code)) vu.$route.push("/login");
         }
       });
     }
@@ -153,9 +143,9 @@ export default {
   },
   mounted() {
     let vu = this;
-    bus.$on("upInfo", () => {
-      vu.getET();
-    });
+    // bus.$on("upInfo", () => {
+    //   vu.getET();
+    // });
   }
 };
 </script>
@@ -179,6 +169,10 @@ export default {
       margin-top: 32px;
       margin-bottom: 32px;
     }
+  }
+  .btn {
+    width: 100%;
+    line-height: 36px;
   }
 }
 </style>

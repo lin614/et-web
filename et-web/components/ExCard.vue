@@ -3,6 +3,7 @@
         <div class="title">
             <div class="linepot"></div>
             <slot name="title"></slot>
+            <slot name="more"></slot>
         </div>
         <slot></slot>
     </div>
@@ -22,10 +23,11 @@ export default {
 .crd {
     margin-bottom: 16px;
     .title {
-        display: flex;
+        flex: 1 1 auto;
         height: 40px;
-        align-items: center;
-        justify-content: flex-start;
+    }
+    .more {
+        float: right;
     }
     .linepot {
         display: inline-block;

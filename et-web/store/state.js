@@ -22,7 +22,7 @@ export default (localStorage) => ({
   },
   api: {
     safe: false,
-    domain: 'www.exchain.com'
+    domain: 'exchain.com'
   },
   theme: {
     dark: true

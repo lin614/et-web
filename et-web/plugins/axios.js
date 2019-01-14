@@ -10,8 +10,7 @@ export default function ({
         return axios.create({
             baseURL: url,
             headers: {
-                'X-EXCHAIN-PN': store.state.user.pn,
-                'Referer': store.getters.home
+                'X-EXCHAIN-PN': store.state.user.pn
             }
         })
     }

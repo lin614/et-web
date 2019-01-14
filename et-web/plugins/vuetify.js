@@ -20,12 +20,15 @@ import {
   VInput,
   VALERT,
   VTabs,
+  // VTab,
+  // VTabItem,
   VBadge,
   VDataTable,
   VDialog,
   VSelect,
   VAutocomplete,
-  VTextField
+  VTextField,
+  VSlider,
 } from 'vuetify'
 
 Vue.use(Vuetify, {
@@ -49,12 +52,15 @@ Vue.use(Vuetify, {
     VInput,
     VALERT,
     VTabs,
+    // VTab,
+    // VTabItem,
     VBadge,
     VDataTable,
     VDialog,
     VSelect,
     VAutocomplete,
-    VTextField
+    VTextField,
+    VSlider,
   }
 })
 

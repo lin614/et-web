@@ -1,14 +1,33 @@
 <template>
   <div>
-    <Tabs
-      value="tab1"
-      :animated="false"
-      @on-click="clickTab"
-    >
-      <TabPane
-        label="当前竞猜"
-        name="tab1"
-      >
+    <v-tabs v-model="active" color="cyan" dark slider-color="yellow">
+      <v-tab v-for="(o, n) in tabs" :key="n" ripple>{{ o.label }}</v-tab>
+      <v-tab-item>
+        <v-data-table :headers="curHeaders" :items="curData" class="elevation-1">
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.time }}</td>
+            <td class="text-xs-right">{{ props.item.ud }}</td>
+            <td class="text-xs-right">{{ props.item.mon }}</td>
+            <td class="text-xs-right">{{ props.item.carstabs }}</td>
+          </template>
+        </v-data-table>
+      </v-tab-item>
+
+      <v-tab-item>
+        <v-data-table :headers="hisHeaders" :items="hisData" class="elevation-1">
+          <template slot="items" slot-scope="props">
+            <td>{{ props.item.time }}</td>
+            <td class="text-xs-right">{{ props.item.ud }}</td>
+            <td class="text-xs-right">{{ props.item.mon }}</td>
+            <td class="text-xs-right">{{ props.item.sta }}</td>
+            <td class="text-xs-right">{{ props.item.etgot }}</td>
+          </template>
+        </v-data-table>
+      </v-tab-item>
+    </v-tabs>
+
+    <!-- 
+      
         <Table
           size="large"
           :columns="col1"
@@ -23,11 +42,8 @@
           size="small"
           style="margin-top:20px;"
         />
-      </TabPane>
-      <TabPane
-        label="历史竞猜"
-        name="tab2"
-      >
+     
+     
         <Table
           size="large"
           :columns="col2"
@@ -42,62 +58,41 @@
           size="small"
           style="margin-top:20px;"
         />
-      </TabPane>
-    </Tabs>
+     -->
   </div>
 </template>
 <script>
 import ax from "axios";
-import config from "../../config/config.js";
+// import config from "../../config/config.js";
 import cookie from "js-cookie";
-ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', {
-  domain: config.url.domain
-})
+
 export default {
   props: ["detail"],
   data() {
     return {
-      col1: [
-        {
-          title: "时间",
-          key: "time"
-        },
-        {
-          title: "竞猜涨跌",
-          key: "ud"
-        },
-        {
-          title: "竞猜金额",
-          key: "mon"
-        },
-        {
-          title: "竞猜结果",
-          key: "sta"
-        }
+      active: 0,
+      tabs: [{
+        label: '当前竞猜',
+        name: 'tab1'
+      }, {
+        label: '历史竞猜',
+        name: 'tab2'
+      }],
+      curHeaders: [
+        { text: '时间', value: 'time' },
+        { text: '竞猜涨跌', value: 'ud' },
+        { text: '竞猜金额', value: 'mon' },
+        { text: '竞猜结果', value: 'carstabs' }
       ],
-      col2: [
-        // ...col1,
-        {
-          title: "时间",
-          key: "time"
-        },
-        {
-          title: "竞猜涨跌",
-          key: "ud"
-        },
-        {
-          title: "竞猜金额",
-          key: "mon"
-        },
-        {
-          title: "竞猜结果",
-          key: "sta"
-        },
-        {
-          title: "获得ET",
-          key: "etgot"
-        }
+      hisHeaders: [
+        { text: '时间', value: 'time' },
+        { text: '竞猜涨跌', value: 'ud' },
+        { text: '竞猜金额', value: 'mon' },
+        { text: '竞猜结果', value: 'sta' },
+        { text: '获得ET', value: 'etgot' }
       ],
+      curData: [],
+      hisData: [],
       pagesize: 10,
       listToday: [],
       listTodayAll: [],
@@ -115,37 +110,36 @@ export default {
           pageNum: 1,
           pageSize: this.detail ? 1000 : 10,
           type: type,
-          uid: cookie.get("uid", { domain: config.url.domain })
+          uid: cookie.get("uid", { domain: this.$store.state.api.domainName })
         };
-        ax.post(config.url.guess + "/api/guess/queryGuessOrders", parms).then(
+
+        this.$store.dispatch('queryGuessOrders', parms).then(
           res => {
-            if (res.status == "200" && res.data.meta.code == "0") {
-              let list = res.data.data.list.map(p => {
-                return {
-                  time: p.createTime,
-                  ud: p.sides == 1 ? "看涨" : "看跌",
-                  mon: p.amount,
-                  sta:
-                    type == "now"
-                      ? "竞猜中"
-                      : p.winAmount > 0
-                      ? "中奖"
-                      : "未中奖",
-                  etgot: p.winAmount
-                };
-              });
-              callback(list);
-            }
+            let list = res.data.list.map(p => {
+              return {
+                time: p.createTime,
+                ud: p.sides == 1 ? "看涨" : "看跌",
+                mon: p.amount,
+                sta:
+                  type == "now"
+                    ? "竞猜中"
+                    : p.winAmount > 0
+                    ? "中奖"
+                    : "未中奖",
+                etgot: p.winAmount
+              };
+            });
+            callback(list);
           }
         );
       };
       func("now", list => {
-        vu.listTodayAll = list;
-        vu.changeTodayPage(vu.page1);
+        vu.curData = list;
+        // vu.changeTodayPage(vu.page1);
       });
       func("history", list => {
-        vu.listHisAll = list;
-        vu.changeHisPage(vu.page2);
+        vu.hisData = list;
+        // vu.changeHisPage(vu.page2);
       });
     },
     changeTodayPage(page) {
@@ -170,9 +164,9 @@ export default {
   },
   mounted() {
     let vu = this;
-    bus.$on("upInfo", () => {
-      vu.getOrders();
-    });
+    // bus.$on("upInfo", () => {
+    //   vu.getOrders();
+    // });
   }
 };
 </script>
