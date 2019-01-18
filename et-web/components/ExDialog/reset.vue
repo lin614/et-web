@@ -112,15 +112,11 @@ export default {
       emailcode: '',
       pwd: '',
       pwd2: '',
-
       resettoken: '',
       gtserver: '',
       resetLoading: false,
-      
-      codeDownText: this.$t('register.sendCode'),
-
+      codeDownText: null,
       geettestFlag: '',
-
       codeDown: false,
       timer: null,
       sendCodeLoading: false,
@@ -301,7 +297,7 @@ export default {
   },
   mounted() {
     this.getGeetestData()
-    var vu = this
+    this.codeDownText = this.$t('register.sendCode')
     
     window.addEventListener('keyup', this.onEnter)
   },

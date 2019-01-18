@@ -38,10 +38,7 @@
 
         <v-btn flat @click="toMyAsset" v-if="user.email">我的资产</v-btn>
 
-        <router-link
-          to="/usercenter/asset"
-          v-if="isLogin"
-        >
+        <router-link to="/usercenter/asset" v-if="isLogin">
           <Button type="text">{{ $t("header.myAsset") }}</Button>
         </router-link>
 
@@ -65,11 +62,11 @@
       </v-toolbar-items>
 
       <!-- 登录 -->
-      <ExdialogLogin :dialog="loginDialog" @setDialog="setLoginDialog"></ExdialogLogin>
+      <!-- <ExdialogLogin :dialog="loginDialog" @setDialog="setLoginDialog"></ExdialogLogin> -->
       <!-- 注册 -->
-      <ExdialogRegister :dialog="registerDialog" @setDialog="setRegisterDialog"></ExdialogRegister>
+      <!-- <ExdialogRegister :dialog="registerDialog" @setDialog="setRegisterDialog"></ExdialogRegister> -->
       <!-- 重置 -->
-      <ExdialogReset :dialog="resetDialog" @setDialog="setResetDialog"></ExdialogReset>
+      <!-- <ExdialogReset :dialog="resetDialog" @setDialog="setResetDialog"></ExdialogReset> -->
     </v-toolbar>
   </div>
 </template>
@@ -87,6 +84,7 @@ export default {
       loginDialog: false,
       registerDialog: false,
       resetDialog: false,
+      isLogin: false,
       items: []
     };
   },

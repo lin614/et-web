@@ -96,7 +96,7 @@ export default {
       sense: null,
       geettestFlag: '',
       regLoading: false,
-      codeDownText: this.$t('register.sendCode'),
+      codeDownText: null,
       timer: null,
       geettest: null,
       geetOnReady: false,
@@ -153,6 +153,7 @@ export default {
   },
   created() {
     instance = this
+    
   },
 
   watch: {
@@ -163,6 +164,7 @@ export default {
 
   mounted() {
     // 邀请码和来源处理
+    this.codeDownText = this.$t('register.sendCode')
     this.init();
     this.getGeetestData()
     window.addEventListener('keyup', this.onEnter)
