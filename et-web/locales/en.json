@@ -4,7 +4,8 @@
     "imgLang": "en",
     "legalMoney": "$",
     "confirm": "Confirm",
-    "cancel": "Cancel"
+    "cancel": "Cancel",
+    "operation": "Action"
   },
   "name": {
     "loadingData": "Loading",
@@ -275,6 +276,11 @@
         "exchange_freeze": "Frozen",
         "transfer": "Transfer",
         "trade": "Trade"
+      },
+      "recharge": {
+        "form": {
+          "coin": "请选择币种"
+        }
       }
     },
     "financeRecord": {

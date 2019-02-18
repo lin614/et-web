@@ -124,7 +124,6 @@ export default (vue) => {
         // axios.get(`http://service.exchain.com/api/v1-b/market/kline_history?period=1hour&type=market&market=huobi&name=btcusdt`)
         // .then((res) => {
         //   res.data.data.forEach(function (bar) { // in subscribeBars
-        //     console.log(bar)
         //     onRealtimeCallback({
         //       time: Number(bar[0]),
         //       open: Number(bar[1]),

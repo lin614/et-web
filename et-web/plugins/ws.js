@@ -43,7 +43,6 @@ export default ({
         }
         WS.onmessage = (e) => {
             let msg = JSON.parse(decode(e.data));
-            console.log(11111111111111);
             console.log(msg);
             if (msg.channel) {
                 console.log('channel', msg.channel)

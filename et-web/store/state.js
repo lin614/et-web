@@ -33,9 +33,7 @@ export default (localStorage) => ({
   market: {
     pairs: [], //交易对信息
     bars: [], //k线数据
-    groups:{
-      
-    }
+    groups:[]
     // pairPrices: [] //首页价格数据
   }
 })

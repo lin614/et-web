@@ -129,7 +129,7 @@
           this.$refs.loginBefore.$el.addEventListener('click', this.loginBefore);
           sense.setInfos(function () {
             return {
-              interactive: 2  //用户场景
+              interactive: 2  // 用户场景
             }
           }).onSuccess(data => {
             let params = {geetest_challenge: data.challenge}
@@ -172,6 +172,7 @@
 
         this.$store.dispatch('login', params).then(res => {
           if (res.errorCode == 0) {
+            
             if (res.result.pn) {
               // axios.defaults.headers.post['X-EXCHAIN-PN'] = res.result.pn
               cookie.set('PN', res.result.pn, {
@@ -190,6 +191,8 @@
               sessionStorage.setItem('PN', encodeURIComponent(res.result.pn))
               sessionStorage.setItem('uid', res.result.id)
               sessionStorage.setItem('email', res.result.email)
+              
+              this.getUserInfo();
             }
             this.loginLoading = false
             this.$emit('setDialog', {loginDialog: false, registerDialog: false});
@@ -204,6 +207,14 @@
           // apiReqError(this, err);
         })
       },
+
+      getUserInfo () {
+        this.$store.dispatch('getUserInfo').then(res => {
+          if (res.errorCode === 0) {
+            sessionStorage.userInfo = JSON.stringify(res.result)
+          }
+        })
+      }
     }
   }
 </script>

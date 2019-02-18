@@ -1,7 +1,7 @@
 import ax from 'axios'
 import cookie from 'js-cookie'
 import Vue from 'Vue'
-import {toParmStr} from '@/js/utils/util.js'
+import { toParmStr } from '@/js/utils/util.js'
 
 let vue = new Vue();
 
@@ -12,7 +12,7 @@ let getService = (action, home) => {
         }
     })
 }
-let postService = (action, data) => {  
+let postService = (action, data) => {
     return ax.post(action, data)
 }
 export default {
@@ -40,12 +40,8 @@ export default {
         commit,
         getters
     }) {
-        try {
-            let res = await getService(getters.service + '/api/exchange/getMarketInfo', getters.home)
-            res.status == '200' && res.data.errorCode == 0 && commit('setPairs', res.data.result)
-        } catch (e) {
-            console.log(e)
-        }
+        let res = await getService(getters.service + '/api/exchange/getMarketInfo', getters.home)
+        res.status == '200' && res.data.errorCode == 0 && commit('setPairs', res.data.result)
     },
     async initBars({
         commit,
@@ -72,149 +68,313 @@ export default {
         }
     },
 
-    login({commit,getters}, data) {
+    getUserInfo({ commit, getters, state }, data) {
+        ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/getUserInfo', data)
+                .then((res) => {
+                    res.status == '200' && res.data.errorCode == 0
+                    resolve(res.data)
+                })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    login({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/login', data)
-            .then((res) => {
-                res.status == '200' && res.data.errorCode == 0 && commit('setUserInfo', res.data.result)
-                resolve(res.data)
-            })
+                .then((res) => {
+                    res.status == '200' && res.data.errorCode == 0 && commit('setUserInfo', res.data.result)
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    register({commit,getters}, data) {
+    register({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/register', data)
-            .then((res) => {
-                resolve(res.data)
-            })
+                .then((res) => {
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    verifyRegister({commit,getters}, data) {
+    getPhoneCode({ commit, getters }, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/account/getPhoneCode', data)
+                .then(res => {
+                    resolve(res.data)
+                })
+        }).catch(error => {
+            reject(error);
+        })
+    },
+
+    getEmailCode({ commit, getters }, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/account/getEmailCode', data)
+                .then(res => {
+                    resolve(res.data)
+                })
+        }).catch(error => {
+            reject(error);
+        })
+    },
+
+    logout({ commit, getters }, data) {
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/user/logout', data)
+                .then((res) => {
+                    commit('setUserInfo', {})
+                    resolve(res.data)
+                })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    verifyRegister({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/verifyRegister', data)
-            .then((res) => {
-                resolve(res.data)
-            })
+                .then((res) => {
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    verifyResetPassword({commit,getters}, data) {
+    verifyResetPassword({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/verifyResetPassword', data)
-            .then((res) => {
-                resolve(res.data)
-            })
+                .then((res) => {
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    resetPassword({commit,getters}, data) {
+    resetPassword({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/resetPassword', data)
-            .then((res) => {
-                resolve(res.data)
-            })
+                .then((res) => {
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    initCaptcha({commit,getters}, data) {
+    initCaptcha({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.service + '/api/user/initCaptcha', data)
-            .then((res) => {
-                resolve(res.data)
-            })
+                .then((res) => {
+                    resolve(res.data)
+                })
         }).catch(error => {
             reject(error)
         });
     },
 
-    getKlineHistory({commit,getters}, data) {
+    getKlineHistory({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             getService(getters.service + '/api/quotation/klineHistoryTradingView?' + toParmStr(data))
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    queryGuessInfo({commit,getters}, data) {
+    queryGuessInfo({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             getService(getters.guess + '/api/guess/queryGuessInfo')
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    queryBTCPrice({commit,getters}, data) {
+    queryBTCPrice({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             getService(getters.guess + '/api/guess/queryBTCPrice')
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    
-    queryLastGuessTops({commit,getters}, data) {
+
+    queryLastGuessTops({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             getService(getters.guess + '/api/guess/queryLastGuessTops')
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    queryGuessSum({commit,getters}, data) {
+    queryGuessSum({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.guess + '/api/guess/queryGuessSum', data)
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    submitGuess({commit,getters}, data) {
+    submitGuess({ commit, getters }, data) {
         return new Promise((resolve, reject) => {
             postService(getters.guess + '/api/guess/submit', data)
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
     },
 
-    queryGuessOrders({commit,getters,state}, data) {
+    queryGuessOrders({ commit, getters, state }, data) {
         ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
         return new Promise((resolve, reject) => {
             postService(getters.guess + '/api/guess/queryGuessOrders', data)
-            .then((res) => {
-                resolve(res.data)
-            }).catch(error => {
-                reject(error)
-            });
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
         });
-    }
+    },
+
+    getAssetsList({ commit, getters, state }, data) {
+        ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/account/assetsList', data)
+                .then((res) => {
+                    let result = []
+                    if (res.data.errorCode === 0) {
+                        let assetList = res.data.result
+                        for (var key in assetList) {
+                            let obj = {}
+                            obj.account_available = assetList[key].account_available
+                            obj.btc = assetList[key].btc
+                            obj.withdraw_fee = assetList[key].withdraw_fee
+                            obj.exchange_available = assetList[key].exchange_available
+                            obj.exchange_freeze = assetList[key].exchange_freeze
+                            obj.token = key
+                            obj.isSmallAmount = assetList[key].btc < 0.0001
+                            result.push(obj)
+                        }
+                    }
+                    resolve({ errorCode: res.data.errorCode, errorMsg: res.data.errorMsg, result: result })
+                })
+        }).catch(error => {
+            reject(error)
+        });
+    },
+
+    getAssetsList2({ commit, getters, state }, data) {
+        ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+
+        return new Promise((resolve, reject) => {
+            ax.all([
+                postService(getters.service + '/api/account/assetsList', data),
+                getService(getters.service + '/api/quotation/getSymbolLists')
+            ])
+                .then(
+                    ax.spread((assets, symbol) => {
+                        let result = []
+                        if (assets.data.errorCode === 0 && symbol.data.errorCode === 0) {
+                            let assetList = assets.data.result
+                            let symbolList = symbol.data.result
+                            for (var key in assetList) {
+                                let obj = {}
+                                obj.account_available = assetList[key].account_available
+                                obj.btc = assetList[key].btc
+                                obj.withdraw_fee = assetList[key].withdraw_fee
+                                obj.exchange_available = assetList[key].exchange_available
+                                obj.exchange_freeze = assetList[key].exchange_freeze
+                                obj.token = key
+                                obj.isSmallAmount = assetList[key].btc < 0.0001
+
+                                // 精度，提现，充值配置
+                                obj.recharge = symbolList[key].recharge
+                                obj.withdraw = symbolList[key].withdraw
+                                obj.decimal = symbolList[key].decimal
+                                obj.trade = symbolList[key].trade
+                                obj.recharge_min = symbolList[key].recharge_min
+                                obj.withdraw_max = symbolList[key].withdraw_max
+                                obj.withdraw_min = symbolList[key].withdraw_min
+
+                                result.push(obj)
+                            }
+                        }
+                        resolve({ errorCode: assets.data.errorCode || symbol.data.errorCode, errorMsg: assets.data.errorMsg || symbol.data.errorMsg, result: result })
+                    })
+                )
+        }).catch(error => {
+            reject(error)
+        })
+    },
+
+    getAddress({ commit, getters, state }, data) {
+        ax.defaults.headers.get['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+        return new Promise((resolve, reject) => {
+            getService(getters.service + '/api/account/getAddress?type=' + data.token)
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
+        })
+    },
+
+    withdraw({ commit, getters, state }, data) {
+        ax.defaults.headers.post['X-EXCHAIN-PN'] = cookie.get('PN', { domain: state.api.domain });
+        return new Promise((resolve, reject) => {
+            postService(getters.service + '/api/account/withdraw', data)
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
+        });
+    },
+
+    transferToExchange({ commit, getters }, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.service + '/api/account/toExchange?type=' + data.transferToken + '&balance=' + data.transferAmount)
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
+        });
+    },
+
+    transferToAccount({ commit, getters }, data) {
+        return new Promise((resolve, reject) => {
+            getService(getters.service + '/api/exchange/toAccount?type=' + data.transferToken + '&balance=' + data.transferAmount)
+                .then((res) => {
+                    resolve(res.data)
+                }).catch(error => {
+                    reject(error)
+                });
+        });
+    },
 }

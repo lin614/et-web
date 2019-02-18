@@ -4,7 +4,8 @@
     "imgLang": "cn",
     "legalMoney": "￥",
     "confirm": "确认",
-    "cancel": "取消"
+    "cancel": "取消",
+    "operation": "操作"
   },
   "name": {
     "loadingData": "数据加载中",
@@ -275,6 +276,11 @@
         "exchange_freeze": "冻结",
         "transfer": "划转",
         "trade": "交易"
+      },
+      "recharge": {
+        "form": {
+          "coin": "请选择币种"
+        }
       }
     },
     "financeRecord": {

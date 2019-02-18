@@ -62,11 +62,11 @@
       </v-toolbar-items>
 
       <!-- 登录 -->
-      <!-- <ExdialogLogin :dialog="loginDialog" @setDialog="setLoginDialog"></ExdialogLogin> -->
+      <ExdialogLogin :dialog="loginDialog" @setDialog="setLoginDialog"></ExdialogLogin>
       <!-- 注册 -->
-      <!-- <ExdialogRegister :dialog="registerDialog" @setDialog="setRegisterDialog"></ExdialogRegister> -->
+      <ExdialogRegister :dialog="registerDialog" @setDialog="setRegisterDialog"></ExdialogRegister>
       <!-- 重置 -->
-      <!-- <ExdialogReset :dialog="resetDialog" @setDialog="setResetDialog"></ExdialogReset> -->
+      <ExdialogReset :dialog="resetDialog" @setDialog="setResetDialog"></ExdialogReset>
     </v-toolbar>
   </div>
 </template>
@@ -76,6 +76,7 @@ import ExdialogLogin from "./ExDialog/login";
 import ExdialogRegister from "./ExDialog/register";
 import ExdialogReset from "./ExDialog/reset";
 import { mapMutations, mapState } from "vuex";
+import cookie from 'js-cookie'
 
 export default {
   components: { ExLogo, ExdialogLogin, ExdialogRegister, ExdialogReset },
@@ -84,17 +85,18 @@ export default {
       loginDialog: false,
       registerDialog: false,
       resetDialog: false,
-      isLogin: false,
       items: []
     };
   },
   computed: {
     ...mapState(["user", "theme"]),
+    isLogin() {
+      return cookie.get("PN", { domain: this.$store.state.api.domainName })
+    },
     email() {
       var info = this.user.email;
       let pre = '';
-      if (!info) {
-        this.isLogin = false;
+      if (!this.isLogin) {
         return "";
       }
       var emailArr = info.split("@");
@@ -139,13 +141,29 @@ export default {
       this.resetDialog = data.resetDialog;
     },
     setMenu(e) {
-      this.$router.push(this.items[e].url);
+      if (this.items[e].url) {
+        this.$router.push(this.items[e].url);
+      } else {
+        this.$store.dispatch('logout').then(res => {
+          if (res.errorCode == 0) {
+            localStorage.loginBeforeUrl = "";
+            sessionStorage.clear();
+
+            cookie.remove("PN");
+            cookie.remove("PN", { domain: this.$store.state.api.domainName });
+
+            this.$router.push("/");
+          } else {
+            apiError(this, res);
+          }
+        })
+      }
     },
     toMyAsset() {
-      this.$router.push('/asset/index');
+      this.$router.push('/asset/asset');
     }
   },
-  create() {
+  created() {
     this.items = [
       { title: this.$t("header.userCenter"), url: '/usercenter' },
       { title: this.$t("header.promiseManage"), url: '/usercenter/entrust' },

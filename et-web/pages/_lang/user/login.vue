@@ -166,10 +166,6 @@
 
         login(params).then(res => {
           if (res.data.errorCode == 0) {
-            this.$store.commit('setUserInfo', {
-              email: res.data.result.email,
-              mtime: res.data.result.mtime
-            })
 
             if (res.data.result.pn) {
               // ax.defaults.headers.post['X-EXCHAIN-PN'] = res.data.result.pn
